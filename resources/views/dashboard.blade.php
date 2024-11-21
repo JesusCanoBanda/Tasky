@@ -34,7 +34,7 @@
                     <h3 class="text-xl font-semibold text-gray-800">Quick Links</h3>
                     <ul class="mt-4 space-y-2">
                         <li>
-                            <a href="#" class="text-blue-500 hover:text-blue-600">View All Tasks</a>
+                            <a href="{{ route('table.index') }}" class="text-blue-500 hover:text-blue-600">View All Tasks</a>
                         </li>
                         <li>
                             <a href="#" class="text-green-500 hover:text-green-600">Add a New Task</a>
