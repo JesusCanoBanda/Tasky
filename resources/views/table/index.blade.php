@@ -6,14 +6,13 @@
       <a href="#" class="title">Espacios</a>
       <hr>
       <a href="#" class="space-name">Space name</a>
-      <a href="#">2nd space</a>
-      <a href="#" class="crate-space">+ Crear espacio</a>
+      <a href="#" class="create-space">+ Crear espacio</a>
       <br>
       <hr>
       <a href="#" class="projects">Proyectos</a>
       <hr>
       <a href="#" class="project-name">Project name</a>
-      <a href="#">+ Crear proyecto</a>
+      <a href="#" class="create-project">+ Crear proyecto</a>
       <a href="#" class="configuration">Configuración</a>
       <a href="#" class="profile" style="display: inline-flex; align-items: center; text-decoration: none; color: white;">
         <img src="images/user.png" alt="profile" style="width: 20px; height: 20px; margin-right: 8px;">
@@ -68,11 +67,17 @@
     function addColumn() {
       const table = document.getElementById('dynamicTable');
       for (let i = 0; i < table.rows.length; i++) {
-        const newCell = table.rows[i].insertCell(-1);
-        newCell.textContent = i === 0 ? `New Col` : `Data ${i}`;
-      }
+      const newCell = table.rows[i].insertCell(-1);
+      if (i === 0) {
+        newCell.textContent = 'New Col';
+        newCell.className = 'table-header'; 
+        newCell.style.backgroundColor = '#3498db'; 
+        newCell.style.color = 'white';
+      } else {
+      newCell.textContent = `Data ${i}`;
     }
-
+  }
+}
     function changePriority(button) {
       const priorities = [
         { class: 'btn-low', text: 'Low' },
