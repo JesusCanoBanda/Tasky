@@ -16,7 +16,6 @@ class TareaPersonal extends Model
         'estado',
         'porcentaje',
         'nombre_campo',
-        'id_espacio'
     ];
 
     public function espacioPersonal(){
