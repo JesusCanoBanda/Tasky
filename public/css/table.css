@@ -35,6 +35,59 @@ body {
   border-color: #ecf0f1;
 }
 
+.title{
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.space-name{
+ font-weight: bold;
+ text-align: center;
+ padding: 30px;
+ margin-top: 10px;
+ background-color: rgb(29, 164, 218);
+}
+
+.create-space{
+  margin-top: 10px;
+}
+
+.projects{
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.project-name{
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+  background-color: rgb(29, 164, 218);
+  margin-top: 10px;
+}
+
+.create-project{
+  margin-top: 10px;
+}
+
+.configuration{
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+  background-color: gray;
+  margin-top: 435px;
+}
+
+.profile{
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+  background-color: gray;
+  margin-top: 10px;
+  margin-left: 40px;
+}
+
 .main-content {
   flex-grow: 1;
   padding: 20px;

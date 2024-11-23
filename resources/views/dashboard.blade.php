@@ -1,3 +1,9 @@
+<style>
+    .block:hover{
+        transform: scale(1.1);
+    }
+</style>
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -15,32 +21,40 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-pink-50 p-6 rounded-lg shadow-md">
-                    <h4 class="text-lg font-semibold text-pink-600">Tasks</h4>
-                    <p class="text-gray-600">You have <span class="font-bold text-pink-800">5</span> tasks pending.</p>
-                </div>
-                <div class="bg-green-50 p-6 rounded-lg shadow-md">
-                    <h4 class="text-lg font-semibold text-green-600">Completed</h4>
-                    <p class="text-gray-600">You completed <span class="font-bold text-green-800">12</span> tasks this week.</p>
-                </div>
-                <div class="bg-blue-50 p-6 rounded-lg shadow-md">
-                    <h4 class="text-lg font-semibold text-blue-600">Projects</h4>
-                    <p class="text-gray-600">You are working on <span class="font-bold text-blue-800">3</span> projects.</p>
-                </div>
+                <a href="{{ route('table.index') }}" class="block">
+                    <div class="bg-pink-50 p-6 rounded-lg shadow-md hover:bg-pink-100 transition duration-200">
+                        <h4 class="text-lg font-semibold text-pink-600">Project</h4>
+                        <p class="text-gray-600">Project name #1</p>
+                    </div>
+                </a>                
+                <a href="{{ route('table.index') }}" class="block" role="button">
+                    <div class="bg-green-50 p-6 rounded-lg shadow-md hover:bg-green-100 transition duration-200">
+                        <h4 class="text-lg font-semibold text-green-600">Project</h4>
+                        <p class="text-gray-600">Project name #2</p>
+                    </div>
+                </a>
+                
+                <a href="{{ route('table.index') }}" class="block">
+                    <div class="bg-blue-50 p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg font-semibold text-blue-600">Project</h4>
+                        <p class="text-gray-600">Project name #3</p>
+                    </div>
+                </a>
+                
             </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h3 class="text-xl font-semibold text-gray-800">Quick Links</h3>
+                    <h3 class="text-xl font-semibold text-gray-800">Work spaces</h3>
                     <ul class="mt-4 space-y-2">
                         <li>
-                            <a href="{{ route('table.index') }}" class="text-blue-500 hover:text-blue-600">View All Tasks</a>
+                            <a href="{{ route('table.index') }}" class="text-blue-500 hover:text-blue-600">Work Space #1</a>
                         </li>
                         <li>
-                            <a href="#" class="text-green-500 hover:text-green-600">Add a New Task</a>
+                            <a href="#" class="text-green-500 hover:text-green-600">Work Space #2</a>
                         </li>
                         <li>
-                            <a href="#" class="text-pink-500 hover:text-pink-600">Check Project Status</a>
+                            <a href="#" class="text-pink-500 hover:text-pink-600">Work Space #3</a>
                         </li>
                     </ul>
                 </div>
