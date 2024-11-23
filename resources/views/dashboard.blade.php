@@ -2,7 +2,6 @@
     .block:hover{
         transform: scale(1.1);
     }
-
 </style>
 
 <x-app-layout>
