@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id(); // ID primario
-            $table->string('nombre'); // Nombre del usuario
+            $table->string('name'); // Nombre del usuario
             $table->string('user_name')->unique(); // Nombre de usuario único
             $table->string('apellidos'); // Apellidos
             $table->string('email')->unique(); // Email único
             $table->string('password'); // Contraseña
-            $table->date('fecha_registro'); // Fecha de registro
-            $table->boolean('rol'); // Rol (booleano)
+            $table->boolean('rol')->default(0); // Rol (booleano)
             $table->rememberToken(); // Token para recordar usuario
             $table->timestamps(); // Timestamps (created_at, updated_at)
         });
