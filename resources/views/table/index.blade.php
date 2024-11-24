@@ -5,14 +5,22 @@
     <div class="sidebar">
       <a href="#" class="title">Espacios</a>
       <hr>
-      <a href="#" class="space-name">Space name</a>
-      <a href="#" class="create-space">+ Crear espacio</a>
+      {{-- Mostrar los espacios de trabajo --}}
+      @if ($espacios->isNotEmpty())
+        @foreach ($espacios as $espacio)
+          <a href="#" class="space-name">{{ $espacio->nombre }}</a>
+        @endforeach
+      @else
+        <p class="no-spaces">No tienes espacios creados aún.</p>
+      @endif
+      <hr>
+      <a href="{{ route('espaciopersonal.create') }}" class="create-space">+ Crear espacio</a>
       <br>
       <hr>
-      <a href="#" class="projects">Proyectos</a>
+      {{-- <a href="#" class="projects">Proyectos</a>
       <hr>
       <a href="#" class="project-name">Project name</a>
-      <a href="#" class="create-project">+ Crear proyecto</a>
+      <a href="#" class="create-project">+ Crear proyecto</a> --}}
       <a href="#" class="configuration">Configuración</a>
       <a href="#" class="profile" style="display: inline-flex; align-items: center; text-decoration: none; color: white;">
         <img src="images/user.png" alt="profile" style="width: 20px; height: 20px; margin-right: 8px;">
@@ -24,7 +32,7 @@
       <div class="container">
         <div class="table-wrap">
           <table class="table" id="dynamicTable">
-            <thead>
+            {{-- <thead>
               <tr>
                 <th>Issues Found</th>
                 <th>Assignee</th>
@@ -41,10 +49,10 @@
                 <td><span class="btn btn-low" onclick="changePriority(this)">Low</span></td>
                 <td><span class="btn btn-low" onclick="changeStage(this)">Not Started</span></td>
               </tr>
-            </tbody>
+            </tbody> --}}
           </table>
-          <button class="btn btn-primary" onclick="addRow()">Agregar Fila</button>
-          <button class="btn btn-primary" onclick="addColumn()">Agregar Columna</button>
+          {{-- <button class="btn btn-primary" onclick="addRow()">Agregar Fila</button>
+          <button class="btn btn-primary" onclick="addColumn()">Agregar Columna</button> --}}
         </div>
       </div>
     </div>
@@ -70,8 +78,8 @@
       const newCell = table.rows[i].insertCell(-1);
       if (i === 0) {
         newCell.textContent = 'New Col';
-        newCell.className = 'table-header'; 
-        newCell.style.backgroundColor = '#3498db'; 
+        newCell.className = 'table-header';
+        newCell.style.backgroundColor = '#3498db';
         newCell.style.color = 'white';
       } else {
       newCell.textContent = `Data ${i}`;

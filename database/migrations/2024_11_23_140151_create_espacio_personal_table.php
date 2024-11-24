@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('espacio_personals', function (Blueprint $table) {
+        Schema::create('espacio_personal', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->string('categoria');
@@ -28,6 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('espacio_personals');
+        // Corregir el nombre de la tabla en la función down()
+        Schema::dropIfExists('espacio_personal');
     }
 };

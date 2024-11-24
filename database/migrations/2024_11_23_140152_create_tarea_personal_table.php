@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tarea_personals', function (Blueprint $table) {
+        Schema::create('tarea_personal', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->timestamp('fecha_inicio')->useCurrent();
@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('id_espacio');
             $table->foreign('id_espacio')
-                ->references('id')->on('espacio_personals')
+                ->references('id')->on('espacio_personal')
                 ->onDelete('cascade');
             $table->timestamps();
         });
