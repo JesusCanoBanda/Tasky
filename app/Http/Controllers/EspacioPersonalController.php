@@ -68,7 +68,7 @@ class EspacioPersonalController extends Controller
         $espacio->delete();
 
         // Redirigir con un mensaje de éxito
-        return redirect()->route('espaciopersonal.read')->with('success', 'Espacio eliminado correctamente.');
+        return redirect()->route('table.index')->with('success', 'Espacio registrado exitosamente.');
     }
 
     // Método para mostrar el formulario de creación

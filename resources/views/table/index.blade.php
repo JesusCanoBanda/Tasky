@@ -9,7 +9,13 @@
       @if ($espacios->isNotEmpty())
         @foreach ($espacios as $espacio)
           <a href="#" class="space-name">{{ $espacio->nombre }}</a>
+          <form action="{{ route('espaciopersonal.destroy', $espacio->id) }}" method="POST" style="display:inline;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?')">Eliminar</button>
+        </form>
         @endforeach
+
       @else
         <p class="no-spaces">No tienes espacios creados aún.</p>
       @endif
