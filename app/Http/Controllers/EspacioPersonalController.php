@@ -57,7 +57,7 @@ class EspacioPersonalController extends Controller
         $espacio->update($validatedData);
 
         // Redirigir con un mensaje de éxito
-        return redirect()->route('espaciopersonal.read')->with('success', 'Espacio actualizado correctamente.');
+        return redirect()->route('table.index')->with('success', 'Espacio registrado exitosamente.');
     }
 
     // Método para eliminar un registro
