@@ -5,12 +5,10 @@
         <div class="sidebar">
             <a href="#" class="title">Espacios</a>
             <hr>
-            {{-- Mostrar los espacios de trabajo --}}
             @if ($espacios->isNotEmpty())
                 @foreach ($espacios as $espacio)
-                    <a href="#" class="space-name">{{ $espacio->nombre }}</a>
-                    <form action="{{ route('espaciopersonal.destroy', $espacio->id) }}" method="POST"
-                        style="display:inline;">
+                    <a href="#" class="space-name" onclick="loadEspacio({{ $espacio->id }})">{{ $espacio->nombre }}</a>
+                    <form action="{{ route('espaciopersonal.destroy', $espacio->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger"
@@ -20,148 +18,45 @@
                         @csrf
                         <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Editar</button>
                     </form>
-
                 @endforeach
             @else
                 <p class="no-spaces">No tienes espacios creados aún.</p>
             @endif
             <hr>
             <a href="{{ route('espaciopersonal.create') }}" class="create-space">+ Crear espacio</a>
-            <br>
-            <hr>
-            {{-- <a href="#" class="projects">Proyectos</a>
-      <hr>
-      <a href="#" class="project-name">Project name</a>
-      <a href="#" class="create-project">+ Crear proyecto</a> --}}
-            <a href="#" class="configuration">Configuración</a>
-            <a href="#" class="profile"
-                style="display: inline-flex; align-items: center; text-decoration: none; color: white;">
-                <img src="images/user.png" alt="profile" style="width: 20px; height: 20px; margin-right: 8px;">
-                Dante
-            </a>
         </div>
 
         <div class="main-content">
-            <div class="container">
-                <div class="table-wrap">
-                    <table class="table" id="dynamicTable">
-                        {{-- <thead>
-              <tr>
-                <th>Issues Found</th>
-                <th>Assignee</th>
-                <th>Due Date</th>
-                <th>Priority</th>
-                <th>Stage</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Update contractor agreement</td>
-                <td><img src="https://via.placeholder.com/30" alt="assignee"></td>
-                <td><span class="far fa-calendar-alt text-muted">21 Nov</span></td>
-                <td><span class="btn btn-low" onclick="changePriority(this)">Low</span></td>
-                <td><span class="btn btn-low" onclick="changeStage(this)">Not Started</span></td>
-              </tr>
-            </tbody> --}}
-                    </table>
-                    {{-- <button class="btn btn-primary" onclick="addRow()">Agregar Fila</button>
-          <button class="btn btn-primary" onclick="addColumn()">Agregar Columna</button> --}}
-                </div>
+            <div id="espacio-content">
+                <!-- Aquí se cargarán los datos del espacio seleccionado -->
+                <p>Selecciona un espacio para ver los detalles.</p>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        function addRow() {
-            const table = document.getElementById('dynamicTable');
-            const newRow = table.insertRow(-1);
-            const columns = table.rows[0].cells.length;
-
-            for (let i = 0; i < columns; i++) {
-                const newCell = newRow.insertCell(i);
-                newCell.textContent = `Col ${i + 1}`;
-            }
-        }
-
-        function addColumn() {
-            const table = document.getElementById('dynamicTable');
-            for (let i = 0; i < table.rows.length; i++) {
-                const newCell = table.rows[i].insertCell(-1);
-                if (i === 0) {
-                    newCell.textContent = 'New Col';
-                    newCell.className = 'table-header';
-                    newCell.style.backgroundColor = '#3498db';
-                    newCell.style.color = 'white';
-                } else {
-                    newCell.textContent = `Data ${i}`;
+        function loadEspacio(id) {
+            // Realizar una solicitud AJAX para obtener los datos del espacio
+            $.ajax({
+                url: `/table/${id}`, // Ruta al controlador
+                type: 'GET',
+                success: function(data) {
+                    // Actualizar el contenido de #espacio-content con los datos del espacio
+                    $('#espacio-content').html(`
+                        <h1>${data.nombre}</h1>
+                        <p>Categoría: ${data.categoria}</p>
+                        <p>Creado en: ${data.created_at}</p>
+                    `);
+                },
+                error: function(xhr) {
+                    // Manejar errores
+                    console.error('Error al cargar el espacio:', xhr);
+                    alert('No se pudo cargar el espacio. Inténtalo de nuevo.');
                 }
-            }
-        }
-
-        function changePriority(button) {
-            const priorities = [{
-                    class: 'btn-low',
-                    text: 'Low'
-                },
-                {
-                    class: 'btn-medium',
-                    text: 'Medium'
-                },
-                {
-                    class: 'btn-high',
-                    text: 'High'
-                },
-                {
-                    class: 'btn-very-high',
-                    text: 'Very High'
-                }
-            ];
-
-            const currentClass = button.classList.contains('btn-medium') ? 'btn-medium' :
-                button.classList.contains('btn-high') ? 'btn-high' :
-                button.classList.contains('btn-very-high') ? 'btn-very-high' :
-                'btn-low';
-
-            const currentIndex = priorities.findIndex(priority => priority.class === currentClass);
-            const nextIndex = (currentIndex + 1) % priorities.length;
-            const nextPriority = priorities[nextIndex];
-
-            button.className = `btn btn-stage2 ${nextPriority.class}`;
-            button.textContent = nextPriority.text;
-        }
-
-        function changeStage(button) {
-            const stages = [{
-                    class: 'btn-low2',
-                    text: 'Not Started'
-                },
-                {
-                    class: 'btn-medium2',
-                    text: 'In Progress'
-                },
-                {
-                    class: 'btn-high2',
-                    text: 'Completed'
-                },
-                {
-                    class: 'btn-very-high2',
-                    text: 'Stuck'
-                }
-            ];
-
-            const currentClass = button.classList.contains('btn-medium2') ? 'btn-medium2' :
-                button.classList.contains('btn-high2') ? 'btn-high2' :
-                button.classList.contains('btn-very-high2') ? 'btn-very-high2' :
-                'btn-low2';
-
-            const currentIndex = stages.findIndex(stage => stage.class === currentClass);
-            const nextIndex = (currentIndex + 1) % stages.length;
-            const nextStage = stages[nextIndex];
-
-            button.className = `btn btn-stage2 ${nextStage.class}`;
-            button.textContent = nextStage.text;
+            });
         }
     </script>
 </x-app-layout>

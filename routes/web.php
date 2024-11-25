@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/table', [TableController::class, 'index'])->name('table.index');
+Route::get('/table/{id}', [TableController::class, 'show'])->name('table.show');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/auth.php';
