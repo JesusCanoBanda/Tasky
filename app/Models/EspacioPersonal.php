@@ -17,6 +17,12 @@ class EspacioPersonal extends Model
     // Relación de pertenencia con el modelo User
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user'); // Cambiar 'user_id' por 'id_user'
+        return $this->belongsTo(User::class, 'id_user');
     }
+    
+    public function tareas()
+    {
+        return $this->hasMany(TareaPersonal::class, 'id_espacio');
+    }
+    
 }

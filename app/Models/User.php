@@ -13,6 +13,8 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     use Notifiable;
 
+    protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -50,4 +52,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function espacioPersonal()
+    {
+        return $this->hasMany(EspacioPersonal::class, 'id_user');
+    }
+
 }

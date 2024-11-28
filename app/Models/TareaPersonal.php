@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TareaPersonal extends Model
 {
     use HasFactory;
+
+    protected $table = 'tarea_personal';
     protected $fillable = [
         "nombre",
         'fecha_inicio',
@@ -18,7 +20,9 @@ class TareaPersonal extends Model
         'nombre_campo',
     ];
 
-    public function espacioPersonal(){
-        return $this->belongsTo(espacioPersonal::class,'id_espacio');
+    public function espacioPersonal()
+    {
+        return $this->belongsTo(EspacioPersonal::class, 'id_espacio');
     }
+
 }

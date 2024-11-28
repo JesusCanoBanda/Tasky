@@ -4,6 +4,8 @@ use App\Http\Controllers\EspacioPersonalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TareaController;
+use App\Models\TareaPersonalColumnas;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,9 +32,14 @@ Route::middleware('auth')->group(function () {
 });
 
 
+//hay que meterlos en un prefix todos tambien
+Route::get('/personal', [EspacioPersonalController::class, 'index'])->name('table.index');
+Route::get('/personal/{id}', [EspacioPersonalController::class, 'show'])->name('table.show');//modificar esos nombres
+Route::get('/personal/{id}/crear',[TareaController::class,'create'])->name('task.create');
+Route::get('/personal/{id}/editar',[TareaController::class,'edit'])->name('task.edit');
+Route::put('/personal/{id}',[TareaController::class,'update'])->name('task.update');
 
-Route::get('/table', [TableController::class, 'index'])->name('table.index');
-Route::get('/table/{id}', [TableController::class, 'show'])->name('table.show');
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/auth.php';
