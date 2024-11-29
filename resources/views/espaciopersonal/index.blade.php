@@ -139,8 +139,8 @@
                 <label class="name">Nombre</label>
                 <input class="input" type="text" name="nombre" required>
                 <br>
-                <label class="category">Categoria</label>
-                <input class="input2" type="text" name="categoria" required>
+                <label class="category">Descripción</label>
+                <input class="input2" type="text" name="categoria" required>{{--hay que cambiar el nombre del campo por descripcion--}}
                 <br>
                 <button type="submit" class="save-button">Guardar</button>
             </form>

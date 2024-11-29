@@ -19,7 +19,7 @@
             <label>Nombre</label>
             <input type="text" name="nombre" value="{{ old('nombre', $espacio->nombre) }}" required>
 
-            <label>Categoria</label>
+            <label>Descripción</label>
             <input type="text" name="categoria" value="{{ old('categoria', $espacio->categoria) }}" required>
 
             <button type="submit" class="save-button">Actualizar</button>
