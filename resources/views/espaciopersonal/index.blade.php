@@ -137,10 +137,10 @@
             <form class="player-form" action="{{ route('espaciopersonal.store') }}" method="POST">
                 @csrf
                 <label class="name">Nombre</label>
-                <input type="text" name="nombre" required>
-    
-                <label>Categoria</label>
-                <input type="text" name="categoria" required>
+                <input class="input" type="text" name="nombre" required>
+                <br>
+                <label class="category">Categoria</label>
+                <input class="input2" type="text" name="categoria" required>
     
                 <button type="submit" class="save-button">Guardar</button>
             </form>

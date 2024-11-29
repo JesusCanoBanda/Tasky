@@ -393,6 +393,28 @@ td {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.results-table .form-title{
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .results-table .name{
   font-weight: bold;
 }
+
+.results-table .category{
+  font-weight: bold;
+}
+
+.input{
+  border-radius: 9px;
+  margin-left: 15px;
+}
+
+.input2{
+  border-radius: 9px;
+}
+
+

@@ -28,25 +28,36 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [EspacioPersonalController::class, 'store'])->name('espaciopersonal.store');
         Route::get('/{id}/edit', [EspacioPersonalController::class, 'edit'])->name('espaciopersonal.edit');
         Route::put('/{id}', [EspacioPersonalController::class, 'update'])->name('espaciopersonal.update');
+
         Route::delete('/{id}', [EspacioPersonalController::class, 'destroy'])->name('espaciopersonal.destroy');
+    });
+
+    Route::group(['prefix'=>'/personal'],function(){
+        Route::get('/', [EspacioPersonalController::class, 'index'])->name('table.index');
+        Route::get('/{id}', [EspacioPersonalController::class, 'show'])->name('table.show');//modificar esos nombres
+        Route::get('/{id}/crear',[TareaController::class,'create'])->name('task.create');
+        Route::post('/{id}',[TareaController::class,'store'])->name('task.store');
+
+        Route::get('/{id}/editar',[TareaController::class,'edit'])->name('task.edit');
+        Route::put('/{id}',[TareaController::class,'update'])->name('task.update');
+
+        Route::delete('/{id}/eliminar', [TareaController::class, 'destroy'])->name('task.destroy');
     });
     
 });
 
 
 //hay que meterlos en un prefix todos tambien
-Route::get('/personal', [EspacioPersonalController::class, 'index'])->name('table.index');
-Route::get('/personal/{id}', [EspacioPersonalController::class, 'show'])->name('table.show');//modificar esos nombres
+// Route::get('/', [EspacioPersonalController::class, 'index'])->name('table.index');
+// Route::get('/personal/{id}', [EspacioPersonalController::class, 'show'])->name('table.show');//modificar esos nombres
 
-Route::get('/personal/{id}/crear',[TareaController::class,'create'])->name('task.create');
-Route::post('personal/{id}',[TareaController::class,'store'])->name('task.store');
+// Route::get('/personal/{id}/crear',[TareaController::class,'create'])->name('task.create');
+// Route::post('personal/{id}',[TareaController::class,'store'])->name('task.store');
 
-Route::get('/personal/{id}/editar',[TareaController::class,'edit'])->name('task.edit');
-Route::put('/personal/{id}',[TareaController::class,'update'])->name('task.update');
+// Route::get('/personal/{id}/editar',[TareaController::class,'edit'])->name('task.edit');
+// Route::put('/personal/{id}',[TareaController::class,'update'])->name('task.update');
 
-Route::delete('/personal/{id}/eliminar', [TareaController::class, 'destroy'])->name('espaciopersonal.destroy');
-
-
+// Route::delete('/personal/{id}/eliminar', [TareaController::class, 'destroy'])->name('task.destroy');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/auth.php';
