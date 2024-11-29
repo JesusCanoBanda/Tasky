@@ -32,19 +32,29 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}', [EspacioPersonalController::class, 'destroy'])->name('espaciopersonal.destroy');
     });
 
-    Route::group(['prefix'=>'/personal'],function(){
+    Route::group(['prefix' => '/personal'], function () {
         Route::get('/', [EspacioPersonalController::class, 'index'])->name('table.index');
-        Route::get('/{id}', [EspacioPersonalController::class, 'show'])->name('table.show');//modificar esos nombres
-        Route::get('/{id}/crear',[TareaController::class,'create'])->name('task.create');
-        Route::post('/{id}',[TareaController::class,'store'])->name('task.store');
-
-        Route::get('/{id}/editar',[TareaController::class,'edit'])->name('task.edit');
-        Route::put('/{id}',[TareaController::class,'update'])->name('task.update');
-
+        Route::get('/{id}', [EspacioPersonalController::class, 'show'])->name('table.show');
+    
+        // Ruta para mostrar el formulario (si es necesario desde otra página, como `create.blade.php`)
+        Route::get('/{id}/crear', [TareaController::class, 'create'])->name('task.create');
+    
+        // Ruta para procesar la creación de una tarea (viene del formulario en el modal)
+        Route::post('/{id}', [TareaController::class, 'store'])->name('task.store');
+    
+        Route::get('/{id}/editar', [TareaController::class, 'edit'])->name('task.edit');
+        Route::put('/{id}', [TareaController::class, 'update'])->name('task.update');
+    
         Route::delete('/{id}/eliminar', [TareaController::class, 'destroy'])->name('task.destroy');
     });
     
 });
+
+//Ruta para salir en el agregar tarea
+
+Route::get('/espaciopersonal', [EspacioPersonalController::class, 'index'])->name('espaciopersonal.index');
+
+
 
 
 //hay que meterlos en un prefix todos tambien
