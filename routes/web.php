@@ -44,6 +44,8 @@ Route::post('personal/{id}',[TareaController::class,'store'])->name('task.store'
 Route::get('/personal/{id}/editar',[TareaController::class,'edit'])->name('task.edit');
 Route::put('/personal/{id}',[TareaController::class,'update'])->name('task.update');
 
+Route::delete('/personal/{id}/eliminar', [TareaController::class, 'destroy'])->name('espaciopersonal.destroy');
+
 
 
 require __DIR__ . '/auth.php';

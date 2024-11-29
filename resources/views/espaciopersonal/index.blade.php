@@ -49,7 +49,6 @@
                         <!-- aqui van las tareas dinamicamente nenes pa que no le metan si no  los descuento-->
                     </tbody>
 
-                    {{-- <a href="{{route('profile.edit')}}">Hola</a> --}}
                 </table>
             </div>
 
@@ -81,8 +80,11 @@
                             `<tr>
                             <th>Id</th>
                             <th>Nombre</th>
+                            <th>Fecha de inicio</th>
+                            <th>Fecha final</th>
                             <th>Descripción</th>
-                            <th>Fecha de creación</th>
+                            <th>Estado </th>
+                            <th>Porcentaje </th>
                             <th>Acciones</th>
                             </tr>`);
 
@@ -92,11 +94,23 @@
                         <tr>
                             <td>${tarea.id} </td>
                             <td>${tarea.nombre}</td>
+                            <td>${tarea.fecha_inicio}</td>
+                            <td>${tarea.fecha_final}</td>
                             <td>${tarea.descripcion}</td>
-                            <td>${tarea.created_at}</td>
+                            <td>${tarea.estado}</td>
+                            <td>${tarea.porcentaje}</td>
+
                             <td>
                             <a href="/personal/${tarea.id}/editar">Editar</a>
                             
+                            <form action="{{ url('/personal/${tarea.id}/eliminar') }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');" class="delete-button">
+                                        Eliminar
+                                    </button>
+                            </form>
+
                             </td>
                         </tr>
                     `;

@@ -81,9 +81,19 @@ class TareaController extends Controller
     {
         // dd($request->all());
 
+        $userId = Auth::id();
+
+        if (!$userId) {
+            return redirect()->route('espaciopersonal.create')->with('error', 'No estás autenticado.');
+        }
+
         $validateData = $request->validate([
-            'nombre'=>'required|string|max:255',
-            'descripcion'=>'required|string|max:255'
+            'nombre' => 'required|string|max:255',
+            'fecha_inicio' => 'nullable|date',
+            'fecha_final' => 'nullable|date|after_or_equal:fecha_inicio',
+            'descripcion' => 'required|string|max:500',
+            'estado' => 'required|string|in:iniciado,completado,finalizado',
+            'porcentaje' => 'required|integer|min:0|max:100'
         ]);
 
         $tarea = TareaPersonal::findOrFail($id);
@@ -95,8 +105,17 @@ class TareaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
+        $userId = Auth::id();
+
+        if (!$userId) {
+            return redirect()->route('espaciopersonal.create')->with('error', 'No estás autenticado.');
+        }
         
+        $tarea = TareaPersonal::findOrFail($id);
+
+        $tarea->delete();
+        return redirect()->route('table.index')->with('success', 'Espacio registrado exitosamente.');
     }
 }

@@ -24,17 +24,12 @@
             <input type="text" name="descripcion" required>
 
             <label>Estado </label>
-            <select  name="estado" required> 
-                <option value="inciado">iniciado</option>
-                <option value="completado">completado</option>
-                <option value="finalizado">finalizado</option>    
-            </select> {{--aqui agregar tres campos iniciado,completado,finalizado--}}
+            <input type="text" name="estado" required>
+            {{--aqui agregar tres campos iniciado,completado,finalizado--}}
 
             <label>Porcentaje </label>
             <input type="number" name="porcentaje" required>
 
-
-            
             <button type="submit" class="save-button">Guardar</button>
         </form>
 
