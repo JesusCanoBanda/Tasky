@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::group(['prefix' => 'user/individual'], function () {
         Route::get('/read', [EspacioPersonalController::class, 'read'])->name('espaciopersonal.read');
         Route::get('/create', [EspacioPersonalController::class, 'create'])->name('espaciopersonal.create');
@@ -29,13 +30,17 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [EspacioPersonalController::class, 'update'])->name('espaciopersonal.update');
         Route::delete('/{id}', [EspacioPersonalController::class, 'destroy'])->name('espaciopersonal.destroy');
     });
+    
 });
 
 
 //hay que meterlos en un prefix todos tambien
 Route::get('/personal', [EspacioPersonalController::class, 'index'])->name('table.index');
 Route::get('/personal/{id}', [EspacioPersonalController::class, 'show'])->name('table.show');//modificar esos nombres
+
 Route::get('/personal/{id}/crear',[TareaController::class,'create'])->name('task.create');
+Route::post('personal/{id}',[TareaController::class,'store'])->name('task.store');
+
 Route::get('/personal/{id}/editar',[TareaController::class,'edit'])->name('task.edit');
 Route::put('/personal/{id}',[TareaController::class,'update'])->name('task.update');
 

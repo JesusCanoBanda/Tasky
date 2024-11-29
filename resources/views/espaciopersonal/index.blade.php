@@ -36,7 +36,6 @@
                 <p>Selecciona un espacio para ver los detalles.</p>
             </div>
 
-            <a>+ Crear Tareas </a>
             <br>
             
             <div class="table">
@@ -75,6 +74,7 @@
                     <p>Categoría: ${espacio.categoria}</p>
                     <p>Creado en: ${espacio.created_at}</p>
                     <p>Tareas</p>
+                    <a href="/personal/${espacio.id}/crear">Agregar Tarea </a>
                 `);
 
                 $('#tareas-header').html(
@@ -102,7 +102,7 @@
                     `;
                 });
 
-            $('#tareas-list').html(tareasHtml); 
+                $('#tareas-list').html(tareasHtml); 
         },
         error: function(xhr) {
             console.error('Error al cargar los datos:', xhr);
@@ -112,35 +112,35 @@
     }
     </script>
 
-    <style>
-        #tareas {
-        max-height: 300px; /* Ajusta según el tamaño deseado */
-        overflow-y: auto;
-        }
+        <style>
+            #tareas {
+            max-height: 300px; /* Ajusta según el tamaño deseado */
+            overflow-y: auto;
+            }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
 
-        th {
-            position: sticky;
-            top: 0;
-            background-color: #f8f9fa; /* Fondo del header */
-            z-index: 1;
-            padding: 10px;
-            text-align: left;
-            border-bottom: 2px solid #ddd;
-        }
+            th {
+                position: sticky;
+                top: 0;
+                background-color: #f8f9fa; /* Fondo del header */
+                z-index: 1;
+                padding: 10px;
+                text-align: left;
+                border-bottom: 2px solid #ddd;
+            }
 
-        td {
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-        }
+            td {
+                padding: 8px;
+                border-bottom: 1px solid #ddd;
+            }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+        </style>
     
 </x-app-layout>

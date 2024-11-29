@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('descripcion');
             $table->string('estado');
             $table->integer('porcentaje');
-            $table->string('nombre_campo');
+            $table->string('nombre_campo')->nullable();
 
             $table->unsignedBigInteger('id_espacio');
             $table->foreign('id_espacio')
