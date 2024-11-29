@@ -27,7 +27,7 @@
                 <p class="no-spaces">No tienes espacios creados aún.</p>
             @endif
             <hr>
-            <a href="{{ route('espaciopersonal.create') }}" class="create-space">+ Crear espacio</a>
+            <button type="button" class="create-space" onclick="openModal()">+ Crear espacio</button>
         </div>
 
         <div class="main-content">
@@ -129,6 +129,49 @@
     }
     </script>
 
+    <!-- Ventana modal Crear Espacio -->
+
+    <div id="crearEspacioModal" class="ModalDialog">
+        <div class="results-table">
+            <div class="form-title">Crear espacio</div>
+            <form class="player-form" action="{{ route('espaciopersonal.store') }}" method="POST">
+                @csrf
+                <label class="name">Nombre</label>
+                <input type="text" name="nombre" required>
+    
+                <label>Categoria</label>
+                <input type="text" name="categoria" required>
+    
+                <button type="submit" class="save-button">Guardar</button>
+            </form>
+    
+    
+            <div class="circle-wrapper">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script del modal  crear espacio -->
+
+    <script>
+
+        function openModal(){
+            document.getElementById('crearEspacioModal').style.display = 'flex';
+        }
+
+        //Esto hace que se cierre clickeando afuera del modal
+        window.onclick = function(event){
+            var modal = document.getElementById('crearEspacioModal');
+            if(event.target == modal){
+                modal.style.display = 'none';
+            }
+        }
+
+    </script>
+
+
+    
         
     
 </x-app-layout>
