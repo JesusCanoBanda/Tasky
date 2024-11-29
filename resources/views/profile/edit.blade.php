@@ -1,9 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="text-2xl font-bold text-gray-800">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
 
     <div class="py-12 bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
