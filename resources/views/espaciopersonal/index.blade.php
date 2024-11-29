@@ -3,7 +3,7 @@
 
     <div class="layout">
         <div class="sidebar">
-            <a href="#" class="title">Espacios</a>
+            <h1 class="title">Espacios</h1>
             <hr>
             @if ($espacios->isNotEmpty())
                 @foreach ($espacios as $espacio)
@@ -13,13 +13,13 @@
                     <form action="{{ route('espaciopersonal.destroy', $espacio->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger"
+                        <button type="submit" class="eliminar"
                             onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?')">Eliminar</button>
                     </form>
 
                     <form action="{{ route('espaciopersonal.edit', $espacio->id) }}" method="GET" style="display:inline;">
                         @csrf
-                        <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Editar</button>
+                        <button type="submit" class="editar" style="margin-left: 10px;">Editar</button>
                     </form>
                     
                 @endforeach
@@ -33,7 +33,7 @@
         <div class="main-content">
             <div id="espacio-content">
                 <!-- Aquí se cargarán los datos del espacio seleccionado -->
-                <p>Selecciona un espacio para ver los detalles.</p>
+                <p class="message">Selecciona un espacio para ver los detalles.</p>
             </div>
 
             <br>
@@ -69,12 +69,15 @@
                 const tareas = response.tareas;
 
                 $('#espacio-content').html(`
-                    <h1>${espacio.nombre}</h1>
-                    <p>Categoría: ${espacio.categoria}</p>
-                    <p>Creado en: ${espacio.created_at}</p>
-                    <p>Tareas</p>
-                    <a href="/personal/${espacio.id}/crear">Agregar Tarea </a>
+                    <div class="card">
+                    <h1 class="name">${espacio.nombre}</h1>
+                    <p><span class="bold">Categoría: </span>${espacio.categoria}</p>
+                    <p><span class="bold">Creado en: </span>${espacio.created_at}</p>
+                    </div>
+                    <a href="/personal/${espacio.id}/crear" class="task">Agregar Tarea </a>
                 `);
+  
+
 
                 $('#tareas-header').html(
                             `<tr>
@@ -92,21 +95,21 @@
                 tareas.forEach((tarea)=> { //vivan las arrow function
                     tareasHtml += `
                         <tr>
-                            <td>${tarea.id} </td>
-                            <td>${tarea.nombre}</td>
-                            <td>${tarea.fecha_inicio}</td>
-                            <td>${tarea.fecha_final}</td>
-                            <td>${tarea.descripcion}</td>
-                            <td>${tarea.estado}</td>
-                            <td>${tarea.porcentaje}</td>
+                            <td class="cont">${tarea.id} </td>
+                            <td class="cont">${tarea.nombre}</td>
+                            <td class="cont">${tarea.fecha_inicio}</td>
+                            <td class="cont">${tarea.fecha_final}</td>
+                            <td class="cont">${tarea.descripcion}</td>
+                            <td class="cont">${tarea.estado}</td>
+                            <td class="cont">${tarea.porcentaje}</td>
 
                             <td>
-                            <a href="/personal/${tarea.id}/editar">Editar</a>
+                            <a href="/personal/${tarea.id}/editar" class="editar">Editar</a>
                             
                             <form action="{{ url('/personal/${tarea.id}/eliminar') }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');" class="delete-button">
+                                    <button type="submit" onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');" class="eliminar">
                                         Eliminar
                                     </button>
                             </form>
@@ -126,35 +129,6 @@
     }
     </script>
 
-        <style>
-            #tareas {
-            max-height: 300px; /* Ajusta según el tamaño deseado */
-            overflow-y: auto;
-            }
-
-            table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-
-            th {
-                position: sticky;
-                top: 0;
-                background-color: #f8f9fa; /* Fondo del header */
-                z-index: 1;
-                padding: 10px;
-                text-align: left;
-                border-bottom: 2px solid #ddd;
-            }
-
-            td {
-                padding: 8px;
-                border-bottom: 1px solid #ddd;
-            }
-
-            tr:nth-child(even) {
-                background-color: #f2f2f2;
-            }
-        </style>
+        
     
 </x-app-layout>

@@ -1,4 +1,10 @@
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
+
+    *{
+     font-family: 'Parkinsans', sans-serif;
+    }
+
     .block:hover{
         transform: scale(1.1);
     }
