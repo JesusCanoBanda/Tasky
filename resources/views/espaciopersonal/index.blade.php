@@ -141,7 +141,7 @@
                 <br>
                 <label class="category">Categoria</label>
                 <input class="input2" type="text" name="categoria" required>
-    
+                <br>
                 <button type="submit" class="save-button">Guardar</button>
             </form>
     
