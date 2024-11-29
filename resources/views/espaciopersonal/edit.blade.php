@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/editarespacio.css') }}">
     <title>Editar Espacio</title>
 </head>
 <body>
     <div class="results-table">
         <div class="form-title">Editar Espacio</div>
+        <a href="{{ route('espaciopersonal.index') }}">
+            <img class="close" src="{{ asset('images/close.png') }}" alt="Cerrar">
+        </a>
         <form class="player-form" action="{{ route('espaciopersonal.update', $espacio->id) }}" method="POST">
             @csrf
             @method('PUT') <!-- Cambiar a PUT para realizar la actualización -->
