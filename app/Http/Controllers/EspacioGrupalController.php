@@ -32,6 +32,40 @@ class EspacioGrupalController extends Controller
         return view('espaciogrupal.index', compact('espacios'));
     }
 
+    public function destroymiembros($id)
+    {
+        $miembro = Miembrosgrupal::find($id); // O lo que sea adecuado para obtener al miembro
+        if ($miembro) {
+            $miembro->delete(); // Elimina el miembro
+            return redirect()->route('grupal.miembros')->with('success', 'Miembro eliminado correctamente.');
+        } else {
+            return redirect()->route('grupal.miembros')->with('error', 'Miembro no encontrado.');
+        }
+    }
+
+    public function miembros()
+    {
+        dd('hola');
+        // Obtener el ID del usuario autenticado
+        $userId = Auth::id();
+
+        // Obtener los miembros de los espacios del usuario autenticado
+        $miembros = Miembrosgrupal::where('id_usuario', $userId)
+            ->with('espacio') // Obtener los espacios relacionados con los miembros
+            ->get();
+
+        // Formatear los datos para enviarlos a la vista
+        $espaciosConMiembros = $miembros->map(function ($miembro) {
+            return [
+                'espacio' => $miembro->espacio, // El espacio relacionado
+                'miembro' => $miembro, // El miembro y su rol en ese espacio
+            ];
+        });
+
+        // Pasar los datos a la vista 'espaciogrupal.gestion'
+        return view('espaciogrupal.gestion', compact('espaciosConMiembros'));
+    }
+
     public function join(Request $request)
     {
         // Validar el ID del espacio

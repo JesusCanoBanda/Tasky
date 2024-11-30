@@ -56,6 +56,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [EspacioGrupalController::class, 'index'])->name('grupal.index');
         Route::get('/{id}', [EspacioGrupalController::class, 'show'])->name('grupal.show');
         Route::post('/join', [EspacioGrupalController::class, 'join'])->name('grupal.join');
+        Route::delete('/miembro/{id}', [EspacioGrupalController::class, 'destroymiembros'])->name('grupal.miembrodestroy');
+        Route::get('/gestionar-miembros', [EspacioGrupalController::class, 'miembros'])->name('grupal.miembros');
         Route::post('/', [EspacioGrupalController::class, 'store'])->name('grupal.store');
         Route::get('/{id}/editar', [EspacioGrupalController::class, 'edit'])->name('grupal.edit');
         Route::put('/{id}', [EspacioGrupalController::class, 'update'])->name('grupal.update');

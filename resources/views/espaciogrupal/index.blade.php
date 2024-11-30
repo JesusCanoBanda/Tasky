@@ -5,6 +5,9 @@
         <div class="sidebar">
             <h1 class="title">Espacios</h1>
             <hr>
+            <a href="{{ route('grupal.miembros') }}" class="card-link">
+                        <h4 class="name2"><b>gestionar miembros</b></h4>
+            </a>
             @if ($espacios->isNotEmpty())
                 @foreach ($espacios as $data)
                     @php
