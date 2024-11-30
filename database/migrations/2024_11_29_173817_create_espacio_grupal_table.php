@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('codigo')->nullable();
-            $table->unsignedInteger('categoria');
+            $table->string('categoria');
             $table->timestamps();
         });
     }
