@@ -24,29 +24,33 @@ class EspacioGrupalController extends Controller
         return view('espaciogrupal.index', compact('espacios'));
     }
 
-    public function join(Request $request, $id)
+    public function join(Request $request)
     {
-        // Lógica para unirse al espacio
-        $user = Auth::user(); // Usuario autenticado
-        $espacio = EspacioGrupal::findOrFail($id); // Encontrar el espacio por ID
+        // Validar el ID del espacio
+        $request->validate([
+            'id_espacio' => 'required|exists:espacio_grupal,id', // Verifica si existe el espacio
+        ]);
 
-        // Verificar si el usuario ya es miembro
-        $existingMember = Miembrosgrupal::where('id_grupal', $id)
+        $user = Auth::user(); // Usuario autenticado
+        $idEspacio = $request->input('id_espacio');
+
+        // Verificar si el usuario ya es miembro del espacio
+        $existingMember = Miembrosgrupal::where('id_grupal', $idEspacio)
             ->where('id_usuario', $user->id)
             ->first();
 
         if ($existingMember) {
-            return redirect()->route('grupal.show', $id)->with('error', 'Ya eres miembro de este espacio.');
+            return redirect()->route('grupal.index')->with('error', 'Ya eres miembro de este espacio.');
         }
 
-        // Agregar el usuario al espacio
+        // Agregar el usuario al espacio con rol de "Miembro" (0)
         Miembrosgrupal::create([
-            'id_grupal' => $id,
+            'id_grupal' => $idEspacio,
             'id_usuario' => $user->id,
-            'rol' => 1, // Puedes ajustar el rol según tu lógica
+            'rol' => 0,
         ]);
 
-        return redirect()->route('grupal.show', $id)->with('success', 'Te has unido al espacio exitosamente.');
+        return redirect()->route('grupal.index')->with('success', 'Te has unido al espacio exitosamente.');
     }
 
     public function store(Request $request)
@@ -172,8 +176,9 @@ class EspacioGrupalController extends Controller
         return redirect()->route('grupal.index')->with('success', 'Espacio actualizado exitosamente.');
     }
 
-    public function destroy($id)//eliminar
+    public function destroy($id)
     {
+        //eliminar
         $espacio = EspacioGrupal::findOrFail($id);
         $espacio->delete();
 

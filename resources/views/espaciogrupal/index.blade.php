@@ -26,6 +26,7 @@
             @endif
             <hr>
             <button type="button" class="create-space" onclick="openModal()">+ Crear espacio</button>
+            <button type="button" class="create-space" onclick="openJoinModal()">+ Unirse a espacio</button>
             {{--
             <!-- Nueva funcionalidad: Unirse a un espacio -->
             <form action="{{ route('grupal.join', ['id' => $espacio->id]) }}" method="POST" class="join-space-form">
@@ -73,6 +74,34 @@
         </div>
 
     </div>
+<!-- Modal para ingresar el ID del espacio -->
+<div id="joinEspacioModal" class="ModalDialog">
+    <div class="results-table">
+        <div class="form-title">Unirse a un Espacio</div>
+        <form id="joinEspacioForm" action="{{ route('grupal.join') }}" method="POST">
+            @csrf
+            <label for="id_espacio" class="name">ID del Espacio</label>
+            <input class="input" type="number" id="id_espacio" name="id_espacio" required>
+            <button type="submit" class="save-button">Unirse</button>
+        </form>
+        <div class="circle-wrapper">
+            <div class="circle"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openJoinModal() {
+        document.getElementById('joinEspacioModal').style.display = 'flex';
+    }
+
+    window.onclick = function(event) {
+        var modal = document.getElementById('joinEspacioModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
