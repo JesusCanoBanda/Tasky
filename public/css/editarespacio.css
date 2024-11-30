@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
+
+*{
+  font-family: 'Parkinsans', sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f4;
+}  
+.results-table {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .results-table .form-title{
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .results-table .name{
+    font-weight: bold;
+  
+  }
+  
+  .results-table .category{
+    font-weight: bold;
+  }
+  
+  .results-table label{
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .results-table input{
+    width: 80%;
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 2px solid black;
+  }
+  
+  .results-table .save-button{
+    background-color: orange;
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .results-table .save-button:hover{
+    background-color: darkorange;
+  }
+
+  .close{
+    position: absolute;
+    width: 30x;
+    height: 30px;
+    right: 36.5%;
+    bottom: 63%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }

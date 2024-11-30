@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
+
+*{
+    font-family: 'Parkinsans', sans-serif;
+    box-sizing: border-box;
+}
+
+.card-container{
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  transition: 0.3s;
+  width: 280px;
+  height: 350px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 25px;
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+}
+
+.card:hover{
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 3.0);
+  transform: translateY(-5px);
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  padding: 10px 0;
+}
+
+img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title{
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.name{
+  color: #3b82f6;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.name2{
+  color: green;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.card-link {
+  text-decoration: none; 
+}
+
+.card-link:hover {
+  transform: scale(1.05);
+}
+
+
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, #4f87d9, #9c6ad4);
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.rounded-lg {
+  border-radius: 12px;
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.text-3xl {
+  font-size: 2rem;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, #4dd0e1, #1e88e5); 
+}
+
+.text-white {
+  color: #ffffff; 
+}
+
+.text-center {
+  text-align: center;
+}
+
+.sm\\:rounded-lg {
+  border-radius: 12px;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.text-3xl {
+  font-size: 2rem;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.text-gray-100 {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+
+
+

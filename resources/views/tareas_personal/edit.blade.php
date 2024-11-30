@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/editartareas.css') }}">
     <title>Editar Espacio</title>
 </head>
 <body>
     <div class="results-table">
-        <div class="form-title">Editar tare</div>
+        <div class="form-title">Editar tarea</div>
+        <a href="{{ route('espaciopersonal.index') }}">
+            <img class="close" src="{{ asset('images/close.png') }}" alt="Cerrar">
+        </a>
         <form class="player-form" action="{{ route('task.update', $tarea->id) }}" method="POST">
             @csrf
             @method('PUT') 
