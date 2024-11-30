@@ -72,12 +72,10 @@
                     <div class="card">
                     <h1 class="name">${espacio.nombre}</h1>
                     <p><span class="bold">Categoría: </span>${espacio.categoria}</p>
-                    <p><span class="bold">Creado en: </span>${espacio.created_at}</p>
+                    <p><span class="bold">Creado en: </span>${new Date(espacio.created_at).toLocaleDateString()}</p>
                     </div>
                     <a href="/personal/${espacio.id}/crear" class="task">Agregar Tarea </a>
                 `);
-  
-
 
                 $('#tareas-header').html(
                             `<tr>
@@ -97,8 +95,8 @@
                         <tr>
                             <td class="cont">${tarea.id} </td>
                             <td class="cont">${tarea.nombre}</td>
-                            <td class="cont">${tarea.fecha_inicio}</td>
-                            <td class="cont">${tarea.fecha_final}</td>
+                            <td class="cont">${new Date(tarea.fecha_inicio).toLocaleDateString()}</td>
+                            <td class="cont">${new Date(tarea.fecha_final).toLocaleDateString()}</td>                            
                             <td class="cont">${tarea.descripcion}</td>
                             <td class="cont">${tarea.estado}</td>
                             <td class="cont">${tarea.porcentaje}</td>

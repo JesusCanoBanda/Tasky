@@ -41,7 +41,7 @@ body {
     margin-bottom: 5px;
   }
   
-  .results-table input{
+  .results-table input , select{
     width: 80%;
     padding: 8px;
     border-radius: 8px;

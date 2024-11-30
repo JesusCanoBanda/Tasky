@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/agregartarea.css') }}">
     <title>Agregar Nueva Tarea</title>
-
 </head>
 <body>
     <div class="results-table">
@@ -19,7 +18,7 @@
             <input type="text" name="nombre" required>
 
             <label>Fecha de inicio </label>
-            <input type="date" name="fecha_inicio" required>
+            <input type="date" name="fecha_inicio" required> 
 
             <label>Fecha final </label>
             <input type="date" name="fecha_final" required>
@@ -28,14 +27,30 @@
             <input type="text" name="descripcion" required>
 
             <label>Estado </label>
-            <input type="text" name="estado" required>
-            {{--aqui agregar tres campos iniciado,completado,finalizado--}}
+            <select name="estado" required>
+                <option value="no iniciado">no iniciado</option>
+                <option value="iniciado">iniciado</option>
+                <option value="casi por finalizar">casi por finalizar</option>
+                <option value="finalizado">finalizado</option>
+            </select>
 
             <label>Porcentaje </label>
-            <input type="number" name="porcentaje" required>
+            <input name="porcentaje" id="range" type="range" min="0" max="100" step="1" value="0" required>
+            <p><span id="valor"></span></p>
 
             <button type="submit" class="save-button">Guardar</button>
         </form>
     </div>
+
+    <script>//pa mostrar el valor del range, si le quieren mover ta bien namas asegurense que me retorne un string
+        const range = document.getElementById('range');
+        const valorRange = document.getElementById('valor');
+
+        valorRange.textContent = range.value;
+
+        range.addEventListener('input',()=>{
+            valorRange.textContent = range.value;
+        });
+    </script>
 </body>
 </html>

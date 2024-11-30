@@ -18,7 +18,7 @@ class TareaController extends Controller
     public function create($id)
     {
 
-        //necesito recuperar los datos del espacio personal,update : ya pude ajax te odio
+        //necesito recuperar los datos del espacio personal,update : ya pude ,ajax te odio
         return view('tareas_personal.create',compact('id'));
     }
 
@@ -28,18 +28,22 @@ class TareaController extends Controller
     public function store(Request $request,$id_espacio)
     {
         // dd($id_espacio);
+        // dd($request);
         $userId = Auth::id();
 
         if (!$userId) {
             return redirect()->route('espaciopersonal.create')->with('error', 'No estás autenticado.');
         }
+        //conversion del range xd
+        $request['porcentaje'] = intval($request['porcentaje']);
+
     
         $validateData = $request->validate([
             'nombre' => 'required|string|max:255',
             'fecha_inicio' => 'nullable|date',
             'fecha_final' => 'nullable|date|after_or_equal:fecha_inicio',
             'descripcion' => 'required|string|max:500',
-            'estado' => 'required|string|in:iniciado,completado,finalizado',
+            'estado' => 'required|string|in:no iniciado,iniciado,casi por finalizar,finalizado',
             'porcentaje' => 'required|integer|min:0|max:100',
         ]);
     
@@ -87,14 +91,19 @@ class TareaController extends Controller
             return redirect()->route('espaciopersonal.create')->with('error', 'No estás autenticado.');
         }
 
+        //conversion del range xd
+        $request['porcentaje'] = intval($request['porcentaje']);
+
+    
         $validateData = $request->validate([
             'nombre' => 'required|string|max:255',
             'fecha_inicio' => 'nullable|date',
             'fecha_final' => 'nullable|date|after_or_equal:fecha_inicio',
             'descripcion' => 'required|string|max:500',
-            'estado' => 'required|string|in:iniciado,completado,finalizado',
-            'porcentaje' => 'required|integer|min:0|max:100'
+            'estado' => 'required|string|in:no iniciado,iniciado,casi por finalizar,finalizado',
+            'porcentaje' => 'required|integer|min:0|max:100',
         ]);
+    
 
         $tarea = TareaPersonal::findOrFail($id);
         $tarea->update($validateData);
