@@ -21,26 +21,19 @@ class MiembrosGrupal extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'rol',
-        'id_usuario',
-        'id_grupal',
-    ];
+    protected $fillable = ['rol', 'id_usuario', 'id_grupal'];
 
     /**
      * Relación con el modelo User.
      * Un miembro grupal está asociado a un usuario.
      */
+    // Modelo Miembrosgrupal
     public function usuario()
     {
         return $this->belongsTo(User::class, 'id_usuario');
     }
 
-    /**
-     * Relación con el modelo EspacioGrupal.
-     * Un miembro grupal pertenece a un espacio grupal.
-     */
-    public function grupal()
+    public function espacio()
     {
         return $this->belongsTo(EspacioGrupal::class, 'id_grupal');
     }

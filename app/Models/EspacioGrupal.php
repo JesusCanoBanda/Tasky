@@ -21,11 +21,7 @@ class EspacioGrupal extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'nombre',
-        'codigo',
-        'categoria',
-    ];
+    protected $fillable = ['nombre', 'codigo', 'categoria'];
 
     /**
      * Relación con TareaGrupal.
@@ -34,5 +30,10 @@ class EspacioGrupal extends Model
     public function tareas()
     {
         return $this->hasMany(TareaGrupal::class, 'id_espacio');
+    }
+    // Modelo EspacioGrupal
+    public function miembros()
+    {
+        return $this->hasMany(Miembrosgrupal::class, 'id_grupal');
     }
 }

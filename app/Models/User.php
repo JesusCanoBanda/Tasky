@@ -23,25 +23,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'user_name',
-        'apellidos',
-        'email',
-        'password',
-        'fecha_registro',
-        'rol',
-    ];
+    protected $fillable = ['name', 'user_name', 'apellidos', 'email', 'password', 'fecha_registro', 'rol'];
 
     /**
      * Atributos que deben estar ocultos en la serialización.
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * Los atributos que deben ser casteados.
@@ -81,9 +70,9 @@ class User extends Authenticatable
             EspacioGrupal::class,
             MiembrosGrupal::class,
             'id_usuario', // Clave foránea en MiembrosGrupal
-            'id',         // Clave foránea en EspacioGrupal
-            'id',         // Clave local en User
-            'id_grupal'   // Clave local en MiembrosGrupal
+            'id', // Clave foránea en EspacioGrupal (debería ser 'id_grupal' en lugar de 'id')
+            'id', // Clave local en User
+            'id_grupal', // Clave local en MiembrosGrupal
         );
     }
 }

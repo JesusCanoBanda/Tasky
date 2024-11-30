@@ -1,0 +1,194 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\EspacioGrupal;
+use App\Models\Miembrosgrupal;
+use App\Models\TareaGrupal;
+use Illuminate\Support\Facades\Auth; // Importar Auth
+
+class EspacioGrupalController extends Controller
+{
+    public function index()
+    {
+        // Espacios de trabajo asociados a un usuario
+        $userId = Auth::id(); // Usuario autenticado
+
+        // Obtener los espacios de los miembros del usuario
+        $miembros = Miembrosgrupal::where('id_usuario', $userId)->get();
+        $espacios = $miembros->map(function ($miembro) {
+            return $miembro->espacio; // Obtener el espacio relacionado con el miembro
+        });
+
+        return view('espaciogrupal.index', compact('espacios'));
+    }
+
+    public function join(Request $request, $id)
+    {
+        // Lógica para unirse al espacio
+        $user = Auth::user(); // Usuario autenticado
+        $espacio = EspacioGrupal::findOrFail($id); // Encontrar el espacio por ID
+
+        // Verificar si el usuario ya es miembro
+        $existingMember = Miembrosgrupal::where('id_grupal', $id)
+            ->where('id_usuario', $user->id)
+            ->first();
+
+        if ($existingMember) {
+            return redirect()->route('grupal.show', $id)->with('error', 'Ya eres miembro de este espacio.');
+        }
+
+        // Agregar el usuario al espacio
+        Miembrosgrupal::create([
+            'id_grupal' => $id,
+            'id_usuario' => $user->id,
+            'rol' => 1, // Puedes ajustar el rol según tu lógica
+        ]);
+
+        return redirect()->route('grupal.show', $id)->with('success', 'Te has unido al espacio exitosamente.');
+    }
+
+    public function store(Request $request)
+    {
+        // Validar los datos
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'categoria' => 'required|string|max:255',
+        ]);
+
+        // Obtener el ID del usuario autenticado
+        $userId = Auth::id();
+
+        // Verificar si el usuario está autenticado
+        if (!$userId) {
+            return redirect()->route('grupal.create')->with('error', 'No estás autenticado.');
+        }
+
+        // Crear el espacio grupal (debe ser un EspacioGrupal)
+        $espacio = EspacioGrupal::create([
+            'nombre' => $validatedData['nombre'],
+            'categoria' => $validatedData['categoria'],
+            'id_user' => $userId,
+        ]);
+
+        // Agregar al usuario como miembro del espacio grupal con rol de "admin"
+        Miembrosgrupal::create([
+            'id_grupal' => $espacio->id,
+            'id_usuario' => $userId,
+            'rol' => 1, // 1 para rol de admin, puedes ajustarlo si es necesario
+        ]);
+
+        return redirect()->route('grupal.index')->with('success', 'Espacio grupal creado exitosamente.');
+    }
+
+    public function show($id)
+    {
+        // Mostrar espacio con tareas grupales y miembros
+        $espacio = EspacioGrupal::findOrFail($id);
+        $miembros = $espacio->miembros; // Relación con los miembros grupales
+        $tareas = TareaGrupal::where('id_espacio', $id)->get(); // Tareas asociadas al espacio
+
+        return response()->json([
+            'espacio' => $espacio,
+            'miembros' => $miembros,
+            'tareas' => $tareas,
+        ]);
+    }
+
+    public function addMember(Request $request, $id)
+    {
+        // Agregar miembros a un espacio grupal
+        $validatedData = $request->validate([
+            'id_usuario' => 'required|exists:users,id',
+            'rol' => 'required|integer',
+        ]);
+
+        // Verificar si el usuario ya está en el espacio
+        $existingMember = Miembrosgrupal::where('id_grupal', $id)
+            ->where('id_usuario', $validatedData['id_usuario'])
+            ->first();
+
+        if ($existingMember) {
+            return redirect()->route('grupal.show', $id)->with('error', 'Este usuario ya es miembro de este espacio.');
+        }
+
+        // Agregar el nuevo miembro
+        Miembrosgrupal::create([
+            'id_grupal' => $id,
+            'id_usuario' => $validatedData['id_usuario'],
+            'rol' => $validatedData['rol'],
+        ]);
+
+        return redirect()->route('grupal.show', $id)->with('success', 'Miembro agregado exitosamente.');
+    }
+
+    public function assignTask(Request $request, $id)
+    {
+        // Asignar tarea grupal a un miembro
+        $validatedData = $request->validate([
+            'fechafinal' => 'required|date',
+            'fechainicio' => 'required|date|before_or_equal:fechafinal',
+            'descripcion' => 'required|string|max:255',
+            'estado' => 'required|string|max:255',
+            'porcentaje' => 'required|integer|between:0,100',
+            'categoria' => 'required|string|max:255',
+            'id_usuario' => 'required|exists:users,id', // Miembro asignado
+        ]);
+
+        // Crear tarea
+        TareaGrupal::create([
+            'fechafinal' => $validatedData['fechafinal'],
+            'fechainicio' => $validatedData['fechainicio'],
+            'descripcion' => $validatedData['descripcion'],
+            'estado' => $validatedData['estado'],
+            'porcentaje' => $validatedData['porcentaje'],
+            'categoria' => $validatedData['categoria'],
+            'id_espacio' => $id,
+            'responsable' => $validatedData['id_usuario'],
+        ]);
+
+        return redirect()->route('grupal.show', $id)->with('success', 'Tarea asignada exitosamente.');
+    }
+
+    public function edit($id)
+    {
+        // Formulario de edición
+        $espacio = EspacioGrupal::findOrFail($id);
+        return view('espaciogrupal.edit', compact('espacio'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Actualizar un registro
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'categoria' => 'required|string|max:255',
+        ]);
+
+        $espacio = EspacioGrupal::findOrFail($id);
+        $espacio->update($validatedData);
+
+        return redirect()->route('grupal.index')->with('success', 'Espacio actualizado exitosamente.');
+    }
+
+    public function destroy($id)//eliminar
+    {
+        $espacio = EspacioGrupal::findOrFail($id);
+        $espacio->delete();
+
+        return redirect()->route('grupal.index')->with('success', 'Espacio registrado exitosamente.');
+    }
+
+    public function create()
+    {
+        // Formulario de creación
+        return view('espaciogrupal.create');
+    }
+
+    public function read()
+    {
+        $espacios = EspacioGrupal::all();
+        return view('espaciogrupal.read', compact('espacios'));
+    }
+}
