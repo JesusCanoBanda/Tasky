@@ -16,7 +16,7 @@
                     <div class="espacio-card">
                         <h3>{{ $espacio->nombre }}</h3>
                         <p>Categoria: {{ $espacio->categoria }}</p>
-                        <p>Miembro: {{ $miembro->usuario->nombre }}</p> <!-- Asumiendo que 'usuario' es la relación con el modelo Usuario -->
+                        <p>Miembro: {{ $miembro->usuario->name }}</p> <!-- Asumiendo que 'usuario' es la relación con el modelo Usuario -->
                         <p>Rol: {{ $miembro->rol == 1 ? 'Administrador' : 'Miembro' }}</p>
 
                         <!-- Opciones adicionales solo si el miembro es administrador -->

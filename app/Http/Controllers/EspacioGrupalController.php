@@ -34,10 +34,27 @@ class EspacioGrupalController extends Controller
 
     public function destroymiembros($id)
     {
-        $miembro = Miembrosgrupal::find($id); // O lo que sea adecuado para obtener al miembro
+        // Obtener el miembro por su ID
+        $miembro = Miembrosgrupal::find($id);
+
+        // Verificar si el miembro existe
         if ($miembro) {
-            $miembro->delete(); // Elimina el miembro
-            return redirect()->route('grupal.miembros')->with('success', 'Miembro eliminado correctamente.');
+            // Verificar si el usuario autenticado es el administrador
+            $usuarioAutenticado = Auth::user(); // Obtener el usuario autenticado
+
+            // Si el usuario autenticado es el administrador
+            if ($usuarioAutenticado->rol == 1) {
+                // Eliminar el miembro (rol 0)
+                if ($miembro->rol == 0) {
+                    $miembro->delete();
+                    return redirect()->route('grupal.miembros')->with('success', 'Miembro eliminado correctamente.');
+                } else {
+                    return redirect()->route('grupal.miembros')->with('error', 'No se puede eliminar un administrador.');
+                }
+            } else {
+                // Si el usuario no es el administrador, no puede eliminar a otros
+                return redirect()->route('grupal.miembros')->with('error', 'No tienes permiso para eliminar a este miembro.');
+            }
         } else {
             return redirect()->route('grupal.miembros')->with('error', 'Miembro no encontrado.');
         }
@@ -45,20 +62,28 @@ class EspacioGrupalController extends Controller
 
     public function miembros()
     {
-        dd('hola');
         // Obtener el ID del usuario autenticado
         $userId = Auth::id();
 
-        // Obtener los miembros de los espacios del usuario autenticado
-        $miembros = Miembrosgrupal::where('id_usuario', $userId)
+        // Obtener los miembros que son parte de algún espacio grupal donde su rol es 0 (miembro)
+        $miembros = Miembrosgrupal::where('id_usuario', '!=', $userId) // Excluye al usuario autenticado
+            ->where('rol', 0) // Filtra solo los miembros con rol 0
             ->with('espacio') // Obtener los espacios relacionados con los miembros
             ->get();
+
+        // Verificar si el usuario tiene algún espacio grupal con rol 1 (administrador)
+        $esAdmin = Miembrosgrupal::where('id_usuario', $userId)->where('rol', 1)->exists();
+
+        // Si el usuario no es administrador o no tiene miembros para mostrar, redirigir a la página principal
+        if ($miembros->isEmpty() || !$esAdmin) {
+            return redirect()->route('grupal.index')->with('error', 'No tienes permiso para acceder a la gestión de espacios grupales.');
+        }
 
         // Formatear los datos para enviarlos a la vista
         $espaciosConMiembros = $miembros->map(function ($miembro) {
             return [
                 'espacio' => $miembro->espacio, // El espacio relacionado
-                'miembro' => $miembro, // El miembro y su rol en ese espacio
+                'miembro' => $miembro, // El miembro con su rol
             ];
         });
 
