@@ -87,18 +87,24 @@ class EspacioGrupalController extends Controller
     }
 
     public function show($id)
-    {
-        // Mostrar espacio con tareas grupales y miembros
-        $espacio = EspacioGrupal::findOrFail($id);
-        $miembros = $espacio->miembros; // Relación con los miembros grupales
-        $tareas = TareaGrupal::where('id_espacio', $id)->get(); // Tareas asociadas al espacio
+{
+    $espacio = EspacioGrupal::findOrFail($id);
+    $miembros = $espacio->miembros;
+    $tareas = TareaGrupal::where('id_espacio', $id)->get();
 
-        return response()->json([
-            'espacio' => $espacio,
-            'miembros' => $miembros,
-            'tareas' => $tareas,
-        ]);
-    }
+    // Determina si el usuario autenticado es admin en este espacio
+    $isAdmin = Miembrosgrupal::where('id_grupal', $id)
+        ->where('id_usuario', Auth::id())
+        ->value('rol') == 1;
+
+    return response()->json([
+        'espacio' => $espacio,
+        'miembros' => $miembros,
+        'tareas' => $tareas,
+        'isAdmin' => $isAdmin, // Enviar el estado del rol
+    ]);
+}
+
 
     public function addMember(Request $request, $id)
     {

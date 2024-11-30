@@ -108,26 +108,31 @@
 
     <script>
         function loadEspacio(id) {
-            $.ajax({
-                url: `/grupal/${id}`,
-                type: 'GET',
-                success: function(response) {
-                    const espacio = response.espacio;
-                    const tareas = response.tareas;
+    $.ajax({
+        url: `/grupal/${id}`,
+        type: 'GET',
+        success: function(response) {
+            const espacio = response.espacio;
+            const tareas = response.tareas;
+            const isAdmin = response.isAdmin; // Recibe el estado del rol
 
-                    $('#espacio-content').html(`
-                    <div class="card">
+            let taskButton = '';
+            if (isAdmin) {
+                taskButton = `<a href="/tareagrupal/${espacio.id}/crear" class="task">Agregar Tarea</a>`;
+            }
+
+            $('#espacio-content').html(`
+                <div class="card">
                     <h1 class="name">${espacio.nombre}</h1>
                     <p><span class="bold">Categoría: </span>${espacio.categoria}</p>
                     <p><span class="bold">Creado en: </span>${espacio.created_at}</p>
-                    <p><span class="bold">codigo de invitacion: </span>${espacio.id}</p>
+                    <p><span class="bold">Código de invitación: </span>${espacio.id}</p>
+                </div>
+                ${taskButton} <!-- Agregar el botón solo si es admin -->
+            `);
 
-                    </div>
-                    <a href="/tareagrupal/${espacio.id}/crear" class="task">Agregar Tarea </a>
-                `);
-
-                    $('#tareas-header').html(
-                        `<tr>
+            $('#tareas-header').html(
+                `<tr>
                     <th>Id</th>
                     <th>Nombre</th>
                     <th>Fecha de inicio</th>
@@ -138,49 +143,54 @@
                     <th>Categoria</th>
                     <th>Responsable</th>
                     <th>Acciones</th>
-                    </tr>`
-                    );
+                </tr>`
+            );
 
-                    let tareasHtml = '';
-                    tareas.forEach((tarea) => {
-                        tareasHtml += `
-                        <tr>
-                            <td class="cont">${tarea.id}</td>
-                            <td class="cont">${tarea.nombre}</td>
-                            <td class="cont">${tarea.fechainicio}</td>
-                            <td class="cont">${tarea.fechafinal}</td>
-                            <td class="cont">${tarea.descripcion}</td>
-                            <td class="cont">${tarea.estado}</td>
-                            <td class="cont">${tarea.porcentaje}</td>
-                            <td class="cont">${tarea.categoria}</td>
-                            <td class="cont">${tarea.responsable}</td>
-
-                            <td>
-                                <a href="/tareagrupal/${tarea.id}/editar" class="editar">Editar</a>
-                                <form action="{{ url('/tareagrupal/${tarea.id}/eliminar') }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');" class="eliminar">
-                                        Eliminar
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    `;
-                    });
-
-                    $('#tareas-list').html(tareasHtml);
-
-                    // Mostrar la funcionalidad para invitar miembros
-                    $('#invite-members').show();
-                    $('#space-id-hidden').val(espacio.id);
-                },
-                error: function(xhr) {
-                    console.error('Error al cargar los datos:', xhr);
-                    alert('No se pudo cargar el espacio o las tareas. Inténtalo de nuevo.');
+            let tareasHtml = '';
+            tareas.forEach((tarea) => {
+                let deleteButton = '';
+                if (isAdmin) {
+                    deleteButton = `
+                        <form action="/tareagrupal/${tarea.id}/eliminar" method="POST" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');" class="eliminar">
+                                Eliminar
+                            </button>
+                        </form>`;
                 }
+
+                tareasHtml += `
+                    <tr>
+                        <td class="cont">${tarea.id}</td>
+                        <td class="cont">${tarea.nombre}</td>
+                        <td class="cont">${tarea.fechainicio}</td>
+                        <td class="cont">${tarea.fechafinal}</td>
+                        <td class="cont">${tarea.descripcion}</td>
+                        <td class="cont">${tarea.estado}</td>
+                        <td class="cont">${tarea.porcentaje}</td>
+                        <td class="cont">${tarea.categoria}</td>
+                        <td class="cont">${tarea.responsable}</td>
+                        <td>
+                            <a href="/tareagrupal/${tarea.id}/editar" class="editar">Editar</a>
+                            ${deleteButton} <!-- Mostrar el botón de eliminar solo si es admin -->
+                        </td>
+                    </tr>`;
             });
+
+            $('#tareas-list').html(tareasHtml);
+
+            // Mostrar la funcionalidad para invitar miembros
+            $('#invite-members').show();
+            $('#space-id-hidden').val(espacio.id);
+        },
+        error: function(xhr) {
+            console.error('Error al cargar los datos:', xhr);
+            alert('No se pudo cargar el espacio o las tareas. Inténtalo de nuevo.');
         }
+    });
+}
+
     </script>
 
     <!-- Ventana modal Crear Espacio -->
