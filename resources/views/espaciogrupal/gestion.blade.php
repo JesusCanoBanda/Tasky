@@ -3,6 +3,11 @@
     <link rel="stylesheet" href="{{ asset('css/table.css') }}">
 
     <div class="container">
+
+        <a href="{{ route('grupal.index') }}" class="card-link">
+            <h4 class="name2"><b>Espacio grupal</b></h4>
+        </a>
+
         <div class="results-table">
             <div class="form-title">Gestión de Espacios Grupales</div>
 
@@ -23,10 +28,12 @@
                         @if ($miembro->rol == 0)
                             <div class="espacio-actions">
                                 <!-- Formulario para eliminar la relación del miembro con el espacio -->
-                                <form action="{{ route('grupal.miembrodestroy', $miembro->id) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('grupal.miembrodestroy', $miembro->id) }}" method="POST"
+                                    style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar este miembro del espacio?')">
+                                    <button type="submit" class="eliminar"
+                                        onclick="return confirm('¿Estás seguro de que deseas eliminar este miembro del espacio?')">
                                         Eliminar miembro
                                     </button>
                                 </form>
