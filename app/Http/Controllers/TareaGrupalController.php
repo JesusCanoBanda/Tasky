@@ -66,8 +66,9 @@ class TareaGrupalController extends Controller
     public function edit($id)
     {
         $tarea = TareaGrupal::findOrFail($id);
+        $miembros = MiembrosGrupal::where('id_grupal', $tarea->id_espacio)->with('usuario')->get();
 
-        return view('tareas_grupal.edit', compact('tarea'));
+        return view('tareas_grupal.edit', compact('tarea','miembros'));
     }
 
     /**

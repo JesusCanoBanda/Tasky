@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('tarea_grupal', function (Blueprint $table) {
             $table->id(); // id int pk
+            $table->string('nombre'); // estado varchar
+
             $table->timestamp('fechainicio'); // fechainicio timestamp
             $table->timestamp('fechafinal'); // fechafinal timestamp
             $table->string('descripcion'); // descripcion varchar

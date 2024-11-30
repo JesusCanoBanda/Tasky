@@ -106,6 +106,8 @@
                     <th>Descripción</th>
                     <th>Estado</th>
                     <th>Porcentaje</th>
+                    <th>Categoria</th>
+                    <th>Responsable</th>
                     <th>Acciones</th>
                     </tr>`
                     );
@@ -116,14 +118,17 @@
                         <tr>
                             <td class="cont">${tarea.id}</td>
                             <td class="cont">${tarea.nombre}</td>
-                            <td class="cont">${tarea.fecha_inicio}</td>
-                            <td class="cont">${tarea.fecha_final}</td>
+                            <td class="cont">${tarea.fechainicio}</td>
+                            <td class="cont">${tarea.fechafinal}</td>
                             <td class="cont">${tarea.descripcion}</td>
                             <td class="cont">${tarea.estado}</td>
                             <td class="cont">${tarea.porcentaje}</td>
+                            <td class="cont">${tarea.categoria}</td>
+                            <td class="cont">${tarea.responsable}</td>
+
                             <td>
-                                <a href="/grupal/${tarea.id}/editar" class="editar">Editar</a>
-                                <form action="{{ url('/grupal/${tarea.id}/eliminar') }}" method="POST" style="display: inline;">
+                                <a href="/tareagrupal/${tarea.id}/editar" class="editar">Editar</a>
+                                <form action="{{ url('/tareagrupal/${tarea.id}/eliminar') }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');" class="eliminar">

@@ -22,6 +22,7 @@ class TareaGrupal extends Model
      * @var array
      */
     protected $fillable = [
+        'nombre',
         'fechainicio',
         'fechafinal',
         'descripcion',
