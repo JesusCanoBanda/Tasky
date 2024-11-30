@@ -6,24 +6,33 @@
             <h1 class="title">Espacios</h1>
             <hr>
             @if ($espacios->isNotEmpty())
-                @foreach ($espacios as $espacio)
+                @foreach ($espacios as $data)
+                    @php
+                        $espacio = $data['espacio'];
+                        $isAdmin = $data['isAdmin'];
+                    @endphp
+
                     <button class="space-name" onclick="loadEspacio({{ $espacio->id }})">{{ $espacio->nombre }}</button>
 
-                    <form action="{{ route('grupal.destroy', $espacio->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="eliminar"
-                            onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?')">Eliminar</button>
-                    </form>
+                    @if ($isAdmin)
+                        <form action="{{ route('grupal.destroy', $espacio->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="eliminar"
+                                onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?')">Eliminar</button>
+                        </form>
 
-                    <form action="{{ route('grupal.edit', $espacio->id) }}" method="GET" style="display:inline;">
-                        @csrf
-                        <button type="submit" class="editar" style="margin-left: 10px;">Editar</button>
-                    </form>
+                        <form action="{{ route('grupal.edit', $espacio->id) }}" method="GET" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="editar" style="margin-left: 10px;">Editar</button>
+                        </form>
+                    @endif
                 @endforeach
             @else
                 <p class="no-spaces">No tienes espacios creados aún.</p>
             @endif
+
+
             <hr>
             <button type="button" class="create-space" onclick="openModal()">+ Crear espacio</button>
             <button type="button" class="create-space" onclick="openJoinModal()">+ Unirse a espacio</button>
@@ -74,54 +83,55 @@
         </div>
 
     </div>
-<!-- Modal para ingresar el ID del espacio -->
-<div id="joinEspacioModal" class="ModalDialog">
-    <div class="results-table">
-        <div class="form-title">Unirse a un Espacio</div>
-        <form id="joinEspacioForm" action="{{ route('grupal.join') }}" method="POST">
-            @csrf
-            <label for="id_espacio" class="name">ID del Espacio</label>
-            <input class="input" type="number" id="id_espacio" name="id_espacio" required>
-            <button type="submit" class="save-button">Unirse</button>
-        </form>
-        <div class="circle-wrapper">
-            <div class="circle"></div>
+    <!-- Modal para ingresar el ID del espacio -->
+    <div id="joinEspacioModal" class="ModalDialog">
+        <div class="results-table">
+            <div class="form-title">Unirse a un Espacio</div>
+            <form id="joinEspacioForm" action="{{ route('grupal.join') }}" method="POST">
+                @csrf
+                <label for="id_espacio" class="name">ID del Espacio</label>
+                <input class="input" type="number" id="id_espacio" name="id_espacio" required>
+                <button type="submit" class="save-button">Unirse</button>
+            </form>
+            <div class="circle-wrapper">
+                <div class="circle"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    function openJoinModal() {
-        document.getElementById('joinEspacioModal').style.display = 'flex';
-    }
-
-    window.onclick = function(event) {
-        var modal = document.getElementById('joinEspacioModal');
-        if (event.target == modal) {
-            modal.style.display = 'none';
+    <script>
+        function openJoinModal() {
+            document.getElementById('joinEspacioModal').style.display = 'flex';
         }
-    }
-</script>
+
+        window.onclick = function(event) {
+            var modal = document.getElementById('joinEspacioModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         function loadEspacio(id) {
-    $.ajax({
-        url: `/grupal/${id}`,
-        type: 'GET',
-        success: function(response) {
-            const espacio = response.espacio;
-            const tareas = response.tareas;
-            const isAdmin = response.isAdmin; // Recibe el estado del rol
+            $.ajax({
+                url: `/grupal/${id}`,
+                type: 'GET',
+                success: function(response) {
+                    const espacio = response.espacio;
+                    const tareas = response.tareas;
+                    const isAdmin = response.isAdmin; // Recibe el estado del rol
 
-            let taskButton = '';
-            if (isAdmin) {
-                taskButton = `<a href="/tareagrupal/${espacio.id}/crear" class="task">Agregar Tarea</a>`;
-            }
+                    let taskButton = '';
+                    if (isAdmin) {
+                        taskButton =
+                            `<a href="/tareagrupal/${espacio.id}/crear" class="task">Agregar Tarea</a>`;
+                    }
 
-            $('#espacio-content').html(`
+                    $('#espacio-content').html(`
                 <div class="card">
                     <h1 class="name">${espacio.nombre}</h1>
                     <p><span class="bold">Categoría: </span>${espacio.categoria}</p>
@@ -131,8 +141,8 @@
                 ${taskButton} <!-- Agregar el botón solo si es admin -->
             `);
 
-            $('#tareas-header').html(
-                `<tr>
+                    $('#tareas-header').html(
+                        `<tr>
                     <th>Id</th>
                     <th>Nombre</th>
                     <th>Fecha de inicio</th>
@@ -144,13 +154,13 @@
                     <th>Responsable</th>
                     <th>Acciones</th>
                 </tr>`
-            );
+                    );
 
-            let tareasHtml = '';
-            tareas.forEach((tarea) => {
-                let deleteButton = '';
-                if (isAdmin) {
-                    deleteButton = `
+                    let tareasHtml = '';
+                    tareas.forEach((tarea) => {
+                        let deleteButton = '';
+                        if (isAdmin) {
+                            deleteButton = `
                         <form action="/tareagrupal/${tarea.id}/eliminar" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
@@ -158,9 +168,9 @@
                                 Eliminar
                             </button>
                         </form>`;
-                }
+                        }
 
-                tareasHtml += `
+                        tareasHtml += `
                     <tr>
                         <td class="cont">${tarea.id}</td>
                         <td class="cont">${tarea.nombre}</td>
@@ -176,21 +186,20 @@
                             ${deleteButton} <!-- Mostrar el botón de eliminar solo si es admin -->
                         </td>
                     </tr>`;
+                    });
+
+                    $('#tareas-list').html(tareasHtml);
+
+                    // Mostrar la funcionalidad para invitar miembros
+                    $('#invite-members').show();
+                    $('#space-id-hidden').val(espacio.id);
+                },
+                error: function(xhr) {
+                    console.error('Error al cargar los datos:', xhr);
+                    alert('No se pudo cargar el espacio o las tareas. Inténtalo de nuevo.');
+                }
             });
-
-            $('#tareas-list').html(tareasHtml);
-
-            // Mostrar la funcionalidad para invitar miembros
-            $('#invite-members').show();
-            $('#space-id-hidden').val(espacio.id);
-        },
-        error: function(xhr) {
-            console.error('Error al cargar los datos:', xhr);
-            alert('No se pudo cargar el espacio o las tareas. Inténtalo de nuevo.');
         }
-    });
-}
-
     </script>
 
     <!-- Ventana modal Crear Espacio -->

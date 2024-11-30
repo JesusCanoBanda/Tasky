@@ -12,15 +12,23 @@ class EspacioGrupalController extends Controller
 {
     public function index()
     {
-        // Espacios de trabajo asociados a un usuario
-        $userId = Auth::id(); // Usuario autenticado
+        // ID del usuario autenticado
+        $userId = Auth::id();
 
-        // Obtener los espacios de los miembros del usuario
-        $miembros = Miembrosgrupal::where('id_usuario', $userId)->get();
+        // Obtener los miembros del usuario junto con sus espacios
+        $miembros = Miembrosgrupal::where('id_usuario', $userId)
+            ->with('espacio') // Asumimos que existe una relación 'espacio' en el modelo Miembrosgrupal
+            ->get();
+
+        // Mapear los espacios y roles asociados
         $espacios = $miembros->map(function ($miembro) {
-            return $miembro->espacio; // Obtener el espacio relacionado con el miembro
+            return [
+                'espacio' => $miembro->espacio, // El espacio relacionado
+                'isAdmin' => $miembro->rol == 1, // Determinar si el usuario es administrador
+            ];
         });
 
+        // Pasar los datos a la vista
         return view('espaciogrupal.index', compact('espacios'));
     }
 
@@ -87,24 +95,21 @@ class EspacioGrupalController extends Controller
     }
 
     public function show($id)
-{
-    $espacio = EspacioGrupal::findOrFail($id);
-    $miembros = $espacio->miembros;
-    $tareas = TareaGrupal::where('id_espacio', $id)->get();
+    {
+        $espacio = EspacioGrupal::findOrFail($id);
+        $miembros = $espacio->miembros;
+        $tareas = TareaGrupal::where('id_espacio', $id)->get();
 
-    // Determina si el usuario autenticado es admin en este espacio
-    $isAdmin = Miembrosgrupal::where('id_grupal', $id)
-        ->where('id_usuario', Auth::id())
-        ->value('rol') == 1;
+        // Determina si el usuario autenticado es admin en este espacio
+        $isAdmin = Miembrosgrupal::where('id_grupal', $id)->where('id_usuario', Auth::id())->value('rol') == 1;
 
-    return response()->json([
-        'espacio' => $espacio,
-        'miembros' => $miembros,
-        'tareas' => $tareas,
-        'isAdmin' => $isAdmin, // Enviar el estado del rol
-    ]);
-}
-
+        return response()->json([
+            'espacio' => $espacio,
+            'miembros' => $miembros,
+            'tareas' => $tareas,
+            'isAdmin' => $isAdmin, // Enviar el estado del rol
+        ]);
+    }
 
     public function addMember(Request $request, $id)
     {
