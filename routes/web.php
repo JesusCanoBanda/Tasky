@@ -7,6 +7,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TareaController;
+
+use App\Http\Controllers\TareaGrupalController;
 use App\Models\TareaPersonalColumnas;
 
 Route::get('/', function () {
@@ -51,37 +53,25 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::group(['prefix' => '/grupal'], function () {
-        // Ruta para listar los espacios grupales del usuario autenticado
         Route::get('/', [EspacioGrupalController::class, 'index'])->name('grupal.index');
-        // Ruta para procesar la solicitud POST cuando el usuario se une a un espacio
-        Route::post('/join/{id}', [EspacioGrupalController::class, 'join'])->name('espaciogrupal.join');
-
-        // Ruta para mostrar un espacio grupal específico con tareas y miembros
         Route::get('/{id}', [EspacioGrupalController::class, 'show'])->name('grupal.show');
-
-        // Ruta para procesar la creación de un nuevo espacio grupal
         Route::post('/', [EspacioGrupalController::class, 'store'])->name('grupal.store');
-
-        // Ruta para mostrar el formulario para editar un espacio grupal
         Route::get('/{id}/editar', [EspacioGrupalController::class, 'edit'])->name('grupal.edit');
-
-        // Ruta para procesar la actualización de un espacio grupal
         Route::put('/{id}', [EspacioGrupalController::class, 'update'])->name('grupal.update');
-
-        // Ruta para eliminar un espacio grupal
         Route::delete('/{id}', [EspacioGrupalController::class, 'destroy'])->name('grupal.destroy');
-
-        // Ruta para agregar un miembro a un espacio grupal
-        Route::post('/{id}/add-member', [EspacioGrupalController::class, 'addMember'])->name('grupal.addMember');
-
-        // Ruta para asignar una tarea grupal a un miembro
-        Route::post('/{id}/assign-task', [EspacioGrupalController::class, 'assignTask'])->name('grupal.assignTask');
-
-        // Ruta para mostrar el formulario de creación de un espacio grupal
         Route::get('/create', [EspacioGrupalController::class, 'create'])->name('grupal.create');
+    });
+    Route::group(['prefix' => '/tareagrupal'], function () {
+        // Ruta para mostrar el formulario (si es necesario desde otra página, como `create.blade.php`)
+        Route::get('/{id}/crear', [TareaGrupalController::class, 'create'])->name('tareagrupal.create');
 
-        // Ruta para leer todos los espacios grupales
-        Route::get('/read', [EspacioGrupalController::class, 'read'])->name('grupal.read');
+        // Ruta para procesar la creación de una tarea (viene del formulario en el modal)
+        Route::post('/{id}', [TareaGrupalController::class, 'store'])->name('tareagrupal.store');
+
+        Route::get('/{id}/editar', [TareaGrupalController::class, 'edit'])->name('tareagrupal.edit');
+        Route::put('/{id}', [TareaGrupalController::class, 'update'])->name('tareagrupal.update');
+
+        Route::delete('/{id}/eliminar', [TareaGrupalController::class, 'destroy'])->name('tareagrupal.destroy');
     });
 });
 

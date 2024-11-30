@@ -94,7 +94,7 @@
                     <p><span class="bold">codigo de invitacion: </span>${espacio.id}</p>
 
                     </div>
-                    <a href="/grupal/${espacio.id}/crear" class="task">Agregar Tarea </a>
+                    <a href="/tareagrupal/${espacio.id}/crear" class="task">Agregar Tarea </a>
                 `);
 
                     $('#tareas-header').html(
