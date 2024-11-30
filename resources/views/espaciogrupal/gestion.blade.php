@@ -15,18 +15,20 @@
 
                     <div class="espacio-card">
                         <h3>{{ $espacio->nombre }}</h3>
-                        <p>Categoria: {{ $espacio->categoria }}</p>
-                        <p>Miembro: {{ $miembro->usuario->name }}</p> <!-- Asumiendo que 'usuario' es la relación con el modelo Usuario -->
+                        <p>Categoría: {{ $espacio->categoria }}</p>
+                        <p>Miembro: {{ $miembro->usuario->name }}</p> <!-- Relación hacia el modelo Usuario -->
                         <p>Rol: {{ $miembro->rol == 1 ? 'Administrador' : 'Miembro' }}</p>
 
-                        <!-- Opciones adicionales solo si el miembro es administrador -->
-                        @if ($miembro->rol == 1)
+                        <!-- Mostrar opciones solo si el miembro es un usuario regular (rol 0) -->
+                        @if ($miembro->rol == 0)
                             <div class="espacio-actions">
-                                <!-- Formulario para eliminar la relación de miembro con el espacio -->
+                                <!-- Formulario para eliminar la relación del miembro con el espacio -->
                                 <form action="{{ route('grupal.miembrodestroy', $miembro->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar este miembro del espacio?')">Eliminar miembro</button>
+                                    <button type="submit" class="eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar este miembro del espacio?')">
+                                        Eliminar miembro
+                                    </button>
                                 </form>
                             </div>
                         @endif
