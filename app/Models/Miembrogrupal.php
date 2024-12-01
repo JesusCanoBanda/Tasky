@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MiembrosGrupal extends Model
+class Miembrogrupal extends Model
 {
     use HasFactory;
 
@@ -27,7 +27,7 @@ class MiembrosGrupal extends Model
      * Relación con el modelo User.
      * Un miembro grupal está asociado a un usuario.
      */
-    // Modelo Miembrosgrupal
+    // Modelo Miembrogrupal
     public function usuario()
     {
         return $this->belongsTo(User::class, 'id_usuario');

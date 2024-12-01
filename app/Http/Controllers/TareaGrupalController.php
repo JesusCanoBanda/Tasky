@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\EspacioGrupal;
-use App\Models\MiembrosGrupal;
+use App\Models\Miembrogrupal;
 
 use App\Models\TareaGrupal;
 use Illuminate\Support\Facades\Auth; // Importar Auth
@@ -17,7 +17,7 @@ class TareaGrupalController extends Controller
     public function create($id)
     {
         // Obtener los miembros del espacio grupal
-        $miembros = MiembrosGrupal::where('id_grupal', $id)->with('usuario')->get();
+        $miembros = Miembrogrupal::where('id_grupal', $id)->with('usuario')->get();
 
         // Retornar la vista con el ID del espacio grupal y los miembros
         return view('tareas_grupal.create', compact('id', 'miembros'));
@@ -66,7 +66,7 @@ class TareaGrupalController extends Controller
     public function edit($id)
     {
         $tarea = TareaGrupal::findOrFail($id);
-        $miembros = MiembrosGrupal::where('id_grupal', $tarea->id_espacio)->with('usuario')->get();
+        $miembros = Miembrogrupal::where('id_grupal', $tarea->id_espacio)->with('usuario')->get();
 
         return view('tareas_grupal.edit', compact('tarea','miembros'));
     }

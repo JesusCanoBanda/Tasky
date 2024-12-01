@@ -34,6 +34,6 @@ class EspacioGrupal extends Model
     // Modelo EspacioGrupal
     public function miembros()
     {
-        return $this->hasMany(Miembrosgrupal::class, 'id_grupal');
+        return $this->hasMany(Miembrogrupal::class, 'id_grupal');
     }
 }

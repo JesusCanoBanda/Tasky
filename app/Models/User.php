@@ -52,27 +52,27 @@ class User extends Authenticatable
     }
 
     /**
-     * Relación con MiembrosGrupal.
+     * Relación con Miembrogrupal.
      * Un usuario puede ser parte de múltiples espacios grupales como miembro.
      */
-    public function miembrosGrupal()
+    public function Miembrogrupal()
     {
-        return $this->hasMany(MiembrosGrupal::class, 'id_usuario');
+        return $this->hasMany(Miembrogrupal::class, 'id_usuario');
     }
 
     /**
-     * Relación con EspacioGrupal a través de MiembrosGrupal.
+     * Relación con EspacioGrupal a través de Miembrogrupal.
      * Un usuario puede pertenecer a múltiples espacios grupales.
      */
     public function espaciosGrupales()
     {
         return $this->hasManyThrough(
             EspacioGrupal::class,
-            MiembrosGrupal::class,
-            'id_usuario', // Clave foránea en MiembrosGrupal
+            Miembrogrupal::class,
+            'id_usuario', // Clave foránea en Miembrogrupal
             'id', // Clave foránea en EspacioGrupal (debería ser 'id_grupal' en lugar de 'id')
             'id', // Clave local en User
-            'id_grupal', // Clave local en MiembrosGrupal
+            'id_grupal', // Clave local en Miembrogrupal
         );
     }
 }

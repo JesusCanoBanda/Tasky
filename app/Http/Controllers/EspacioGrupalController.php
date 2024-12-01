@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\EspacioGrupal;
-use App\Models\Miembrosgrupal;
+use App\Models\Miembrogrupal;
 use App\Models\TareaGrupal;
 use Illuminate\Support\Facades\Auth; // Importar Auth
 
@@ -16,8 +16,8 @@ class EspacioGrupalController extends Controller
         $userId = Auth::id();
 
         // Obtener los miembros del usuario junto con sus espacios
-        $miembros = Miembrosgrupal::where('id_usuario', $userId)
-            ->with('espacio') // Asumimos que existe una relación 'espacio' en el modelo Miembrosgrupal
+        $miembros = Miembrogrupal::where('id_usuario', $userId)
+            ->with('espacio') // Asumimos que existe una relación 'espacio' en el modelo Miembrogrupal
             ->get();
 
         // Mapear los espacios y roles asociados
@@ -37,14 +37,14 @@ class EspacioGrupalController extends Controller
         $userId = Auth::id();
 
         // Verifica que el usuario sea administrador en algún espacio grupal
-        $esAdmin = MiembrosGrupal::where('id_usuario', $userId)->where('rol', 1)->exists();
+        $esAdmin = Miembrogrupal::where('id_usuario', $userId)->where('rol', 1)->exists();
 
         if (!$esAdmin) {
             return redirect()->route('grupal.index')->with('error', 'No tienes permiso para acceder a la gestión de espacios grupales.');
         }
 
         // Obtén los miembros con rol 0 en los espacios grupales donde el usuario es administrador
-        $miembros = MiembrosGrupal::whereHas('espacio', function ($query) use ($userId) {
+        $miembros = Miembrogrupal::whereHas('espacio', function ($query) use ($userId) {
             $query->whereHas('miembros', function ($q) use ($userId) {
                 $q->where('id_usuario', $userId)->where('rol', 1);
             });
@@ -70,7 +70,7 @@ class EspacioGrupalController extends Controller
     public function destroymiembros($id)
     {
         // Obtener el miembro por su ID
-        $miembro = Miembrosgrupal::find($id);
+        $miembro = Miembrogrupal::find($id);
 
         if (!$miembro) {
             return redirect()->route('grupal.miembros')->with('error', 'Miembro no encontrado.');
@@ -79,7 +79,7 @@ class EspacioGrupalController extends Controller
         // Verificar si el usuario autenticado es administrador del grupo
         $usuarioAutenticado = Auth::user();
 
-        $esAdmin = Miembrosgrupal::where('id_grupal', $miembro->id_grupal)
+        $esAdmin = Miembrogrupal::where('id_grupal', $miembro->id_grupal)
             ->where('id_usuario', $usuarioAutenticado->id)
             ->where('rol', 1)
             ->exists();
@@ -110,7 +110,7 @@ class EspacioGrupalController extends Controller
         $idEspacio = $request->input('id_espacio');
 
         // Verificar si el usuario ya es miembro del espacio
-        $existingMember = Miembrosgrupal::where('id_grupal', $idEspacio)
+        $existingMember = Miembrogrupal::where('id_grupal', $idEspacio)
             ->where('id_usuario', $user->id)
             ->first();
 
@@ -119,7 +119,7 @@ class EspacioGrupalController extends Controller
         }
 
         // Agregar el usuario al espacio con rol de "Miembro" (0)
-        Miembrosgrupal::create([
+        Miembrogrupal::create([
             'id_grupal' => $idEspacio,
             'id_usuario' => $user->id,
             'rol' => 0,
@@ -152,7 +152,7 @@ class EspacioGrupalController extends Controller
         ]);
 
         // Agregar al usuario como miembro del espacio grupal con rol de "admin"
-        Miembrosgrupal::create([
+        Miembrogrupal::create([
             'id_grupal' => $espacio->id,
             'id_usuario' => $userId,
             'rol' => 1, // 1 para rol de admin, puedes ajustarlo si es necesario
@@ -168,7 +168,7 @@ class EspacioGrupalController extends Controller
         $tareas = TareaGrupal::where('id_espacio', $id)->get();
 
         // Determina si el usuario autenticado es admin en este espacio
-        $isAdmin = Miembrosgrupal::where('id_grupal', $id)->where('id_usuario', Auth::id())->value('rol') == 1;
+        $isAdmin = Miembrogrupal::where('id_grupal', $id)->where('id_usuario', Auth::id())->value('rol') == 1;
 
         return response()->json([
             'espacio' => $espacio,
@@ -187,7 +187,7 @@ class EspacioGrupalController extends Controller
         ]);
 
         // Verificar si el usuario ya está en el espacio
-        $existingMember = Miembrosgrupal::where('id_grupal', $id)
+        $existingMember = Miembrogrupal::where('id_grupal', $id)
             ->where('id_usuario', $validatedData['id_usuario'])
             ->first();
 
@@ -196,7 +196,7 @@ class EspacioGrupalController extends Controller
         }
 
         // Agregar el nuevo miembro
-        Miembrosgrupal::create([
+        Miembrogrupal::create([
             'id_grupal' => $id,
             'id_usuario' => $validatedData['id_usuario'],
             'rol' => $validatedData['rol'],
