@@ -25,8 +25,8 @@
                         </div>
                     </div>
                 </a>
-            
-                <a href="{{ route('table.index') }}" class="card-link">
+
+                <a href="{{ route('grupal.index') }}" class="card-link">
                     <div class="card" style="background-color: #A8E6CF;">
                         <div class="container">
                             <h4 class="title"><b>Espacio de Trabajo</b></h4>
@@ -44,7 +44,7 @@
                         <h4 class="text-lg font-semibold text-black"  style="text-align: center">Espacio de Trabajo</h4>
                         <h4 class="text-lg font-semibold text-blue-600" style="text-align: center">Personal</h4>
                     </div>
-                </a>   
+                </a>
 
                 <a href="{{ route('table.index') }}" class="block" role="button">
                     <div class="bg-green-50 p-6 rounded-lg shadow-md hover:bg-green-100 transition duration-200">
@@ -52,14 +52,14 @@
                         <p class="text-gray-600">Project name #2</p>
                     </div>
                 </a>
-                
+
                 <a href="{{ route('table.index') }}" class="block">
                     <div class="bg-blue-50 p-6 rounded-lg shadow-md">
                         <h4 class="text-lg font-semibold text-black"  style="text-align: center">Espacio de Trabajo</h4>
                         <h4 class="text-lg font-semibold text-red-600" style="text-align: center">Grupal</h4>
                     </div>
                 </a>
-                
+
             </div> -->
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

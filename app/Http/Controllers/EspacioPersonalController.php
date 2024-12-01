@@ -42,7 +42,7 @@ class EspacioPersonalController extends Controller
     public function show($id) //este es pa mostrar ya con las tareas
     {
         $espacio = EspacioPersonal::where('id', $id)->where('id_user', auth()->id())->firstOrFail();
-        
+
         $tareas = EspacioPersonal::findOrFail($id)->tareas;
 
         return response()->json([
@@ -67,7 +67,7 @@ class EspacioPersonalController extends Controller
 
         $espacio = EspacioPersonal::findOrFail($id);
         $espacio->update($validatedData);
-        
+
         return redirect()->route('table.index')->with('success', 'Espacio registrado exitosamente.');
     }
 
@@ -87,7 +87,7 @@ class EspacioPersonalController extends Controller
     public function read()
     {
         $espacios = EspacioPersonal::all();
-        
+
         return view('espaciopersonal.read', compact('espacios'));
     }
 }
