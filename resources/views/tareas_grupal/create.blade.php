@@ -27,11 +27,17 @@
             <label>Descripción</label>
             <input type="text" name="descripcion" required>
 
-            <label>Estado</label>
-            <input type="text" name="estado" required>
+            <label>Estado </label>
+            <select name="estado" required>
+                <option value="no iniciado">no iniciado</option>
+                <option value="iniciado">iniciado</option>
+                <option value="casi por finalizar">casi por finalizar</option>
+                <option value="finalizado">finalizado</option>
+            </select>
 
-            <label>Porcentaje</label>
-            <input type="number" name="porcentaje" required>
+            <label>Porcentaje </label>
+            <input name="porcentaje" id="range" type="range" min="0" max="100" step="1" value="0" required>
+            <p><span id="valor"></span></p>
 
             <label>Categoría</label>
             <input type="text" name="categoria" required>
@@ -46,8 +52,17 @@
 
             <button type="submit" class="save-button">Guardar</button>
         </form>
-
-
     </div>
+
+    <script>//pa mostrar el valor del range, si le quieren mover ta bien namas asegurense que me retorne un string
+        const range = document.getElementById('range');
+        const valorRange = document.getElementById('valor');
+
+        valorRange.textContent = range.value;
+
+        range.addEventListener('input',()=>{
+            valorRange.textContent = range.value;
+        });
+    </script>
 </body>
 </html>

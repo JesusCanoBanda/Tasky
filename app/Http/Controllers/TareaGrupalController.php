@@ -34,12 +34,15 @@ class TareaGrupalController extends Controller
             return redirect()->route('espaciogrupal.create')->with('error', 'No estás autenticado.');
         }
 
+        $request['porcentaje'] = intval($request['porcentaje']);
+
+
         $validateData = $request->validate([
             'nombre' => 'required|string|max:255',
             'fechainicio' => 'nullable|date',
             'fechafinal' => 'nullable|date|after_or_equal:fechainicio',
             'descripcion' => 'required|string|max:500',
-            'estado' => 'required|string|in:iniciado,completado,finalizado',
+            'estado' => 'required|string|in:no iniciado,iniciado,casi por finalizar,finalizado',
             'porcentaje' => 'required|integer|min:0|max:100',
             'responsable' => 'nullable|string|max:255',
             'categoria' => 'required|string|max:255', // Validar 'categoria'
@@ -82,12 +85,15 @@ class TareaGrupalController extends Controller
             return redirect()->route('espaciogrupal.create')->with('error', 'No estás autenticado.');
         }
 
+        $request['porcentaje'] = intval($request['porcentaje']);
+
+
         $validateData = $request->validate([
             'nombre' => 'required|string|max:255',
             'fechainicio' => 'nullable|date',
             'fechafinal' => 'nullable|date|after_or_equal:fechainicio',
             'descripcion' => 'required|string|max:500',
-            'estado' => 'required|string|in:iniciado,completado,finalizado',
+            'estado' => 'required|string|in:no iniciado,iniciado,casi por finalizar,finalizado',
             'porcentaje' => 'required|integer|min:0|max:100',
             'responsable' => 'nullable|string|max:255',
             'categoria' => 'required|string|max:255', // Validar 'categoria'

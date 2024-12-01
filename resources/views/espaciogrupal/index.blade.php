@@ -138,7 +138,7 @@
                 <div class="card">
                     <h1 class="name">${espacio.nombre}</h1>
                     <p><span class="bold">Categoría: </span>${espacio.categoria}</p>
-                    <p><span class="bold">Creado en: </span>${espacio.created_at}</p>
+                    <p><span class="bold">Creado en: </span>${new Date(espacio.created_at).toLocaleDateString()}</p>
                     <p><span class="bold">Código de invitación: </span>${espacio.id}</p>
                 </div>
                 ${taskButton} <!-- Agregar el botón solo si es admin -->
@@ -177,8 +177,8 @@
                     <tr>
                         <td class="cont">${tarea.id}</td>
                         <td class="cont">${tarea.nombre}</td>
-                        <td class="cont">${tarea.fechainicio}</td>
-                        <td class="cont">${tarea.fechafinal}</td>
+                        <td class="cont">${new Date(tarea.fechainicio).toLocaleDateString()}</td>
+                        <td class="cont">${new Date (tarea.fechafinal).toLocaleDateString()}</td>
                         <td class="cont">${tarea.descripcion}</td>
                         <td class="cont">${tarea.estado}</td>
                         <td class="cont">${tarea.porcentaje}</td>

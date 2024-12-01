@@ -26,19 +26,17 @@
             <label for="descripcion">Descripción</label>
             <textarea id="descripcion" name="descripcion" rows="4" required>{{ old('descripcion', $tarea->descripcion) }}</textarea>
 
-            <label for="estado">Estado</label>
-            <select id="estado" name="estado" required>
-                <option value="iniciado" {{ old('estado', $tarea->estado) == 'iniciado' ? 'selected' : '' }}>Iniciado
-                </option>
-                <option value="completado" {{ old('estado', $tarea->estado) == 'completado' ? 'selected' : '' }}>
-                    Completado</option>
-                <option value="finalizado" {{ old('estado', $tarea->estado) == 'finalizado' ? 'selected' : '' }}>
-                    Finalizado</option>
+            <label>Estado </label>
+            <select name="estado" required>
+                <option value="no iniciado" {{$tarea->estado === 'no iniciado' ? 'selected' : ''}}>no iniciado</option>
+                <option value="iniciado" {{$tarea->estado === 'iniciado' ? 'selected' : ''}}>iniciado</option>
+                <option value="casi por finalizar" {{$tarea->estado === 'casi por finalizar' ? 'selected' : ''}}>casi por finalizar</option>
+                <option value="finalizado" {{$tarea->estado === 'finalizado' ? 'selected' : ''}}>finalizado</option>
             </select>
 
-            <label for="porcentaje">Porcentaje</label>
-            <input type="number" id="porcentaje" name="porcentaje" value="{{ old('porcentaje', $tarea->porcentaje) }}"
-                min="0" max="100" required>
+            <label>Porcentaje </label>
+            <input id="range" type="range" name="porcentaje" value="{{old('porcentaje',$tarea->porcentaje)}}" required>
+            <p><span id="valor"></span></p>
 
             <label>Responsable</label>
             <select name="responsable">
@@ -63,6 +61,17 @@
             <div class="circle"></div>
         </div>
     </div>
+
+    <script>
+        const range = document.getElementById('range');
+        const valorRange = document.getElementById('valor');
+
+        valorRange.textContent = range.value;
+
+        range.addEventListener('input',()=>{
+            valorRange.textContent = range.value;
+        });
+    </script>
 </body>
 
 </html>
