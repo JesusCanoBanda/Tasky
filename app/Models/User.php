@@ -75,4 +75,9 @@ class User extends Authenticatable
             'id_grupal', // Clave local en Miembrogrupal
         );
     }
+
+    public function isAdmin()
+    {
+        return $this->rol === 1;
+    }
 }

@@ -78,6 +78,16 @@
                     </ul>
                 </div>
             </div>
+            @auth
+                @if(auth()->user()->isAdmin())
+                    <div>
+                        <li>
+                            <a href="{{ route('admin.index') }}">Administrar Usuarios</a>
+                        </li>
+                    </div>
+                @endif
+            @endauth
+
         </div>
     </div>
 </x-app-layout>

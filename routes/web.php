@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EspacioPersonalController;
 use App\Http\Controllers\EspacioGrupalController;
 
@@ -81,6 +82,16 @@ Route::middleware('auth')->group(function () {
 //Ruta para salir en el agregar tarea
 
 Route::get('/espaciopersonal', [EspacioPersonalController::class, 'index'])->name('espaciopersonal.index');
+
+//Ruta para ir a la vista de administrar usuarios
+
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
+Route::put('/admin/edit/{id}', [AdminController::class, 'update'])->name('admin.update');
+Route::delete('/admin/eliminar/{id}', [AdminController::class, 'delete'])->name('admin.delete');
+
+
+
 
 //hay que meterlos en un prefix todos tambien
 // Route::get('/', [EspacioPersonalController::class, 'index'])->name('table.index');
