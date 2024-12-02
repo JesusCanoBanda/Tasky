@@ -143,58 +143,85 @@ public function store(Request $request, $id_espacio)
      * Actualizar una tarea grupal existente en la base de datos.
      */
     public function update(Request $request, $id)
-    {
-        $userId = Auth::id();
-    
-        if (!$userId) {
-            return redirect()->route('espaciogrupal.create')->with('error', 'No estás autenticado.');
-        }
-    
-        $request['porcentaje'] = intval($request['porcentaje']);
-    
-        $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'fechainicio' => 'nullable|date',
-            'fechafinal' => 'nullable|date|after_or_equal:fechainicio',
-            'descripcion' => 'required|string|max:500',
-            'estado' => 'required|string|in:no iniciado,iniciado,casi por finalizar,finalizado',
-            'porcentaje' => 'required|integer|min:0|max:100',
-            'responsable' => 'nullable|string|max:255',
-            'categoria' => 'required|string|max:255',
-        ]);
-    
-        $validator->after(function ($validator) use ($request) {
-            $estado = $request->input('estado');
-            $porcentaje = $request->input('porcentaje');
-    
-            if ($estado === 'no iniciado' && $porcentaje != 0) {
-                $validator->errors()->add('porcentaje', 'El porcentaje debe ser 0 si la tarea no está iniciada.');
-            }
-    
-            if ($estado === 'iniciado' && ($porcentaje <= 0 || $porcentaje > 70)) {
-                $validator->errors()->add('porcentaje', 'El porcentaje debe ser mayor a 0 y no puede exceder el 70% si la tarea está iniciada.');
-            }
-    
-            if ($estado === 'casi por finalizar' && $porcentaje == 100) {
-                $validator->errors()->add('porcentaje', 'El porcentaje no puede ser 100% si la tarea está casi por finalizar.');
-            }
-    
-            if ($estado === 'finalizado' && $porcentaje != 100) {
-                $validator->errors()->add('porcentaje', 'El porcentaje debe ser 100% si la tarea está finalizada.');
-            }
-        });
-    
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-    
-        $tarea = TareaGrupal::findOrFail($id);
-        $tarea->update($validator->validated());
-    
-        return redirect()->route('grupal.index')->with('success', 'Tarea actualizada exitosamente.');
+{
+    $userId = Auth::id();
+
+    if (!$userId) {
+        return redirect()->route('espaciogrupal.create')->with('error', 'No estás autenticado.');
     }
+
+    $request['porcentaje'] = intval($request['porcentaje']);
+
+    // Definir las reglas de validación con mensajes personalizados
+    $validator = Validator::make($request->all(), [
+        'nombre' => 'required|string|max:255',
+        'fechainicio' => 'nullable|date',
+        'fechafinal' => 'nullable|date|after_or_equal:fechainicio',
+        'descripcion' => 'required|string|max:500',
+        'estado' => 'required|string|in:no iniciado,iniciado,casi por finalizar,finalizado',
+        'porcentaje' => 'required|integer|min:0|max:100',
+        'responsable' => 'nullable|string|max:255',
+        'categoria' => 'required|string|max:255',
+    ], [
+        'nombre.required' => 'El campo nombre es obligatorio.',
+        'nombre.string' => 'El campo nombre debe ser una cadena de texto.',
+        'nombre.max' => 'El nombre no puede exceder los 255 caracteres.',
+        'fechainicio.date' => 'La fecha de inicio debe ser una fecha válida.',
+        'fechafinal.date' => 'La fecha final debe ser una fecha válida.',
+        'fechafinal.after_or_equal' => 'La fecha final debe ser posterior o igual a la fecha de inicio.',
+        'descripcion.required' => 'El campo descripción es obligatorio.',
+        'descripcion.string' => 'El campo descripción debe ser una cadena de texto.',
+        'descripcion.max' => 'La descripción no puede exceder los 500 caracteres.',
+        'estado.required' => 'El campo estado es obligatorio.',
+        'estado.in' => 'El estado debe ser uno de los siguientes: no iniciado, iniciado, casi por finalizar, finalizado.',
+        'porcentaje.required' => 'El campo porcentaje es obligatorio.',
+        'porcentaje.integer' => 'El campo porcentaje debe ser un número entero.',
+        'porcentaje.min' => 'El campo porcentaje no puede ser menor que 0.',
+        'porcentaje.max' => 'El campo porcentaje no puede ser mayor que 100.',
+        'responsable.string' => 'El campo responsable debe ser una cadena de texto.',
+        'responsable.max' => 'El campo responsable no puede exceder los 255 caracteres.',
+        'categoria.required' => 'El campo categoría es obligatorio.',
+        'categoria.string' => 'El campo categoría debe ser una cadena de texto.',
+        'categoria.max' => 'El campo categoría no puede exceder los 255 caracteres.',
+    ]);
+
+    // Validaciones adicionales después de la validación básica
+    $validator->after(function ($validator) use ($request) {
+        $estado = $request->input('estado');
+        $porcentaje = $request->input('porcentaje');
+
+        if ($estado === 'no iniciado' && $porcentaje != 0) {
+            $validator->errors()->add('porcentaje', 'El porcentaje debe ser 0 si la tarea no está iniciada.');
+        }
+
+        if ($estado === 'iniciado' && ($porcentaje <= 0 || $porcentaje > 70)) {
+            $validator->errors()->add('porcentaje', 'El porcentaje debe ser mayor a 0 y no puede exceder el 70% si la tarea está iniciada.');
+        }
+
+        if ($estado === 'casi por finalizar' && $porcentaje == 100) {
+            $validator->errors()->add('porcentaje', 'El porcentaje no puede ser 100% si la tarea está casi por finalizar.');
+        }
+
+        if ($estado === 'finalizado' && $porcentaje != 100) {
+            $validator->errors()->add('porcentaje', 'El porcentaje debe ser 100% si la tarea está finalizada.');
+        }
+    });
+
+    // Si las validaciones fallan, redirigir con los errores
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+    }
+
+    // Encontrar la tarea y actualizarla
+    $tarea = TareaGrupal::findOrFail($id);
+    $tarea->update($validator->validated());
+
+    // Redirigir a la lista de tareas con un mensaje de éxito
+    return redirect()->route('grupal.index')->with('success', 'Tarea actualizada exitosamente.');
+}
+
     
     /**
      * Eliminar una tarea grupal de la base de datos.
