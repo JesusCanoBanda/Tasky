@@ -52,7 +52,7 @@
                 @endforeach
             </select>
 
-            <label for="categoria">Categoría</label>
+            <label for="categoria">Notas</label>
             <input type="text" id="categoria" name="categoria" value="{{ old('categoria', $tarea->categoria) }}"
                 required>
 

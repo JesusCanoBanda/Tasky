@@ -14,7 +14,7 @@
             <label>Nombre</label>
             <input type="text" name="nombre" required>
 
-            <label>Categoria</label>
+            <label>Notas</label>
             <input type="text" name="categoria" required>
 
             <button type="submit" class="save-button">Guardar</button>

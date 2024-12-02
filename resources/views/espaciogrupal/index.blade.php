@@ -243,7 +243,7 @@
                     <th>Descripción</th>
                     <th>Estado</th>
                     <th>Porcentaje</th>
-                    <th>Categoria</th>
+                    <th>Notas</th>
                     <th>Responsable</th>
                     <th>Acciones</th>
                 </tr>`

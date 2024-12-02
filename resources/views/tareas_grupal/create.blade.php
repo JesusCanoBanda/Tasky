@@ -39,7 +39,7 @@
             <input name="porcentaje" id="range" type="range" min="0" max="100" step="1" value="0" >
             <p><span id="valor"></span></p>
 
-            <label>Categoría</label>
+            <label>Notas</label>
             <input type="text" name="categoria" >
 
             <label>Responsable</label>
