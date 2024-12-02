@@ -8,10 +8,10 @@
 </head>
 <body>
     <div class="results-table">
-        <div class="form-title">Editar Espacio</div>
-        <a href="{{ route('espaciopersonal.index') }}">
-            <img class="close" src="{{ asset('images/close.png') }}" alt="Cerrar">
+        <a class="flex justify-end w-full" href="{{ route('espaciopersonal.index') }}">
+            <img src="{{ asset('images/close.png') }}" alt="Cerrar">
         </a>
+        <div class="form-title">Editar Espacio</div>
         <form class="player-form" action="{{ route('espaciopersonal.update', $espacio->id) }}" method="POST">
             @csrf
             @method('PUT') <!-- Cambiar a PUT para realizar la actualización -->

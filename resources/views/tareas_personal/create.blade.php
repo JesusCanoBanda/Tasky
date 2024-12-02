@@ -9,8 +9,8 @@
 <body>
     <div class="results-table">
         <div class="form-title">Agregar tarea</div>
-        <a href="{{ route('espaciopersonal.index') }}">
-            <img class="close" src="{{ asset('images/close.png') }}" alt="Cerrar">
+        <a class="flex justify-end w-full" href="{{ route('espaciopersonal.index') }}">
+            <img src="{{ asset('images/close.png') }}" alt="Cerrar">
         </a>
         <form class="player-form" action="{{route('task.store',['id'=>"$id"])}}" method="POST">
             @csrf

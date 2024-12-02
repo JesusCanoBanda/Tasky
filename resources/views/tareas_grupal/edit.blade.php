@@ -11,8 +11,8 @@
 <body>
     <div class="results-table">
         <div class="form-title">Editar tarea</div>
-        <a href="{{ route('grupal.index') }}">
-            <img class="close" src="{{ asset('images/close.png') }}" alt="Cerrar">
+        <a class="flex justify-end w-full" href="{{ route('grupal.index') }}">
+            <img src="{{ asset('images/close.png') }}" alt="Cerrar">
         </a>
         <form class="player-form" action="{{ route('tareagrupal.update', $tarea->id) }}" method="POST">
             @csrf

@@ -50,9 +50,7 @@
         <button type="button" class="bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 w-full mb-4 transition-all duration-200" onclick="openModal()">
             + Crear Espacio
         </button>
-        <button type="button" class="bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-600 w-full transition-all duration-200" onclick="openJoinModal()">
-            + Unirse a Espacio
-        </button>
+
     </div>
 </div>
 
