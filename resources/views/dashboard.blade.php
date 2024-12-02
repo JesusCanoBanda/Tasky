@@ -1,7 +1,7 @@
 <x-app-layout>
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 
-    <div class="py-12 bg-gray-100 min-h-screen">
+    <div class="py-12 bg-gray-100 h-full">
         <div class="max-w-7xl mx-auto space-y-8 px-6 lg:px-8">
             <div class="bg-white rounded-xl shadow-md p-6 text-center">
                 <h3 class="text-4xl font-bold text-gray-700">{{ __("Bienvenido a TASKY!") }}</h3>
@@ -28,21 +28,6 @@
                         </div>
                     </div>
                 </a>
-            </div>
-
-            <div class="bg-white rounded-xl shadow-md p-6">
-                <h3 class="text-2xl font-bold text-gray-700">Tus Workspaces</h3>
-                <ul class="mt-4 space-y-2">
-                    <li>
-                        <a href="{{ route('table.index') }}" class="block text-blue-500 hover:text-blue-600">Workspace #1</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block text-green-500 hover:text-green-600">Workspace #2</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block text-pink-500 hover:text-pink-600">Workspace #3</a>
-                    </li>
-                </ul>
             </div>
 
             @auth

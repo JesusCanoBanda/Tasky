@@ -123,26 +123,6 @@
         </div>
     </section>
 
-    <section id="contact" class="py-16 bg-[#2A175E] text-gray-200">
-        <div class="container mx-auto text-center">
-            <h2 class="text-4xl font-semibold">¿Tienes preguntas?</h2>
-            <p class="mt-4">¡Déjanos un mensaje y te responderemos pronto!</p>
-            <form action="#" method="POST" class="mt-8 max-w-lg mx-auto">
-                <div class="mb-4">
-                    <input type="text" name="name" placeholder="Tu nombre" class="w-full p-4 border rounded-lg bg-gray-700 focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div class="mb-4">
-                    <input type="email" name="email" placeholder="Tu correo electrónico" class="w-full p-4 border rounded-lg bg-gray-700 focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div class="mb-4">
-                    <textarea name="message" rows="4" placeholder="Tu mensaje" class="w-full p-4 border rounded-lg bg-gray-700 focus:ring-2 focus:ring-blue-500"></textarea>
-                </div>
-                <button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600">
-                    Enviar
-                </button>
-            </form>
-        </div>
-    </section>
 
     <footer class="bg-[#1E0579] text-gray-200 py-6">
         <div class="container mx-auto text-center">

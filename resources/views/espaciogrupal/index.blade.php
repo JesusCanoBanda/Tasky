@@ -2,18 +2,18 @@
     <link rel="stylesheet" href="{{ asset('css/table.css') }}">
 
     <div class="layout">
-    <div class="bg-gradient-to-b from-[#1E0579] via-[#2E1461] to-[#421F88] text-white w-72 h-screen p-6 flex flex-col justify-between shadow-xl">                    <div>
+    <div class="bg-gradient-to-b from-[#1E0579] via-[#2E1461] to-[#421F88] text-white w-72 h-full p-6 flex flex-col justify-between shadow-xl">                    <div>
         <!-- Logo y Título -->
         <div class="flex items-center gap-3 mb-8">
 
-            <h1 class="text-xl font-bold tracking-wide">Espacios</h1>
+            <h1 class="text-xl font-bold tracking-wide">Espacio Personal</h1>
         </div>
 
         <hr class="border-gray-600 mb-6">
 
         <!-- Gestionar Miembros -->
-        <a href="{{ route('grupal.miembros') }}" class="flex items-center gap-3 py-3 px-4 bg-[#3F3F5A] hover:bg-[#505070] rounded-lg mb-6 transition-all duration-200">
-            <span class="text-sm font-medium">Gestionar Miembros</span>
+        <a href="{{ route('grupal.miembros') }}" class="flex items-center gap-3 py-3 px-4 bg-[#DB3B2D] rounded-lg mb-6 transition-all duration-200">
+            <span class="text-sm font-medium ">Gestionar Miembros</span>
         </a>
 
         <!-- Espacios -->

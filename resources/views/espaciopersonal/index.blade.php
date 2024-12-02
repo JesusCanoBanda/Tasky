@@ -1,34 +1,87 @@
 <x-app-layout>
     <link rel="stylesheet" href="{{ asset('css/table.css') }}">
 
-    <div class="layout">
-        <div class="sidebar">
-            <h1 class="title">Espacios</h1>
-            <hr>
+    <div class="layout overflow-hidden">
+    <div class="bg-gradient-to-b from-[#1E0579] via-[#2E1461] to-[#421F88] text-white w-72 h-full overflow-hidden p-6 flex flex-col justify-between shadow-xl">
+    <div>
+        <!-- Logo y Título -->
+        <div class="flex items-center gap-3 mb-8">
+            <h1 class="text-xl font-bold tracking-wider uppercase">Espacio Personal</h1>
+        </div>
+
+        <hr class="border-gray-600 mb-6">
+
+        <!-- Espacios -->
+        <div class="space-y-4">
             @if ($espacios->isNotEmpty())
                 @foreach ($espacios as $espacio)
+                <button class="flex items-center gap-3 py-3 px-4 w-full text-left bg-[#3F3F5A] hover:bg-[#505070] rounded-lg transition-all duration-200"
+    onclick="toggleActions({{ $espacio->id }})"> <!-- Llamada a toggleActions -->
+    <span class="text-sm font-medium">{{ $espacio->nombre }}</span>
+</button>
 
-                    <button class="space-name" onclick="loadEspacio({{ $espacio->id }})">{{ $espacio->nombre }}</button>
 
-                    <form action="{{ route('espaciopersonal.destroy', $espacio->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="eliminar"
-                            onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?')">Eliminar</button>
-                    </form>
-
-                    <form action="{{ route('espaciopersonal.edit', $espacio->id) }}" method="GET" style="display:inline;">
-                        @csrf
-                        <button type="submit" class="editar" style="margin-left: 10px;">Editar</button>
-                    </form>
-                    
+                    <!-- Botones de acciones (ocultos por defecto) -->
+                    <div id="actions-{{ $espacio->id }}" class="hidden flex gap-2 mt-2">
+                        <form action="{{ route('espaciopersonal.destroy', $espacio->id) }}" method="POST" class="w-full">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                    class="flex items-center gap-2 py-2 px-3 bg-red-500 text-white rounded-lg hover:bg-red-600 w-full transition-all duration-200"
+                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?')">
+                                    <span class="text-sm font-medium">Eliminar</span>
+                                </button>
+                        </form>
+                        <form action="{{ route('espaciopersonal.edit', $espacio->id) }}" method="GET" class="w-full">
+                        <button type="submit"
+                                    class="flex items-center gap-2 py-2 px-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 w-full transition-all duration-200">
+                                    <span class="text-sm font-medium">Editar</span>
+                                </button>
+                        </form>
+                    </div>
                 @endforeach
             @else
-                <p class="no-spaces">No tienes espacios creados aún.</p>
+                <p class="text-sm text-gray-400 text-center">No tienes espacios creados aún.</p>
             @endif
-            <hr>
-            <button type="button" class="create-space" onclick="openModal()">+ Crear espacio</button>
         </div>
+
+        <hr class="border-gray-600 my-6">
+
+        <!-- Botones para Crear o Unirse a un Espacio -->
+        <button type="button" class="bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 w-full mb-4 transition-all duration-200" onclick="openModal()">
+            + Crear Espacio
+        </button>
+        <button type="button" class="bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-600 w-full transition-all duration-200" onclick="openJoinModal()">
+            + Unirse a Espacio
+        </button>
+    </div>
+</div>
+
+<!-- Contenido Principal -->
+
+
+
+<script>
+    function toggleActions(espacioId) {
+        const actionDiv = document.getElementById(`actions-${espacioId}`);
+        const allActionDivs = document.querySelectorAll('[id^="actions-"]');
+
+        // Ocultar todas las acciones
+        allActionDivs.forEach(div => {
+            if (div.id !== `actions-${espacioId}`) {
+                div.classList.add('hidden');
+            }
+        });
+
+        // Alternar visibilidad de las acciones seleccionadas
+        if (actionDiv.classList.contains('hidden')) {
+            actionDiv.classList.remove('hidden');
+        } else {
+            actionDiv.classList.add('hidden');
+        }
+    }
+</script>
+
 
         <div class="main-content">
             <div id="espacio-content">
@@ -58,7 +111,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    
     <script>
        function loadEspacio(id) { //estas cosas ya son como componentes todos feos con jquery xd
         $.ajax({
