@@ -198,7 +198,7 @@ public function store(Request $request, $id_espacio)
             $validator->errors()->add('porcentaje', 'El porcentaje debe ser mayor a 0 y no puede exceder el 70% si la tarea está iniciada.');
         }
 
-        if ($estado === 'casi por finalizar' && $porcentaje == 100) {
+        if ($estado === 'casi por finalizar' && ($porcentaje == 100 || $porcentaje < 70)) {
             $validator->errors()->add('porcentaje', 'El porcentaje no puede ser 100% si la tarea está casi por finalizar.');
         }
 
