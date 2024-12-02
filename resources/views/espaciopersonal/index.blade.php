@@ -15,11 +15,10 @@
         <div class="space-y-4">
             @if ($espacios->isNotEmpty())
                 @foreach ($espacios as $espacio)
-                <button class="flex items-center gap-3 py-3 px-4 w-full text-left bg-[#3F3F5A] hover:bg-[#505070] rounded-lg transition-all duration-200"
-    onclick="toggleActions({{ $espacio->id }})"> <!-- Llamada a toggleActions -->
-    <span class="text-sm font-medium">{{ $espacio->nombre }}</span>
-</button>
-
+                    <button class="flex items-center gap-3 py-3 px-4 w-full text-left bg-[#3F3F5A] hover:bg-[#505070] rounded-lg transition-all duration-200"
+                            onclick="loadEspacio({{ $espacio->id }}); toggleActions({{ $espacio->id }})"> <!-- Llamada a toggleActions y loadEspacio -->
+                        <span class="text-sm font-medium">{{ $espacio->nombre }}</span>
+                    </button>
 
                     <!-- Botones de acciones (ocultos por defecto) -->
                     <div id="actions-{{ $espacio->id }}" class="hidden flex gap-2 mt-2">
@@ -33,7 +32,7 @@
                                 </button>
                         </form>
                         <form action="{{ route('espaciopersonal.edit', $espacio->id) }}" method="GET" class="w-full">
-                        <button type="submit"
+                            <button type="submit"
                                     class="flex items-center gap-2 py-2 px-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 w-full transition-all duration-200">
                                     <span class="text-sm font-medium">Editar</span>
                                 </button>
@@ -59,8 +58,6 @@
 
 <!-- Contenido Principal -->
 
-
-
 <script>
     function toggleActions(espacioId) {
         const actionDiv = document.getElementById(`actions-${espacioId}`);
@@ -79,6 +76,72 @@
         } else {
             actionDiv.classList.add('hidden');
         }
+    }
+
+    function loadEspacio(id) { 
+        $.ajax({
+            url: `/personal/${id}`,
+            type: 'GET',
+            success: function(response) {
+                const espacio = response.espacio;
+                const tareas = response.tareas;
+
+                $('#espacio-content').html(`
+                    <div class="card">
+                    <h1 class="name">${espacio.nombre}</h1>
+                    <p><span class="bold">Categoría: </span>${espacio.categoria}</p>
+                    <p><span class="bold">Creado en: </span>${new Date(espacio.created_at).toLocaleDateString()}</p>
+                    </div>
+                    <a href="/personal/${espacio.id}/crear" class="task">Agregar Tarea </a>
+                `);
+
+                $('#tareas-header').html(
+                            `<tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Fecha de inicio</th>
+                            <th>Fecha final</th>
+                            <th>Descripción</th>
+                            <th>Estado </th>
+                            <th>Porcentaje </th>
+                            <th>Acciones</th>
+                            </tr>`);
+
+                let tareasHtml = '';
+                tareas.forEach((tarea) => { 
+                    tareasHtml += `
+                        <tr>
+                            <td class="cont">${tarea.id} </td>
+                            <td class="cont">${tarea.nombre}</td>
+                            <td class="cont">${new Date(tarea.fecha_inicio).toLocaleDateString()}</td>
+                            <td class="cont">${new Date(tarea.fecha_final).toLocaleDateString()}</td>                            
+                            <td class="cont">${tarea.descripcion}</td>
+                            <td class="cont">${tarea.estado}</td>
+                            <td class="cont">${tarea.porcentaje}</td>
+
+                            <td>
+                            <a href="/personal/${tarea.id}/editar" class="editar">Editar</a>
+                            
+                            <form action="{{ url('/personal/${tarea.id}/eliminar') }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');" class="eliminar">
+                                        Eliminar
+                                    </button>
+                            </form>
+
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                $('#tareas-list').html(tareasHtml); 
+        },
+        error: function(xhr) {
+            console.error('Error al cargar los datos:', xhr);
+            alert('No se pudo cargar el espacio o las tareas. Inténtalo de nuevo.');
+        }
+        });
     }
 </script>
 

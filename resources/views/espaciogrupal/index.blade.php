@@ -6,7 +6,7 @@
         <!-- Logo y Título -->
         <div class="flex items-center gap-3 mb-8">
 
-            <h1 class="text-xl font-bold tracking-wide">Espacio Personal</h1>
+            <h1 class="text-xl font-bold tracking-wide">Espacio Grupal</h1>
         </div>
 
         <hr class="border-gray-600 mb-6">
