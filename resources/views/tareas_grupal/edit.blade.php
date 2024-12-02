@@ -17,14 +17,17 @@
         <form class="player-form" action="{{ route('tareagrupal.update', $tarea->id) }}" method="POST">
             @csrf
             @method('PUT')
-
+            <label>Nombre</label>
             <input type="text" id="nombre" name="nombre" value="{{ old('nombre', $tarea->nombre) }}" required>
-            <input type="date" id="fechainicio" name="fechainicio"
-                value="{{ old('fechainicio', $tarea->fechainicio) }}">
-            <input type="date" id="fechafinal" name="fechafinal" value="{{ old('fechafinal', $tarea->fechafinal) }}">
 
-            <label for="descripcion">Descripción</label>
-            <textarea id="descripcion" name="descripcion" rows="4" required>{{ old('descripcion', $tarea->descripcion) }}</textarea>
+            <label>Fecha de inicio</label>
+            <input type="date" id="fechainicio" name="fechainicio" value="{{ old('fechainicio', $tarea->fechainicio ? \Carbon\Carbon::parse($tarea->fechainicio)->format('Y-m-d') : '') }}">
+
+            <label>Fecha de inicio</label>
+            <input type="date" id="fechafinal" name="fechafinal" value="{{ old('fechafinal', $tarea->fechafinal ? \Carbon\Carbon::parse($tarea->fechafinal)->format('Y-m-d') : '') }}">
+
+            <label>Descripción</label>
+            <input type="text" name="descripcion" value="{{ old('descripcion', $tarea->descripcion) }}" required>
 
             <label>Estado </label>
             <select name="estado" required>
@@ -61,6 +64,20 @@
             <div class="circle"></div>
         </div>
     </div>
+
+    @if ($errors->any())
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            window.onload = function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    html: `{!! implode('<br>', $errors->all()) !!}`,
+                    confirmButtonText: 'Entendido'
+                });
+            };
+        </script>
+    @endif
 
     <script>
         const range = document.getElementById('range');
