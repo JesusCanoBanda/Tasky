@@ -2,88 +2,178 @@
     <link rel="stylesheet" href="{{ asset('css/table.css') }}">
 
     <div class="layout">
-        <div class="sidebar">
-            <h1 class="title">Espacios</h1>
-            <hr>
-            <a href="{{ route('grupal.miembros') }}" class="card-link">
-                        <h4 class="name2"><b>gestionar miembros</b></h4>
-            </a>
+    <div class="bg-gradient-to-b from-[#1E0579] via-[#2E1461] to-[#421F88] text-white w-72 h-screen p-6 flex flex-col justify-between shadow-xl">                    <div>
+        <!-- Logo y Título -->
+        <div class="flex items-center gap-3 mb-8">
+
+            <h1 class="text-xl font-bold tracking-wide">Espacios</h1>
+        </div>
+
+        <hr class="border-gray-600 mb-6">
+
+        <!-- Gestionar Miembros -->
+        <a href="{{ route('grupal.miembros') }}" class="flex items-center gap-3 py-3 px-4 bg-[#3F3F5A] hover:bg-[#505070] rounded-lg mb-6 transition-all duration-200">
+            <span class="text-sm font-medium">Gestionar Miembros</span>
+        </a>
+
+        <!-- Espacios -->
+        <div class="space-y-4">
             @if ($espacios->isNotEmpty())
                 @foreach ($espacios as $data)
                     @php
                         $espacio = $data['espacio'];
                         $isAdmin = $data['isAdmin'];
                     @endphp
+                    <button class="flex items-center gap-3 py-3 px-4 w-full text-left bg-[#3F3F5A] hover:bg-[#505070] rounded-lg transition-all duration-200"
+                        onclick="loadEspacio({{ $espacio->id }}); toggleActions({{ $espacio->id }});">
+                        <span class="text-sm font-medium">{{ $espacio->nombre }}</span>
+                    </button>
 
-                    <button class="space-name" onclick="loadEspacio({{ $espacio->id }})">{{ $espacio->nombre }}</button>
-
+                    <!-- Acciones para Admin (ocultas por defecto) -->
                     @if ($isAdmin)
-                        <form action="{{ route('grupal.destroy', $espacio->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="eliminar"
-                                onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?')">Eliminar</button>
-                        </form>
-
-                        <form action="{{ route('grupal.edit', $espacio->id) }}" method="GET" style="display:inline;">
-                            @csrf
-                            <button type="submit" class="editar" style="margin-left: 10px;">Editar</button>
-                        </form>
+                        <div id="actions-{{ $espacio->id }}" class="hidden flex gap-2 mt-2">
+                            <form action="{{ route('grupal.destroy', $espacio->id) }}" method="POST" class="w-full">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="flex items-center gap-2 py-2 px-3 bg-red-500 text-white rounded-lg hover:bg-red-600 w-full transition-all duration-200"
+                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?')">
+                                    <span class="text-sm font-medium">Eliminar</span>
+                                </button>
+                            </form>
+                            <form action="{{ route('grupal.edit', $espacio->id) }}" method="GET" class="w-full">
+                                <button type="submit"
+                                    class="flex items-center gap-2 py-2 px-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 w-full transition-all duration-200">
+                                    <span class="text-sm font-medium">Editar</span>
+                                </button>
+                            </form>
+                        </div>
                     @endif
                 @endforeach
             @else
-                <p class="no-spaces">No tienes espacios creados aún.</p>
+                <p class="text-sm text-gray-400 text-center">No tienes espacios creados aún.</p>
             @endif
-
-
-            <hr>
-            <button type="button" class="create-space" onclick="openModal()">+ Crear espacio</button>
-            <button type="button" class="create-space" onclick="openJoinModal()">+ Unirse a espacio</button>
-            {{--
-            <!-- Nueva funcionalidad: Unirse a un espacio -->
-            <form action="{{ route('grupal.join', ['id' => $espacio->id]) }}" method="POST" class="join-space-form">
-                @csrf
-                <label for="space-id" class="join-label">Unirse a un espacio</label>
-                <input type="text" id="space-id" name="id_espacio" placeholder="ID del espacio" required>
-                <button type="submit" class="join-button">Unirse</button>
-            </form> --}}
-
         </div>
 
-        <div class="main-content">
-            <div id="espacio-content">
-                <!-- Aquí se cargarán los datos del espacio seleccionado -->
-                <p class="message">Selecciona un espacio para ver los detalles.</p>
-            </div>
+        <hr class="border-gray-600 my-6">
 
-            <br>
+        <!-- Botones para Crear o Unirse a un Espacio -->
+        <button type="button" class="bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 w-full mb-4 transition-all duration-200" onclick="openModal()">
+            + Crear Espacio
+        </button>
+        <button type="button" class="bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-600 w-full transition-all duration-200" onclick="openJoinModal()">
+            + Unirse a Espacio
+        </button>
+    </div>
+</div>
 
-            <div class="table">
-                <table>
 
-                    <thead id="tareas-header">
-                        <!-- Dinámico -->
-                    </thead>
 
-                    <tbody id="tareas-list">
-                        <!-- Dinámico -->
-                    </tbody>
+<script>
+    function toggleActions(id) {
+        const actions = document.getElementById(`actions-${id}`);
+        if (actions) {
+            actions.classList.toggle('hidden');
+        }
+    }
+</script>
 
-                </table>
-            </div>
+<!-- Contenido Principal -->
+<div class="main-content p-6 bg-[#2A2A42] rounded-lg shadow-lg">
+    <div id="espacio-content">
+        <p class="message text-center text-gray-400">Selecciona un espacio para ver los detalles.</p>
+    </div>
 
-            {{-- <!-- Nueva funcionalidad: Invitar miembros -->
-            <div id="invite-members" style="display: none;">
-                <h2>Invitar miembros al espacio</h2>
-                <form action="{{ route('grupal.invite') }}" method="POST">
-                    @csrf
-                    <label for="member-email">Correo del miembro:</label>
-                    <input type="email" id="member-email" name="email" placeholder="Introduce el correo" required>
-                    <input type="hidden" id="space-id-hidden" name="id_espacio">
-                    <button type="submit" class="invite-button">Invitar</button>
-                </form>
-            </div> --}}
-        </div>
+    <br>
+
+    <div class="table overflow-auto bg-[#3F3F5A] rounded-lg p-4">
+        <table class="table-auto w-full text-left">
+            <thead id="tareas-header" class="text-gray-400">
+                <!-- Dinámico -->
+            </thead>
+            <tbody id="tareas-list" class="text-white">
+                <!-- Dinámico -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+<script>
+    function toggleActions(espacioId) {
+        const actionDiv = document.getElementById(`actions-${espacioId}`);
+        const allActionDivs = document.querySelectorAll('[id^="actions-"]');
+
+        // Ocultar todas las acciones
+        allActionDivs.forEach(div => {
+            if (div.id !== `actions-${espacioId}`) {
+                div.classList.add('hidden');
+            }
+        });
+
+        // Alternar visibilidad de las acciones seleccionadas
+        if (actionDiv.classList.contains('hidden')) {
+            actionDiv.classList.remove('hidden');
+        } else {
+            actionDiv.classList.add('hidden');
+        }
+    }
+
+    function loadEspacio(id) {
+        $.ajax({
+            url: `/grupal/${id}`,
+            type: 'GET',
+            success: function(response) {
+                const espacio = response.espacio;
+                const tareas = response.tareas;
+
+                // Detalles del Espacio
+                $('#espacio-content').html(`
+                    <div class="bg-[#3F3F5A] p-4 rounded-lg">
+                        <h1 class="text-lg font-bold text-white mb-2">${espacio.nombre}</h1>
+                        <p class="text-sm text-gray-300 mb-2">Categoría: ${espacio.categoria}</p>
+                        <p class="text-sm text-gray-300 mb-2">Creado en: ${new Date(espacio.created_at).toLocaleDateString()}</p>
+                        <p class="text-sm text-gray-300 mb-4">Código de invitación: ${espacio.id}</p>
+                    </div>
+                `);
+
+                // Encabezados de la Tabla
+                $('#tareas-header').html(`
+                    <tr>
+                        <th class="p-2">ID</th>
+                        <th class="p-2">Nombre</th>
+                        <th class="p-2">Fecha Inicio</th>
+                        <th class="p-2">Fecha Final</th>
+                        <th class="p-2">Descripción</th>
+                    </tr>
+                `);
+
+                // Lista de Tareas
+                let tareasHtml = '';
+                tareas.forEach(tarea => {
+                    tareasHtml += `
+                        <tr>
+                            <td class="p-2">${tarea.id}</td>
+                            <td class="p-2">${tarea.nombre}</td>
+                            <td class="p-2">${new Date(tarea.fechainicio).toLocaleDateString()}</td>
+                            <td class="p-2">${new Date(tarea.fechafinal).toLocaleDateString()}</td>
+                            <td class="p-2">${tarea.descripcion}</td>
+                        </tr>
+                    `;
+                });
+                $('#tareas-list').html(tareasHtml);
+            },
+            error: function(xhr) {
+                console.error('Error al cargar los datos:', xhr);
+                alert('No se pudo cargar el espacio o las tareas. Inténtalo de nuevo.');
+            }
+        });
+    }
+</script>
+
+
+</div>
+
 
     </div>
     <!-- Modal para ingresar el ID del espacio -->
