@@ -12,34 +12,36 @@
         <a class="flex justify-end w-full" href="{{ route('espaciopersonal.index') }}">
             <img src="{{ asset('images/close.png') }}" alt="Cerrar">
         </a>
-        <form class="player-form" action="{{route('task.store',['id'=>"$id"])}}" method="POST">
+        <form class="player-form" action="{{ route('task.store', ['id' => "$id"]) }}" method="POST">
             @csrf
+        
             <label>Nombre</label>
-            <input type="text" name="nombre" required>
-
-            <label>Fecha de inicio </label>
-            <input type="date" name="fecha_inicio" required> 
-
-            <label>Fecha final </label>
-            <input type="date" name="fecha_final" required>
-
-            <label>Descripción </label>
-            <input type="text" name="descripcion" required>
-
-            <label>Estado </label>
+            <input type="text" name="nombre" maxlength="15" required value="{{ old('nombre') }}">
+        
+            <label>Fecha de inicio</label>
+            <input type="date" name="fecha_inicio" required value="{{ old('fecha_inicio') }}">
+        
+            <label>Fecha final</label>
+            <input type="date" name="fecha_final" required value="{{ old('fecha_final') }}">
+        
+            <label>Descripción</label>
+            <input type="text" name="descripcion" maxlength="50" required value="{{ old('descripcion') }}">
+        
+            <label>Estado</label>
             <select name="estado" required>
-                <option value="no iniciado">no iniciado</option>
-                <option value="iniciado">iniciado</option>
-                <option value="casi por finalizar">casi por finalizar</option>
-                <option value="finalizado">finalizado</option>
+                <option value="no iniciado" {{ old('estado') == 'no iniciado' ? 'selected' : '' }}>no iniciado</option>
+                <option value="iniciado" {{ old('estado') == 'iniciado' ? 'selected' : '' }}>iniciado</option>
+                <option value="casi por finalizar" {{ old('estado') == 'casi por finalizar' ? 'selected' : '' }}>casi por finalizar</option>
+                <option value="finalizado" {{ old('estado') == 'finalizado' ? 'selected' : '' }}>finalizado</option>
             </select>
-
-            <label>Porcentaje </label>
-            <input name="porcentaje" id="range" type="range" min="0" max="100" step="1" value="0" required>
+        
+            <label>Porcentaje</label>
+            <input name="porcentaje" id="range" type="range" min="0" max="100" step="1" value="{{ old('porcentaje', 0) }}" required>
             <p><span id="valor"></span></p>
-
+        
             <button type="submit" class="save-button">Guardar</button>
         </form>
+        
     </div>
 
     @if ($errors->any())

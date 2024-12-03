@@ -17,7 +17,7 @@
             @method('PUT') 
 
             <label>Nombre</label>
-            <input type="text" name="nombre" value="{{ old('nombre', $tarea->nombre) }}" required>
+            <input type="text" name="nombre" value="{{ old('nombre', $tarea->nombre) }}" maxlength="15" required>
 
             <label>Fecha de inicio </label>
             <input type="date" name="fecha_inicio" value="{{old('fecha_incio',$tarea->fecha_inicio ? \Carbon\Carbon::parse($tarea->fecha_inicio)->format('Y-m-d') : '') }}">
@@ -26,7 +26,7 @@
             <input type="date" name="fecha_final" value="{{old('fecha_final',$tarea->fecha_final ? \Carbon\Carbon::parse($tarea->fecha_final)->format('Y-m-d') : '') }}">
 
             <label>Descripción</label>
-            <input type="text" name="descripcion" value="{{ old('descripcion', $tarea->descripcion) }}" required>
+            <input type="text" name="descripcion" value="{{ old('descripcion', $tarea->descripcion) }}" maxlength="50" required>
 
             {{-- <label>Estado </label>
             <input type="text" name="estado" value="{{old('estado',$tarea->estado)}}" required> --}}
