@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class TareaController extends Controller
 {
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -29,20 +29,20 @@ class TareaController extends Controller
     public function store(Request $request, $id_espacio)
     {
         $userId = Auth::id();
-    
+
         if (!$userId) {
             return redirect()->route('espaciopersonal.create')->with('error', 'No estás autenticado.');
         }
-    
+
         // Conversión del porcentaje
         $request['porcentaje'] = intval($request['porcentaje']);
-    
+
         // Validaciones personalizadas
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:15', 
-            'fecha_inicio' => 'nullable|date|after_or_equal:today', 
-            'fecha_final' => 'nullable|date|after_or_equal:fecha_inicio', 
-            'descripcion' => 'required|string|max:50', 
+            'nombre' => 'required|string|max:15',
+            'fecha_inicio' => 'nullable|date|after_or_equal:today',
+            'fecha_final' => 'nullable|date|after_or_equal:fecha_inicio',
+            'descripcion' => 'required|string|max:50',
             'estado' => 'required|string|in:no iniciado,iniciado,casi por finalizar,finalizado',
             'porcentaje' => [
                 'required',
@@ -51,19 +51,19 @@ class TareaController extends Controller
                 'max:100',
                 function ($attribute, $value, $fail) use ($request) {
                     $estado = $request->input('estado');
-    
+
                     if ($estado === 'no iniciado' && $value != 0) {
                         $fail('El porcentaje debe ser 0 si el estado es no iniciado.');
                     }
-    
+
                     if ($estado === 'iniciado' && ($value <= 0 || $value > 70)) {
                         $fail('El porcentaje debe ser mayor a 0 y no superar el 70% si el estado es iniciado.');
                     }
-    
+
                     if ($estado === 'casi por finalizar' && ($value == 100 || $value < 70)) {
                         $fail('El porcentaje debe estar entre 70 y 99 si el estado es casi por finalizar.');
                     }
-    
+
                     if ($estado === 'finalizado' && $value != 100) {
                         $fail('El porcentaje debe ser 100 si el estado es finalizado.');
                     }
@@ -88,13 +88,13 @@ class TareaController extends Controller
             'porcentaje.min' => 'El porcentaje no puede ser menor que 0.',
             'porcentaje.max' => 'El porcentaje no puede ser mayor que 100.',
         ]);
-    
+
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
-    
+
         TareaPersonal::create([
             'nombre' => $request->nombre,
             'fecha_inicio' => $request->fecha_inicio,
@@ -104,10 +104,10 @@ class TareaController extends Controller
             'porcentaje' => $request->porcentaje,
             'id_espacio' => $id_espacio,
         ]);
-    
+
         return redirect()->route('table.index')->with('success', 'Tarea creada exitosamente.');
     }
-    
+
 
 
     /**
@@ -134,18 +134,18 @@ class TareaController extends Controller
     public function update(Request $request, string $id)
     {
         $userId = Auth::id();
-    
+
         if (!$userId) {
             return redirect()->route('espaciopersonal.create')->with('error', 'No estás autenticado.');
         }
-    
+
         $request['porcentaje'] = intval($request['porcentaje']);
-    
+
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
+            'nombre' => 'required|string|max:15',
             'fecha_inicio' => 'nullable|date',
             'fecha_final' => 'nullable|date|after_or_equal:fecha_inicio',
-            'descripcion' => 'required|string|max:500',
+            'descripcion' => 'required|string|max:50',
             'estado' => 'required|string|in:no iniciado,iniciado,casi por finalizar,finalizado',
             'porcentaje' => [
                 'required',
@@ -154,19 +154,19 @@ class TareaController extends Controller
                 'max:100',
                 function ($attribute, $value, $fail) use ($request) {
                     $estado = $request->input('estado');
-    
+
                     if ($estado === 'no iniciado' && $value != 0) {
                         $fail('El porcentaje debe ser 0 si el estado es no iniciado.');
                     }
-    
+
                     if ($estado === 'iniciado' && ($value <= 0 || $value > 70)) {
                         $fail('El porcentaje debe ser mayor a 0 y no superar el 70% si el estado es iniciado.');
                     }
-    
+
                     if ($estado === 'casi por finalizar' && ($value == 100 || $value < 70)) {
                         $fail('El porcentaje debe estar entre 70 y 99 si el estado es casi por finalizar.');
                     }
-    
+
                     if ($estado === 'finalizado' && $value != 100) {
                         $fail('El porcentaje debe ser 100 si el estado es finalizado.');
                     }
@@ -190,19 +190,19 @@ class TareaController extends Controller
             'porcentaje.min' => 'El porcentaje no puede ser menor que 0.',
             'porcentaje.max' => 'El porcentaje no puede ser mayor que 100.',
         ]);
-    
+
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
-    
+
         $tarea = TareaPersonal::findOrFail($id);
         $tarea->update($request->all());
-    
+
         return redirect()->route('table.index')->with('success', 'Tarea actualizada exitosamente.');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -214,7 +214,7 @@ class TareaController extends Controller
         if (!$userId) {
             return redirect()->route('espaciopersonal.create')->with('error', 'No estás autenticado.');
         }
-        
+
         $tarea = TareaPersonal::findOrFail($id);
 
         $tarea->delete();

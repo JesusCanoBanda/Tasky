@@ -24,7 +24,7 @@
                         type="text"
                         id="nombre"
                         name="nombre"
-                        maxlength="15"
+                        maxlength="20"
                         value="{{ old('nombre') }}"
                         required
                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
@@ -61,7 +61,7 @@
                         type="text"
                         id="descripcion"
                         name="descripcion"
-                        maxlength="30"
+                        maxlength="50"
                         value="{{ old('descripcion') }}"
                         required
                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
@@ -103,7 +103,7 @@
                     <input
                         type="text"
                         name="categoria"
-                        maxlength="25"
+                        maxlength="50"
                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 </div>
 

@@ -61,7 +61,7 @@
                         type="text"
                         id="descripcion"
                         name="descripcion"
-                        maxlength="30"
+                        maxlength="50"
                         required
                         value="{{ old('descripcion') }}"
                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">

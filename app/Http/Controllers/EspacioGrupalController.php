@@ -144,8 +144,8 @@ class EspacioGrupalController extends Controller
     {
         // Validar los datos
         $validatedData = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'categoria' => 'required|string|max:255',
+            'nombre' => 'required|string|max:18',
+            'categoria' => 'required|string|max:25',
         ]);
 
         // Obtener el ID del usuario autenticado
@@ -256,8 +256,8 @@ class EspacioGrupalController extends Controller
     {
         // Actualizar un registro
         $validatedData = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'categoria' => 'required|string|max:255',
+            'nombre' => 'required|string|max:18',
+            'categoria' => 'required|string|max:25',
         ]);
 
         $espacio = EspacioGrupal::findOrFail($id);

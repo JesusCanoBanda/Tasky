@@ -31,8 +31,8 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:20'], // Máximo 20 caracteres
-            'user_name' => ['required', 'string', 'max:20', 'unique:users,user_name'], // Máximo 20 caracteres
-            'apellidos' => ['required', 'string', 'max:20'], // Máximo 20 caracteres
+            'user_name' => ['required', 'string', 'max:15', 'unique:users,user_name'], // Máximo 20 caracteres
+            'apellidos' => ['required', 'string', 'max:15'], // Máximo 20 caracteres
             'email' => ['required', 'string', 'email', 'max:62', 'unique:users,email'], // Email sigue con 255
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);

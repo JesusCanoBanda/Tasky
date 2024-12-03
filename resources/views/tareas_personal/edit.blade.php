@@ -19,12 +19,12 @@
                 <!-- Nombre -->
                 <div>
                     <label for="nombre" class="block text-sm font-medium text-gray-850">Nombre</label>
-                    <input 
-                        type="text" 
-                        id="nombre" 
-                        name="nombre" 
-                        value="{{ old('nombre', $tarea->nombre) }}" 
-                        maxlength="18" 
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        value="{{ old('nombre', $tarea->nombre) }}"
+                        maxlength="15"
                         required
                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 </div>
@@ -32,10 +32,10 @@
                 <!-- Fecha de inicio -->
                 <div>
                     <label for="fecha_inicio" class="block text-sm font-medium text-gray-850">Fecha de inicio</label>
-                    <input 
-                        type="date" 
-                        id="fecha_inicio" 
-                        name="fecha_inicio" 
+                    <input
+                        type="date"
+                        id="fecha_inicio"
+                        name="fecha_inicio"
                         value="{{ old('fecha_inicio', $tarea->fecha_inicio ? \Carbon\Carbon::parse($tarea->fecha_inicio)->format('Y-m-d') : '') }}"
                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 </div>
@@ -43,10 +43,10 @@
                 <!-- Fecha final -->
                 <div>
                     <label for="fecha_final" class="block text-sm font-medium text-gray-850">Fecha final</label>
-                    <input 
-                        type="date" 
-                        id="fecha_final" 
-                        name="fecha_final" 
+                    <input
+                        type="date"
+                        id="fecha_final"
+                        name="fecha_final"
                         value="{{ old('fecha_final', $tarea->fecha_final ? \Carbon\Carbon::parse($tarea->fecha_final)->format('Y-m-d') : '') }}"
                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 </div>
@@ -54,12 +54,12 @@
                 <!-- Descripción -->
                 <div>
                     <label for="descripcion" class="block text-sm font-medium text-gray-850">Descripción</label>
-                    <input 
-                        type="text" 
-                        id="descripcion" 
-                        name="descripcion" 
-                        maxlength="50" 
-                        value="{{ old('descripcion', $tarea->descripcion) }}" 
+                    <input
+                        type="text"
+                        id="descripcion"
+                        name="descripcion"
+                        maxlength="50"
+                        value="{{ old('descripcion', $tarea->descripcion) }}"
                         required
                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 </div>
@@ -67,9 +67,9 @@
                 <!-- Estado -->
                 <div>
                     <label for="estado" class="block text-sm font-medium text-gray-850">Estado</label>
-                    <select 
-                        id="estado" 
-                        name="estado" 
+                    <select
+                        id="estado"
+                        name="estado"
                         required
                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                         <option value="no iniciado" {{ $tarea->estado === 'no iniciado' ? 'selected' : '' }}>No iniciado</option>
@@ -82,13 +82,13 @@
                 <!-- Porcentaje -->
                 <div>
                     <label for="range" class="block text-sm font-medium text-gray-700">Porcentaje</label>
-                    <input 
-                        type="range" 
-                        id="range" 
-                        name="porcentaje" 
-                        value="{{ old('porcentaje', $tarea->porcentaje) }}" 
-                        min="0" 
-                        max="100" 
+                    <input
+                        type="range"
+                        id="range"
+                        name="porcentaje"
+                        value="{{ old('porcentaje', $tarea->porcentaje) }}"
+                        min="0"
+                        max="100"
                         step="1"
                         class="w-full mt-1">
                     <p class="text-sm text-gray-500 mt-1"><span id="valor" class="font-semibold">0</span>%</p>
@@ -96,8 +96,8 @@
 
                 <!-- Botón Actualizar -->
                 <div>
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         class="w-full bg-blue-600 text-white py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         Actualizar
                     </button>

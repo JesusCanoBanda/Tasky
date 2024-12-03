@@ -19,12 +19,12 @@
                 <!-- Nombre -->
                 <div>
                     <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-                    <input 
-                        type="text" 
-                        id="nombre" 
-                        name="nombre" 
-                        maxlength="18" 
-                        value="{{ old('nombre', $espacio->nombre) }}" 
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        maxlength="18"
+                        value="{{ old('nombre', $espacio->nombre) }}"
                         required
                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
                 </div>
@@ -32,20 +32,20 @@
                 <!-- Descripción -->
                 <div>
                     <label for="categoria" class="block text-sm font-medium text-gray-700">Descripción</label>
-                    <input 
-                        type="text" 
-                        id="categoria" 
-                        name="categoria" 
-                        maxlength="25" 
-                        value="{{ old('categoria', $espacio->categoria) }}" 
+                    <input
+                        type="text"
+                        id="categoria"
+                        name="categoria"
+                        maxlength="25"
+                        value="{{ old('categoria', $espacio->categoria) }}"
                         required
                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
                 </div>
 
                 <!-- Botón Actualizar -->
                 <div class="flex justify-end">
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
                         Actualizar
                     </button>

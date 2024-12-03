@@ -23,7 +23,7 @@ class EspacioPersonalController extends Controller
         ], [
             'nombre.max' => 'El nombre no puede tener más de 18 caracteres.',
             'categoria.max' => 'La categoría no puede tener más de 25 caracteres.',
-        ]); 
+        ]);
 
         $userId = Auth::id(); //aut del user
 
@@ -64,8 +64,8 @@ class EspacioPersonalController extends Controller
     public function update(Request $request, $id)//actualizar un registro
     {
         $validatedData = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'categoria' => 'required|string|max:255',
+            'nombre' => 'required|string|max:18',
+            'categoria' => 'required|string|max:25',
         ]);
 
         $espacio = EspacioPersonal::findOrFail($id);
