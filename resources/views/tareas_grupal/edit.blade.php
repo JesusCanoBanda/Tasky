@@ -18,7 +18,7 @@
             @csrf
             @method('PUT')
             <label>Nombre</label>
-            <input type="text" id="nombre" name="nombre" value="{{ old('nombre', $tarea->nombre) }}" required>
+            <input type="text" id="nombre" name="nombre" value="{{ old('nombre', $tarea->nombre) }}" maxlength="15" required>
 
             <label>Fecha de inicio</label>
             <input type="date" id="fechainicio" name="fechainicio" value="{{ old('fechainicio', $tarea->fechainicio ? \Carbon\Carbon::parse($tarea->fechainicio)->format('Y-m-d') : '') }}">
@@ -27,7 +27,7 @@
             <input type="date" id="fechafinal" name="fechafinal" value="{{ old('fechafinal', $tarea->fechafinal ? \Carbon\Carbon::parse($tarea->fechafinal)->format('Y-m-d') : '') }}">
 
             <label>Descripción</label>
-            <input type="text" name="descripcion" value="{{ old('descripcion', $tarea->descripcion) }}" required>
+            <input type="text" name="descripcion" value="{{ old('descripcion', $tarea->descripcion) }}" maxlength="50" required>
 
             <label>Estado </label>
             <select name="estado" required>
@@ -54,7 +54,7 @@
 
             <label for="categoria">Notas</label>
             <input type="text" id="categoria" name="categoria" value="{{ old('categoria', $tarea->categoria) }}"
-                required>
+                maxlength="50" required>
 
             <button type="submit" class="save-button">Actualizar</button>
         </form>

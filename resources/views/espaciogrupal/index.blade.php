@@ -1,5 +1,6 @@
 <x-app-layout>
     <link rel="stylesheet" href="{{ asset('css/table.css') }}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('sweetalert::alert')
 
     <div class="layout">
