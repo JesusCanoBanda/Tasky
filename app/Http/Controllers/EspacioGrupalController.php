@@ -101,45 +101,45 @@ class EspacioGrupalController extends Controller
     }
 
 
-    public function join(Request $request)
-    {
-        // Validar si el ID del espacio existe
-        $request->validate([
-            'id_espacio' => 'required|integer',
-        ]);
+    // public function join(Request $request)
+    // {
+    //     // Validar si el ID del espacio existe
+    //     $request->validate([
+    //         'id_espacio' => 'required|integer',
+    //     ]);
 
-        $idEspacio = $request->input('id_espacio');
+    //     $idEspacio = $request->input('id_espacio');
 
-        // Verificar si el espacio grupal existe
-        $espacio = EspacioGrupal::find($idEspacio);
+    //     // Verificar si el espacio grupal existe
+    //     $espacio = EspacioGrupal::find($idEspacio);
 
-        if (!$espacio) {
-            Alert::error('Error', 'El grupo no fue encontrado.');
-            return redirect()->route('grupal.index');
-        }
+    //     if (!$espacio) {
+    //         Alert::error('Error', 'El grupo no fue encontrado.');
+    //         return redirect()->route('grupal.index');
+    //     }
 
-        $user = Auth::user();
+    //     $user = Auth::user();
 
-        // Verificar si el usuario ya es miembro del espacio
-        $existingMember = Miembrogrupal::where('id_grupal', $idEspacio)
-            ->where('id_usuario', $user->id)
-            ->first();
+    //     // Verificar si el usuario ya es miembro del espacio
+    //     $existingMember = Miembrogrupal::where('id_grupal', $idEspacio)
+    //         ->where('id_usuario', $user->id)
+    //         ->first();
 
-        if ($existingMember) {
-            Alert::info('Información', 'Ya eres miembro de este espacio.');
-            return redirect()->route('grupal.index');
-        }
+    //     if ($existingMember) {
+    //         Alert::info('Información', 'Ya eres miembro de este espacio.');
+    //         return redirect()->route('grupal.index');
+    //     }
 
-        // Agregar el usuario al espacio con rol de "Miembro" (0)
-        Miembrogrupal::create([
-            'id_grupal' => $idEspacio,
-            'id_usuario' => $user->id,
-            'rol' => 0,
-        ]);
+    //     // Agregar el usuario al espacio con rol de "Miembro" (0)
+    //     Miembrogrupal::create([
+    //         'id_grupal' => $idEspacio,
+    //         'id_usuario' => $user->id,
+    //         'rol' => 0,
+    //     ]);
 
-        Alert::success('Éxito', 'Te has unido al espacio exitosamente.');
-        return redirect()->route('grupal.index');
-    }
+    //     Alert::success('Éxito', 'Te has unido al espacio exitosamente.');
+    //     return redirect()->route('grupal.index');
+    // }
 
 
     public function store(Request $request)
