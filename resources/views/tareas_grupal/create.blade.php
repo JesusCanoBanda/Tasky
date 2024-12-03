@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/agregartarea.css') }}">
     <title>Agregar Nueva Tarea</title>
-
 </head>
 <body>
     <div class="results-table">
@@ -13,45 +12,48 @@
             <img src="{{ asset('images/close.png') }}" alt="Cerrar">
         </a>
         <div class="form-title">Agregar tarea</div>
-        <form class="player-form" action="{{ route('tareagrupal.store', ['id' => "$id"]) }}" method="POST">
+        <form id="taskForm" class="player-form" action="{{ route('tareagrupal.store', ['id' => $id]) }}" method="POST">
             @csrf
             <label>Nombre</label>
-            <input type="text" name="nombre" >
-
+            <input type="text" name="nombre" id="nombre" maxlength="15" value="{{ old('nombre') }}" required>
+        
             <label>Fecha de inicio</label>
-            <input type="date" name="fechainicio" >
-
+            <input type="date" name="fechainicio" id="fechainicio" value="{{ old('fechainicio') }}" required>
+        
             <label>Fecha final</label>
-            <input type="date" name="fechafinal" >
-
+            <input type="date" name="fechafinal" id="fechafinal" value="{{ old('fechafinal') }}" required>
+        
             <label>Descripción</label>
-            <input type="text" name="descripcion" >
-
-            <label>Estado </label>
-            <select name="estado" >
-                <option value="no iniciado">no iniciado</option>
-                <option value="iniciado">iniciado</option>
-                <option value="casi por finalizar">casi por finalizar</option>
-                <option value="finalizado">finalizado</option>
+            <input type="text" name="descripcion" id="descripcion" maxlength="50" value="{{ old('descripcion') }}" required>
+        
+            <label>Estado</label>
+            <select name="estado" id="estado" required>
+                <option value="no iniciado" {{ old('estado') == 'no iniciado' ? 'selected' : '' }}>no iniciado</option>
+                <option value="iniciado" {{ old('estado') == 'iniciado' ? 'selected' : '' }}>iniciado</option>
+                <option value="casi por finalizar" {{ old('estado') == 'casi por finalizar' ? 'selected' : '' }}>casi por finalizar</option>
+                <option value="finalizado" {{ old('estado') == 'finalizado' ? 'selected' : '' }}>finalizado</option>
             </select>
 
             <label>Porcentaje </label>
             <input name="porcentaje" id="range" type="range" min="0" max="100" step="1" value="0" >
             <p><span id="valor"></span></p>
 
-            <label>Notas</label>
+            <label>Categoria </label>
             <input type="text" name="categoria" >
 
             <label>Responsable</label>
-            <select name="responsable">
+            <select name="responsable" id="responsable" required>
                 <option value="">Seleccione un responsable</option>
                 @foreach ($miembros as $miembro)
-                    <option value="{{ $miembro->usuario->name }}">{{ $miembro->usuario->name }}</option>
+                    <option value="{{ $miembro->usuario->name }}" {{ old('responsable') == $miembro->usuario->name ? 'selected' : '' }}>
+                        {{ $miembro->usuario->name }}
+                    </option>
                 @endforeach
             </select>
-
+        
             <button type="submit" class="save-button">Guardar</button>
         </form>
+        
     </div>
 
     @if ($errors->any())
@@ -68,15 +70,5 @@
         </script>
     @endif
 
-    <script>//pa mostrar el valor del range, si le quieren mover ta bien namas asegurense que me retorne un string
-        const range = document.getElementById('range');
-        const valorRange = document.getElementById('valor');
-
-        valorRange.textContent = range.value;
-
-        range.addEventListener('input',()=>{
-            valorRange.textContent = range.value;
-        });
-    </script>
 </body>
 </html>

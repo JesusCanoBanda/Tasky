@@ -15,13 +15,13 @@
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full bg-blue-50 border border-blue-300 rounded-md focus:ring focus:ring-blue-500 focus:border-blue-500" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full bg-blue-50 border border-blue-300 rounded-md focus:ring focus:ring-blue-500 focus:border-blue-500" :value="old('name', $user->name)" required autofocus autocomplete="name" maxlength="20" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full bg-blue-50 border border-blue-300 rounded-md focus:ring focus:ring-blue-500 focus:border-blue-500" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full bg-blue-50 border border-blue-300 rounded-md focus:ring focus:ring-blue-500 focus:border-blue-500" :value="old('email', $user->email)" required autocomplete="username" maxlength="62" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
         </div>
 

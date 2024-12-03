@@ -1,5 +1,7 @@
 <x-app-layout>
     <link rel="stylesheet" href="{{ asset('css/table.css') }}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- @include('sweetalert::alert') --}}
 
     <div class="layout">
     <div class="bg-gradient-to-b from-[#1E0579] via-[#2E1461] to-[#421F88] text-white w-72 h-full p-6 flex flex-col justify-between shadow-xl">                    <div>

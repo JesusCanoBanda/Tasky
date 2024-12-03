@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="text-center text-gray-300 text-xs">
-                        ¿Ya tienes una cuenta? 
+                        ¿Ya tienes una cuenta?
                         <a href="{{ route('login') }}" class="text-green-400 hover:underline">Inicia sesión</a>
                     </div>
 
