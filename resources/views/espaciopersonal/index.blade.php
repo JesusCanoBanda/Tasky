@@ -242,43 +242,79 @@
     </script>
 
     <!-- Ventana modal Crear Espacio -->
+    <div id="crearEspacioModal" class="hidden fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+    <div class="max-w-md w-full bg-white rounded-lg shadow-xl p-6 relative">
+        <!-- Botón de cerrar -->
+        <button
+            class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+            onclick="cerrarModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
 
-    <div id="crearEspacioModal" class="ModalDialog">
-        <div class="results-table">
-            <div class="form-title">Crear espacio</div>
-            <form class="player-form" action="{{ route('espaciopersonal.store') }}" method="POST">
-                @csrf
-                <label class="name">Nombre</label>
-                <input class="input" type="text" maxlength="18" name="nombre" required>
-                <br>
-                <label class="category">Descripción</label>
-                <input class="input2" type="text" maxlength="25" name="categoria" required>{{--hay que cambiar el nombre del campo por descripcion--}}
-                <br>
-                <button type="submit" class="save-button">Guardar</button>
-            </form>
-    
-    
-            <div class="circle-wrapper">
-                <div class="circle"></div>
+        <!-- Título -->
+        <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">Crear Espacio</h2>
+
+        <!-- Formulario -->
+        <form action="{{ route('espaciopersonal.store') }}" method="POST" class="space-y-4">
+            @csrf
+
+            <!-- Nombre -->
+            <div>
+                <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    maxlength="18"
+                    required
+                    class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             </div>
-        </div>
+
+            <!-- Descripción -->
+            <div>
+                <label for="categoria" class="block text-sm font-medium text-gray-700">Descripción</label>
+                <input
+                    type="text"
+                    id="categoria"
+                    name="categoria"
+                    maxlength="25"
+                    required
+                    class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Botón Guardar -->
+            <div class="flex justify-end">
+                <button
+                    type="submit"
+                    class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Guardar
+                </button>
+            </div>
+        </form>
     </div>
+</div>
 
-    <!-- Script del modal  crear espacio -->
+<!-- Script del modal -->
+<script>
+    function openModal() {
+        const modal = document.getElementById('crearEspacioModal');
+        modal.classList.remove('hidden');
+    }
 
-    <script>
+    function cerrarModal() {
+        const modal = document.getElementById('crearEspacioModal');
+        modal.classList.add('hidden');
+    }
 
-        function openModal(){
-            document.getElementById('crearEspacioModal').style.display = 'flex';
+    // Cerrar el modal al hacer clic fuera de él
+    window.onclick = function(event) {
+        const modal = document.getElementById('crearEspacioModal');
+        if (event.target === modal) {
+            cerrarModal();
         }
+    };
+</script>
 
-        //Esto hace que se cierre clickeando afuera del modal
-        window.onclick = function(event){
-            var modal = document.getElementById('crearEspacioModal');
-            if(event.target == modal){
-                modal.style.display = 'none';
-            }
-        }
-
-    </script>    
 </x-app-layout>

@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Espacio</title>
 
-</head>
-<body>
+    <x-app-layout>
     <div class="results-table">
-        <div class="form-title">Crear espacio</div>
+        <div class="form-title">YOROLEJIJU</div>
         <form class="player-form" action="{{ route('espaciopersonal.store') }}" method="POST">
             @csrf
             <label>Nombre</label>
@@ -25,5 +18,5 @@
             <div class="circle"></div>
         </div>
     </div>
-</body>
-</html>
+    
+</x-app-layout>

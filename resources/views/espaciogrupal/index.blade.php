@@ -203,33 +203,59 @@
 
     </div>
     <!-- Modal para ingresar el ID del espacio -->
-    <div id="joinEspacioModal" class="ModalDialog">
-        <div class="results-table">
-            <div class="form-title">Unirse a un Espacio</div>
-            <form id="joinEspacioForm" action="{{ route('grupal.join') }}" method="POST">
-                @csrf
-                <label for="id_espacio" class="name">ID del Espacio</label>
-                <input class="input" type="number" id="id_espacio" name="id_espacio" required>
-                <button type="submit" class="save-button">Unirse</button>
-            </form>
-            <div class="circle-wrapper">
-                <div class="circle"></div>
+    <div id="joinEspacioModal" class="hidden fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+    <div class="max-w-md w-full bg-white rounded-lg shadow-xl p-6 relative">
+        <!-- Botón de cerrar -->
+        <button
+            class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+            onclick="document.getElementById('joinEspacioModal').classList.add('hidden')">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <!-- Título -->
+        <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">Unirse a un Espacio</h2>
+
+        <!-- Formulario -->
+        <form id="joinEspacioForm" action="{{ route('grupal.join') }}" method="POST" class="space-y-4">
+            @csrf
+
+            <!-- ID del Espacio -->
+            <div>
+                <label for="id_espacio" class="block text-sm font-medium text-gray-700">ID del Espacio</label>
+                <input
+                    type="number"
+                    id="id_espacio"
+                    name="id_espacio"
+                    required
+                    class="mt-1 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
             </div>
-        </div>
+
+            <!-- Botón Unirse -->
+            <div class="flex justify-end">
+                <button
+                    type="submit"
+                    class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    Unirse
+                </button>
+            </div>
+        </form>
     </div>
+</div>
 
-    <script>
-        function openJoinModal() {
-            document.getElementById('joinEspacioModal').style.display = 'flex';
-        }
+<script>
+    function openJoinModal() {
+        document.getElementById('joinEspacioModal').classList.remove('hidden');
+    }
 
-        window.onclick = function(event) {
-            var modal = document.getElementById('joinEspacioModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
+    window.onclick = function (event) {
+        const modal = document.getElementById('joinEspacioModal');
+        if (event.target === modal) {
+            modal.classList.add('hidden');
         }
-    </script>
+    };
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -323,40 +349,75 @@
 
     <!-- Ventana modal Crear Espacio -->
 
-    <div id="crearEspacioModal" class="ModalDialog">
-        <div class="results-table">
-            <div class="form-title">Crear espacio</div>
-            <form class="player-form" action="{{ route('grupal.store') }}" method="POST">
-                @csrf
-                <label class="name">Nombre</label>
-                <input class="input" type="text" maxlength="18" name="nombre" required>
-                <br>
-                <label class="category">Descripción</label>
-                <input class="input2" type="text" maxlength="25" name="categoria" required>
-                <br>
-                <button type="submit" class="save-button">Guardar</button>
-            </form>
+    <div id="crearEspacioModal" class="hidden fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+    <div class="max-w-md w-full bg-white rounded-lg shadow-xl p-6 relative">
+        <!-- Botón de cerrar -->
+        <button
+            class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+            onclick="document.getElementById('crearEspacioModal').classList.add('hidden')">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
 
-            <div class="circle-wrapper">
-                <div class="circle"></div>
+        <!-- Título -->
+        <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">Crear Espacio</h2>
+
+        <!-- Formulario -->
+        <form action="{{ route('grupal.store') }}" method="POST" class="space-y-4">
+            @csrf
+
+            <!-- Nombre -->
+            <div>
+                <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+                <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    maxlength="18"
+                    required
+                    class="mt-1 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
             </div>
-        </div>
+
+            <!-- Descripción -->
+            <div>
+                <label for="categoria" class="block text-sm font-medium text-gray-700">Descripción</label>
+                <input
+                    type="text"
+                    id="categoria"
+                    name="categoria"
+                    maxlength="25"
+                    required
+                    class="mt-1 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Botón Guardar -->
+            <div class="flex justify-end">
+                <button
+                    type="submit"
+                    class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Guardar
+                </button>
+            </div>
+        </form>
+
+ 
     </div>
+</div>
 
-    <!-- Script del modal Crear Espacio -->
+<script>
+    function openModal() {
+        document.getElementById('crearEspacioModal').classList.remove('hidden');
+    }
 
-    <script>
-        function openModal() {
-            document.getElementById('crearEspacioModal').style.display = 'flex';
+    window.onclick = function (event) {
+        const modal = document.getElementById('crearEspacioModal');
+        if (event.target === modal) {
+            modal.classList.add('hidden');
         }
+    };
+</script>
 
-        window.onclick = function(event) {
-            var modal = document.getElementById('crearEspacioModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-    </script>
 
     
 </x-app-layout>
