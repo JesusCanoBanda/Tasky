@@ -33,14 +33,14 @@
                 <option value="casi por finalizar" {{ old('estado') == 'casi por finalizar' ? 'selected' : '' }}>casi por finalizar</option>
                 <option value="finalizado" {{ old('estado') == 'finalizado' ? 'selected' : '' }}>finalizado</option>
             </select>
-        
-            <label>Porcentaje</label>
-            <input name="porcentaje" id="range" type="range" min="0" max="100" step="1" value="{{ old('porcentaje', 0) }}">
-            <p><span id="valor">{{ old('porcentaje', 0) }}</span></p>
-        
-            <label>Notas</label>
-            <input type="text" name="categoria" id="categoria" maxlength="50" value="{{ old('categoria') }}">
-        
+
+            <label>Porcentaje </label>
+            <input name="porcentaje" id="range" type="range" min="0" max="100" step="1" value="0" >
+            <p><span id="valor"></span></p>
+
+            <label>Categoria </label>
+            <input type="text" name="categoria" >
+
             <label>Responsable</label>
             <select name="responsable" id="responsable" required>
                 <option value="">Seleccione un responsable</option>
