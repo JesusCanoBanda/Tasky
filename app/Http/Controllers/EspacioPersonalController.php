@@ -18,9 +18,12 @@ class EspacioPersonalController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'categoria' => 'required|string|max:255',
-        ]);
+            'nombre' => 'required|string|max:18',
+            'categoria' => 'required|string|max:25',
+        ], [
+            'nombre.max' => 'El nombre no puede tener más de 18 caracteres.',
+            'categoria.max' => 'La categoría no puede tener más de 25 caracteres.',
+        ]); 
 
         $userId = Auth::id(); //aut del user
 
