@@ -18,10 +18,10 @@
             @method('PUT') <!-- Cambiar a PUT para realizar la actualización -->
 
             <label>Nombre</label>
-            <input type="text" name="nombre" value="{{ old('nombre', $espacio->nombre) }}" required>
+            <input type="text" name="nombre" maxlength="18" value="{{ old('nombre', $espacio->nombre) }}" required>
 
             <label>Descripción</label>
-            <input type="text" name="categoria" value="{{ old('categoria', $espacio->categoria) }}" required>
+            <input type="text" name="categoria" maxlength="25" value="{{ old('categoria', $espacio->categoria) }}" required>
 
             <button type="submit" class="save-button">Actualizar</button>
         </form>

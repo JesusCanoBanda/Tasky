@@ -329,10 +329,10 @@
             <form class="player-form" action="{{ route('grupal.store') }}" method="POST">
                 @csrf
                 <label class="name">Nombre</label>
-                <input class="input" type="text" name="nombre" required>
+                <input class="input" type="text" maxlength="18" name="nombre" required>
                 <br>
                 <label class="category">Descripción</label>
-                <input class="input2" type="text" name="categoria" required>
+                <input class="input2" type="text" maxlength="25" name="categoria" required>
                 <br>
                 <button type="submit" class="save-button">Guardar</button>
             </form>

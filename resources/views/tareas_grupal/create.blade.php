@@ -24,7 +24,7 @@
             <input type="date" name="fechafinal" id="fechafinal" value="{{ old('fechafinal') }}" required>
         
             <label>Descripción</label>
-            <input type="text" name="descripcion" id="descripcion" maxlength="50" value="{{ old('descripcion') }}" required>
+            <input type="text" name="descripcion" id="descripcion" maxlength="30" value="{{ old('descripcion') }}" required>
         
             <label>Estado</label>
             <select name="estado" id="estado" required>
