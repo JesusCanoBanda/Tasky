@@ -16,16 +16,16 @@
             @csrf
             <label>Nombre</label>
             <input type="text" name="nombre" id="nombre" maxlength="15" value="{{ old('nombre') }}" required>
-        
+
             <label>Fecha de inicio</label>
             <input type="date" name="fechainicio" id="fechainicio" value="{{ old('fechainicio') }}" required>
-        
+
             <label>Fecha final</label>
             <input type="date" name="fechafinal" id="fechafinal" value="{{ old('fechafinal') }}" required>
-        
+
             <label>Descripción</label>
             <input type="text" name="descripcion" id="descripcion" maxlength="30" value="{{ old('descripcion') }}" required>
-        
+
             <label>Estado</label>
             <select name="estado" id="estado" required>
                 <option value="no iniciado" {{ old('estado') == 'no iniciado' ? 'selected' : '' }}>no iniciado</option>
@@ -38,8 +38,8 @@
             <input name="porcentaje" id="range" type="range" min="0" max="100" step="1" value="0" >
             <p><span id="valor"></span></p>
 
-            <label>Categoria </label>
-            <input type="text" name="categoria" >
+            <label>Notas </label>
+            <input type="text" name="categoria" maxlength="50" >
 
             <label>Responsable</label>
             <select name="responsable" id="responsable" required>
@@ -50,10 +50,10 @@
                     </option>
                 @endforeach
             </select>
-        
+
             <button type="submit" class="save-button">Guardar</button>
         </form>
-        
+
     </div>
 
     @if ($errors->any())
