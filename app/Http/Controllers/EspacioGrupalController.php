@@ -7,6 +7,7 @@ use App\Models\EspacioGrupal;
 use App\Models\Miembrogrupal;
 use App\Models\TareaGrupal;
 use Illuminate\Support\Facades\Auth; // Importar Auth
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EspacioGrupalController extends Controller
 {
@@ -99,15 +100,25 @@ class EspacioGrupalController extends Controller
         return redirect()->route('grupal.miembros')->with('success', 'El miembro fue eliminado correctamente del grupo.');
     }
 
+
     public function join(Request $request)
     {
-        // Validar el ID del espacio
+        // Validar si el ID del espacio existe
         $request->validate([
-            'id_espacio' => 'required|exists:espacio_grupal,id', // Verifica si existe el espacio
+            'id_espacio' => 'required|integer',
         ]);
 
-        $user = Auth::user(); // Usuario autenticado
         $idEspacio = $request->input('id_espacio');
+
+        // Verificar si el espacio grupal existe
+        $espacio = EspacioGrupal::find($idEspacio);
+
+        if (!$espacio) {
+            Alert::error('Error', 'El grupo no fue encontrado.');
+            return redirect()->route('grupal.index');
+        }
+
+        $user = Auth::user();
 
         // Verificar si el usuario ya es miembro del espacio
         $existingMember = Miembrogrupal::where('id_grupal', $idEspacio)
@@ -115,7 +126,8 @@ class EspacioGrupalController extends Controller
             ->first();
 
         if ($existingMember) {
-            return redirect()->route('grupal.index')->with('error', 'Ya eres miembro de este espacio.');
+            Alert::info('Información', 'Ya eres miembro de este espacio.');
+            return redirect()->route('grupal.index');
         }
 
         // Agregar el usuario al espacio con rol de "Miembro" (0)
@@ -125,8 +137,10 @@ class EspacioGrupalController extends Controller
             'rol' => 0,
         ]);
 
-        return redirect()->route('grupal.index')->with('success', 'Te has unido al espacio exitosamente.');
+        Alert::success('Éxito', 'Te has unido al espacio exitosamente.');
+        return redirect()->route('grupal.index');
     }
+
 
     public function store(Request $request)
     {
