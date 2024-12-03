@@ -39,7 +39,7 @@
             <p><span id="valor"></span></p>
 
             <label>Notas </label>
-            <input type="text" name="categoria" maxlength="25" >
+            <input type="text" name="categoria" maxlength="25">
 
             <label>Responsable</label>
             <select name="responsable" id="responsable" required>

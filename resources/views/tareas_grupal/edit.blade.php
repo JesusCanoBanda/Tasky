@@ -27,7 +27,7 @@
             <input type="date" id="fechafinal" name="fechafinal" value="{{ old('fechafinal', $tarea->fechafinal ? \Carbon\Carbon::parse($tarea->fechafinal)->format('Y-m-d') : '') }}">
 
             <label>Descripción</label>
-            <input type="text" name="descripcion" value="{{ old('descripcion', $tarea->descripcion) }}" maxlength="50" required>
+            <input type="text" name="descripcion" value="{{ old('descripcion', $tarea->descripcion) }}" maxlength="25" required>
 
             <label>Estado </label>
             <select name="estado" required>
@@ -54,7 +54,7 @@
 
             <label for="categoria">Notas</label>
             <input type="text" id="categoria" name="categoria" value="{{ old('categoria', $tarea->categoria) }}"
-                maxlength="50" required>
+            maxlength="25" required>
 
             <button type="submit" class="save-button">Actualizar</button>
         </form>
