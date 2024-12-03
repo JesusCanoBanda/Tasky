@@ -7,7 +7,6 @@ use App\Models\EspacioGrupal;
 use App\Models\Miembrogrupal;
 use App\Models\TareaGrupal;
 use Illuminate\Support\Facades\Auth; // Importar Auth
-use RealRashid\SweetAlert\Facades\Alert;
 
 class EspacioGrupalController extends Controller
 {
@@ -100,7 +99,6 @@ class EspacioGrupalController extends Controller
         return redirect()->route('grupal.miembros')->with('success', 'El miembro fue eliminado correctamente del grupo.');
     }
 
-
     public function join(Request $request)
     {
         // Validar si el ID del espacio existe
@@ -114,8 +112,9 @@ class EspacioGrupalController extends Controller
         $espacio = EspacioGrupal::find($idEspacio);
 
         if (!$espacio) {
-            Alert::error('Error', 'El grupo no fue encontrado.');
-            return redirect()->route('grupal.index');
+            return redirect()
+                ->route('grupal.index')
+                ->withErrors(['id_espacio' => 'El espacio grupal no existe.']);
         }
 
         $user = Auth::user();
@@ -126,8 +125,9 @@ class EspacioGrupalController extends Controller
             ->first();
 
         if ($existingMember) {
-            Alert::info('Información', 'Ya eres miembro de este espacio.');
-            return redirect()->route('grupal.index');
+            return redirect()
+                ->route('grupal.index')
+                ->withErrors(['id_espacio' => 'Ya eres miembro de este espacio grupal.']);
         }
 
         // Agregar el usuario al espacio con rol de "Miembro" (0)
@@ -137,10 +137,8 @@ class EspacioGrupalController extends Controller
             'rol' => 0,
         ]);
 
-        Alert::success('Éxito', 'Te has unido al espacio exitosamente.');
         return redirect()->route('grupal.index');
     }
-
 
     public function store(Request $request)
     {

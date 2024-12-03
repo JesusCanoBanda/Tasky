@@ -1,136 +1,159 @@
 <x-app-layout>
     <link rel="stylesheet" href="{{ asset('css/table.css') }}">
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('sweetalert::alert')
 
     <div class="layout">
-    <div class="bg-gradient-to-b from-[#1E0579] via-[#2E1461] to-[#421F88] text-white w-72 h-full p-6 flex flex-col justify-between shadow-xl">                    <div>
-        <!-- Logo y Título -->
-        <div class="flex items-center gap-3 mb-8">
+        <div
+            class="bg-gradient-to-b from-[#1E0579] via-[#2E1461] to-[#421F88] text-white w-72 h-full p-6 flex flex-col justify-between shadow-xl">
+            <div>
+                <!-- Logo y Título -->
+                <div class="flex items-center gap-3 mb-8">
 
-            <h1 class="text-xl font-bold tracking-wide">Espacio Grupal</h1>
-        </div>
+                    <h1 class="text-xl font-bold tracking-wide">Espacio Grupal</h1>
+                </div>
 
-        <hr class="border-gray-600 mb-6">
+                <hr class="border-gray-600 mb-6">
 
-        <!-- Gestionar Miembros -->
-        <a href="{{ route('grupal.miembros') }}" class="flex items-center gap-3 py-3 px-4 bg-[#DB3B2D] rounded-lg mb-6 transition-all duration-200">
-            <span class="text-sm font-medium ">Gestionar Miembros</span>
-        </a>
+                <!-- Gestionar Miembros -->
+                <a href="{{ route('grupal.miembros') }}"
+                    class="flex items-center gap-3 py-3 px-4 bg-[#DB3B2D] rounded-lg mb-6 transition-all duration-200">
+                    <span class="text-sm font-medium ">Gestionar Miembros</span>
+                </a>
 
-        <!-- Espacios -->
-        <div class="space-y-4">
-            @if ($espacios->isNotEmpty())
-                @foreach ($espacios as $data)
-                    @php
-                        $espacio = $data['espacio'];
-                        $isAdmin = $data['isAdmin'];
-                    @endphp
-                    <button class="flex items-center gap-3 py-3 px-4 w-full text-left bg-[#3F3F5A] hover:bg-[#505070] rounded-lg transition-all duration-200"
-                        onclick="loadEspacio({{ $espacio->id }}); toggleActions({{ $espacio->id }});">
-                        <span class="text-sm font-medium">{{ $espacio->nombre }}</span>
-                    </button>
+                <!-- Espacios -->
+                <div class="space-y-4">
+                    @if ($espacios->isNotEmpty())
+                        @foreach ($espacios as $data)
+                            @php
+                                $espacio = $data['espacio'];
+                                $isAdmin = $data['isAdmin'];
+                            @endphp
+                            <button
+                                class="flex items-center gap-3 py-3 px-4 w-full text-left bg-[#3F3F5A] hover:bg-[#505070] rounded-lg transition-all duration-200"
+                                onclick="loadEspacio({{ $espacio->id }}); toggleActions({{ $espacio->id }});">
+                                <span class="text-sm font-medium">{{ $espacio->nombre }}</span>
+                            </button>
 
-                    <!-- Acciones para Admin (ocultas por defecto) -->
-                    @if ($isAdmin)
-                        <div id="actions-{{ $espacio->id }}" class="hidden flex gap-2 mt-2">
-                            <form action="{{ route('grupal.destroy', $espacio->id) }}" method="POST" class="w-full">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="flex items-center gap-2 py-2 px-3 bg-red-500 text-white rounded-lg hover:bg-red-600 w-full transition-all duration-200"
-                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?')">
-                                    <span class="text-sm font-medium">Eliminar</span>
-                                </button>
-                            </form>
-                            <form action="{{ route('grupal.edit', $espacio->id) }}" method="GET" class="w-full">
-                                <button type="submit"
-                                    class="flex items-center gap-2 py-2 px-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 w-full transition-all duration-200">
-                                    <span class="text-sm font-medium">Editar</span>
-                                </button>
-                            </form>
-                        </div>
+                            <!-- Acciones para Admin (ocultas por defecto) -->
+                            @if ($isAdmin)
+                                <div id="actions-{{ $espacio->id }}" class="hidden flex gap-2 mt-2">
+                                    <form action="{{ route('grupal.destroy', $espacio->id) }}" method="POST"
+                                        class="w-full">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="flex items-center gap-2 py-2 px-3 bg-red-500 text-white rounded-lg hover:bg-red-600 w-full transition-all duration-200"
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?')">
+                                            <span class="text-sm font-medium">Eliminar</span>
+                                        </button>
+                                    </form>
+                                    <form action="{{ route('grupal.edit', $espacio->id) }}" method="GET"
+                                        class="w-full">
+                                        <button type="submit"
+                                            class="flex items-center gap-2 py-2 px-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 w-full transition-all duration-200">
+                                            <span class="text-sm font-medium">Editar</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
+                        @endforeach
+                    @else
+                        <p class="text-sm text-gray-400 text-center">No tienes espacios creados aún.</p>
                     @endif
-                @endforeach
-            @else
-                <p class="text-sm text-gray-400 text-center">No tienes espacios creados aún.</p>
+                </div>
+
+                <hr class="border-gray-600 my-6">
+
+                <!-- Botones para Crear o Unirse a un Espacio -->
+                <button type="button"
+                    class="bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 w-full mb-4 transition-all duration-200"
+                    onclick="openModal()">
+                    + Crear Espacio
+                </button>
+                <button type="button"
+                    class="bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-600 w-full transition-all duration-200"
+                    onclick="openJoinModal()">
+                    + Unirse a Espacio
+                </button>
+            </div>
+            @if ($errors->any())
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script>
+                    window.onload = function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            html: `{!! implode('<br>', $errors->all()) !!}`,
+                            confirmButtonText: 'Entendido'
+                        });
+                    };
+                </script>
             @endif
+
         </div>
 
-        <hr class="border-gray-600 my-6">
-
-        <!-- Botones para Crear o Unirse a un Espacio -->
-        <button type="button" class="bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 w-full mb-4 transition-all duration-200" onclick="openModal()">
-            + Crear Espacio
-        </button>
-        <button type="button" class="bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-600 w-full transition-all duration-200" onclick="openJoinModal()">
-            + Unirse a Espacio
-        </button>
-    </div>
-</div>
 
 
-
-<script>
-    function toggleActions(id) {
-        const actions = document.getElementById(`actions-${id}`);
-        if (actions) {
-            actions.classList.toggle('hidden');
-        }
-    }
-</script>
-
-<!-- Contenido Principal -->
-<div class="main-content p-6 bg-[#2A2A42] rounded-lg shadow-lg">
-    <div id="espacio-content">
-        <p class="message text-center text-gray-400">Selecciona un espacio para ver los detalles.</p>
-    </div>
-
-    <br>
-
-    <div class="table overflow-auto bg-[#3F3F5A] rounded-lg p-4">
-        <table class="table-auto w-full text-left">
-            <thead id="tareas-header" class="text-gray-400">
-                <!-- Dinámico -->
-            </thead>
-            <tbody id="tareas-list" class="text-white">
-                <!-- Dinámico -->
-            </tbody>
-        </table>
-    </div>
-</div>
-
-</div>
-<script>
-    function toggleActions(espacioId) {
-        const actionDiv = document.getElementById(`actions-${espacioId}`);
-        const allActionDivs = document.querySelectorAll('[id^="actions-"]');
-
-        // Ocultar todas las acciones
-        allActionDivs.forEach(div => {
-            if (div.id !== `actions-${espacioId}`) {
-                div.classList.add('hidden');
+        <script>
+            function toggleActions(id) {
+                const actions = document.getElementById(`actions-${id}`);
+                if (actions) {
+                    actions.classList.toggle('hidden');
+                }
             }
-        });
+        </script>
 
-        // Alternar visibilidad de las acciones seleccionadas
-        if (actionDiv.classList.contains('hidden')) {
-            actionDiv.classList.remove('hidden');
-        } else {
-            actionDiv.classList.add('hidden');
+        <!-- Contenido Principal -->
+        <div class="main-content p-6 bg-[#2A2A42] rounded-lg shadow-lg">
+            <div id="espacio-content">
+                <p class="message text-center text-gray-400">Selecciona un espacio para ver los detalles.</p>
+            </div>
+
+            <br>
+
+            <div class="table overflow-auto bg-[#3F3F5A] rounded-lg p-4">
+                <table class="table-auto w-full text-left">
+                    <thead id="tareas-header" class="text-gray-400">
+                        <!-- Dinámico -->
+                    </thead>
+                    <tbody id="tareas-list" class="text-white">
+                        <!-- Dinámico -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function toggleActions(espacioId) {
+            const actionDiv = document.getElementById(`actions-${espacioId}`);
+            const allActionDivs = document.querySelectorAll('[id^="actions-"]');
+
+            // Ocultar todas las acciones
+            allActionDivs.forEach(div => {
+                if (div.id !== `actions-${espacioId}`) {
+                    div.classList.add('hidden');
+                }
+            });
+
+            // Alternar visibilidad de las acciones seleccionadas
+            if (actionDiv.classList.contains('hidden')) {
+                actionDiv.classList.remove('hidden');
+            } else {
+                actionDiv.classList.add('hidden');
+            }
         }
-    }
 
-    function loadEspacio(id) {
-        $.ajax({
-            url: `/grupal/${id}`,
-            type: 'GET',
-            success: function(response) {
-                const espacio = response.espacio;
-                const tareas = response.tareas;
+        function loadEspacio(id) {
+            $.ajax({
+                url: `/grupal/${id}`,
+                type: 'GET',
+                success: function(response) {
+                    const espacio = response.espacio;
+                    const tareas = response.tareas;
 
-                // Detalles del Espacio
-                $('#espacio-content').html(`
+                    // Detalles del Espacio
+                    $('#espacio-content').html(`
                     <div class="bg-[#3F3F5A] p-4 rounded-lg">
                         <h1 class="text-lg font-bold text-white mb-2">${espacio.nombre}</h1>
                         <p class="text-sm text-gray-300 mb-2">Categoría: ${espacio.categoria}</p>
@@ -139,8 +162,8 @@
                     </div>
                 `);
 
-                // Encabezados de la Tabla
-                $('#tareas-header').html(`
+                    // Encabezados de la Tabla
+                    $('#tareas-header').html(`
                     <tr>
                         <th class="p-2">ID</th>
                         <th class="p-2">Nombre</th>
@@ -150,10 +173,10 @@
                     </tr>
                 `);
 
-                // Lista de Tareas
-                let tareasHtml = '';
-                tareas.forEach(tarea => {
-                    tareasHtml += `
+                    // Lista de Tareas
+                    let tareasHtml = '';
+                    tareas.forEach(tarea => {
+                        tareasHtml += `
                         <tr>
                             <td class="p-2">${tarea.id}</td>
                             <td class="p-2">${tarea.nombre}</td>
@@ -162,19 +185,19 @@
                             <td class="p-2">${tarea.descripcion}</td>
                         </tr>
                     `;
-                });
-                $('#tareas-list').html(tareasHtml);
-            },
-            error: function(xhr) {
-                console.error('Error al cargar los datos:', xhr);
-                alert('No se pudo cargar el espacio o las tareas. Inténtalo de nuevo.');
-            }
-        });
-    }
-</script>
+                    });
+                    $('#tareas-list').html(tareasHtml);
+                },
+                error: function(xhr) {
+                    console.error('Error al cargar los datos:', xhr);
+                    alert('No se pudo cargar el espacio o las tareas. Inténtalo de nuevo.');
+                }
+            });
+        }
+    </script>
 
 
-</div>
+    </div>
 
 
     </div>
