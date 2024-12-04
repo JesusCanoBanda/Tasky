@@ -1,11 +1,14 @@
 <x-app-layout>
-    <!-- Enlace al archivo CSS para el estilo de la tabla (si es necesario) -->
-    <link rel="stylesheet" href="{{ asset('css/table.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/gestion.css') }}">
 
     <div class="container">
 
-        <a href="{{ route('grupal.index') }}" class="card-link">
-            <h4 class="name2"><b>Espacio grupal</b></h4>
+        <a class="absolute top-3 right-[-530px] w-12 h-12 flex items-center justify-center text-red-500 hover:text-gray-600"
+            href="{{ route('grupal.index') }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
         </a>
 
         <div class="results-table">
@@ -19,10 +22,10 @@
                     @endphp
 
                     <div class="espacio-card">
-                        <h3>{{ $espacio->nombre }}</h3>
-                        <p>Categoría: {{ $espacio->categoria }}</p>
-                        <p>Miembro: {{ $miembro->usuario->name }}</p> <!-- Relación hacia el modelo Usuario -->
-                        <p>Rol: {{ $miembro->rol == 1 ? 'Administrador' : 'Miembro' }}</p>
+                        <h3 style="font-size: 20px; color: blue"><b>{{ $espacio->nombre }}</b></h3>
+                        <p><b>Categoría:</b> {{ $espacio->categoria }}</p>
+                        <p><b>Miembro: </b>{{ $miembro->usuario->name }}</p> <!-- Relación hacia el modelo Usuario -->
+                        <p><b>Rol:</b> {{ $miembro->rol == 1 ? 'Administrador' : 'Miembro' }}</p>
 
                         <!-- Mostrar opciones solo si el miembro es un usuario regular (rol 0) -->
                         @if ($miembro->rol == 0)

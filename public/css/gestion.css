@@ -1,0 +1,88 @@
+* {
+    font-family: 'Parkinsans', sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.results-table {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.espacio-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.espacio-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.name2 {
+    position: absolute;
+    top: 20px;
+    left: 70%;
+    border: none;
+    background-color: green;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.name2:hover {
+    background-color: darkgreen;
+    transform: scale(1.1);
+}
+
+.eliminar {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    margin-top: 10px;
+}
+
+.eliminar:hover {
+    background-color: rgb(155, 26, 26);
+}
+
+.form-title {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
