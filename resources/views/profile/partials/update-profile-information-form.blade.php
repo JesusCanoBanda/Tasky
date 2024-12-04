@@ -5,7 +5,7 @@
         </h2>
 
         <p class="mt-2 text-sm text-blue-600">
-            {{ __("Update your account's profile information and email address.") }}
+            {{ __("Actualiza tu nombre") }}
         </p>
     </header>
 
@@ -20,8 +20,8 @@
         </div>
 
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full bg-blue-50 border border-blue-300 rounded-md focus:ring focus:ring-blue-500 focus:border-blue-500" :value="old('email', $user->email)" required autocomplete="username" maxlength="62" />
+            {{-- <x-input-label for="email" :value="__('Email')" /> --}}
+            <x-text-input id="email" name="email" type="hidden" class="mt-1 block w-full bg-blue-50 border border-blue-300 rounded-md focus:ring focus:ring-blue-500 focus:border-blue-500" :value="old('email', $user->email)" required autocomplete="username" maxlength="62" readonly/>
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
         </div>
 

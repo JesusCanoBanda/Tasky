@@ -143,8 +143,8 @@ class TareaController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:15',
-            'fecha_inicio' => 'nullable|date',
-            'fecha_final' => 'nullable|date|after_or_equal:fecha_inicio',
+            'fecha_inicio' => 'nullable|date|date_format:Y-m-d',
+            'fecha_final' => 'nullable|date|after_or_equal:fecha_inicio|date_format:Y-m-d',
             'descripcion' => 'required|string|max:50',
             'estado' => 'required|string|in:no iniciado,iniciado,casi por finalizar,finalizado',
             'porcentaje' => [

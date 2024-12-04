@@ -102,9 +102,9 @@ class TareaGrupalController extends Controller
              'responsable.string' => 'El responsable debe ser un texto válido.',
              'responsable.max' => 'El responsable no debe superar los 15 caracteres.',
 
-             'categoria.required' => 'La categoría es obligatoria.',
-             'categoria.string' => 'La categoría debe ser un texto válido.',
-             'categoria.max' => 'La categoría no debe superar los 50 caracteres.',
+             'categoria.required' => 'Las notas son obligatorias.',
+             'categoria.string' => 'Las notas deben ser un texto válido.',
+             'categoria.max' => 'Las notas no deben superar los 50 caracteres.',
          ]);
 
          if ($validator->fails()) {
@@ -215,8 +215,8 @@ class TareaGrupalController extends Controller
         'responsable.string' => 'El responsable debe ser un texto válido.',
         'responsable.max' => 'El responsable no debe superar los 15 caracteres.',
 
-        'categoria.required' => 'La categoría es obligatoria.',
-        'categoria.string' => 'La categoría debe ser un texto válido.',
+        'categoria.required' => 'Las notas son obligatorias.',
+        'categoria.string' => 'Las notas debe ser un texto válido.',
         'categoria.max' => 'Las notas no deben superar los 50 caracteres.',
     ]);
 

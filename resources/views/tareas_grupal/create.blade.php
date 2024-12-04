@@ -104,7 +104,7 @@
                         type="text"
                         name="categoria"
                         maxlength="50"
-                        class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
                 </div>
 
                 <!-- Responsable -->
