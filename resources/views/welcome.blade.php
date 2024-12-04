@@ -32,10 +32,10 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#contact" 
+                    {{-- <a href="#contact" 
                        class="hover:text-blue-300 hover:border-b-2 hover:border-blue-400 transition duration-200">
                        Contacto
-                    </a>
+                    </a> --}}
                 </li>
             </ul>
         </nav>
