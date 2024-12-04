@@ -28,9 +28,9 @@ class AdminController extends Controller
     public function update(Request $request, $id)//Actualizar los datos 
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'user_name' => 'required|string|max:255|unique:users,user_name,' . $id,
-            'apellidos' => 'required|string|max:255',
+            'name' => 'required|string|max:20',
+            'user_name' => 'required|string|max:15|unique:users,user_name,' . $id,
+            'apellidos' => 'required|string|max:15',
             'rol' => 'required|in:0,1', 
         ]);
 

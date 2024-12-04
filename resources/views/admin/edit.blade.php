@@ -66,13 +66,13 @@
         @method('PUT')
 
         <label for="name">Nombre</label>
-        <input type="text" name="name" id="name" value="{{ old('name', $users->name) }}" required>
+        <input type="text" name="name" id="name" value="{{ old('name', $users->name) }}" maxlength="20" required>
 
         <label for="user_name">Usuario</label>
-        <input type="text" name="user_name" id="user_name" value="{{ old('user_name', $users->user_name) }}" required>
+        <input type="text" name="user_name" id="user_name" value="{{ old('user_name', $users->user_name) }}" maxlength="15" required>
 
         <label for="apellidos">Apellidos</label>
-        <input type="text" name="apellidos" id="apellidos" value="{{ old('apellidos', $users->apellidos) }}" required>
+        <input type="text" name="apellidos" id="apellidos" value="{{ old('apellidos', $users->apellidos) }}" maxlength="15" required>
 
         <label for="rol">Rol</label>
         <select name="rol" id="rol" required>
