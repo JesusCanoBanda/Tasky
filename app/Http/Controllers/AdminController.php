@@ -48,9 +48,21 @@ class AdminController extends Controller
     public function delete($id) //administardor de usuarios
     {
         //$user = User::where('id', auth()->id())->get();
-        $user = User::findOrFail($id);
+        
+
+        $user = User::with('espaciosGrupales', 'Miembrogrupal')->findOrFail($id);
+
+        // Eliminar los espacios grupales asociados a los miembros grupales del usuario
+        foreach ($user->espaciosGrupales as $espacio) {
+            $espacio->delete();
+        }
+
+        // Eliminar los registros de miembros grupales
+        $user->Miembrogrupal()->delete();
+
+        // Eliminar el usuario
         $user->delete();
 
-        return redirect()->route('admin.index')->with('success', 'Usuario eliminado exitosamente.');
+        return redirect()->route('admin.index')->with('success', 'Usuario y sus asociaciones eliminados exitosamente.');
     }
 }
